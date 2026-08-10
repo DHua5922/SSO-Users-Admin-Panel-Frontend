@@ -1,5 +1,5 @@
-import logo from "../../assets/logo.svg";
-import { paths } from "../../constants";
+import logo from "../assets/logo.svg";
+import { paths } from "../constants";
 
 export default function Navbar() {
 	return (
@@ -13,9 +13,7 @@ export default function Navbar() {
 
 				<ul>
 					<li>
-						<a className="text-white" href={paths.home}>
-							Home
-						</a>
+						<a href={paths.home}>Home</a>
 					</li>
 				</ul>
 			</div>

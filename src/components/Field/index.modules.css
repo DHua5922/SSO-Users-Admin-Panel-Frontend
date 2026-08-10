@@ -1,13 +1,14 @@
 label {
-    font-weight: 500;
+	font-weight: 500;
 }
 
 input {
-    border: 1px solid var(--dark-color);
-    padding: 8px;
-    border-radius: 4px;
+	border: 1px solid var(--dark-color);
+	padding: 8px;
+	border-radius: 4px;
 }
 
-label, input {
-    color: var(--dark-color);
+label,
+input {
+	color: var(--dark-color);
 }
