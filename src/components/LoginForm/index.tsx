@@ -19,11 +19,12 @@ export default function LoginForm({
 	className = "",
 	...props
 }: Props) {
-	const formattedClassName = `flex flex-col gap-4 ${className}`.trim();
+	const formattedClassName =
+		`w-full max-w-[350px] m-auto shadow-lg flex flex-col p-8 gap-4 border border-gray-200 rounded-md ${className}`.trim();
 
 	return (
 		<form className={formattedClassName} {...props}>
-			<h2 className="text-2xl font-bold">Login</h2>
+			<h2 className="text-3xl text-center font-medium">Login</h2>
 
 			<Field
 				label="Email"

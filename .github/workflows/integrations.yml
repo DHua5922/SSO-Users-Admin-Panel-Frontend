@@ -38,4 +38,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Run Integration Tests
-        run: pnpm run test:integration
+        run: pnpm run test:integrations

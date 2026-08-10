@@ -41,7 +41,7 @@ function useLoginForm() {
 export default function LoginPage() {
 	const loginForm = useLoginForm();
 	return (
-		<div className="">
+		<div className="flex flex-col justify-center items-center h-screen">
 			<LoginForm {...loginForm} />
 		</div>
 	);

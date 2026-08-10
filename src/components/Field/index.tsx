@@ -1,4 +1,5 @@
 import type { HTMLAttributes, InputHTMLAttributes } from "react";
+import "./index.modules.css";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	label?: string;
@@ -14,7 +15,7 @@ export default function Field({
 	...props
 }: Props) {
 	return (
-		<div className={`flex flex-col gap-4 ${className}`} {...props}>
+		<div className={`flex flex-col gap-2 ${className}`} {...props}>
 			<label htmlFor={inputProps.id}>
 				{label}
 				{required && <span className="text-red-500">{" *"}</span>}
