@@ -1,0 +1,11 @@
+.container {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 0.25rem;
+
+	&:focus {
+		outline: 2px solid var(--primary-color);
+	}
+}
