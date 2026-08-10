@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 :root {
-	--primary-color: #4f46e5;
-	--secondary-color: #eeeeee;
+	--primary-color: #0878FF;
+	--light-color: #FFFFFF;
+	--dark-color: #071B42;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: "Barlow", sans-serif;
 }

@@ -10,39 +10,39 @@ import type { User } from "../schemas/user";
 import useAuthStore from "../store/auth";
 
 function useLoginForm() {
-	const navigate = useNavigate();
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const setMe = useAuthStore((state) => state.setMe);
-	const handlePageError = usePageErrorHandler();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const setMe = useAuthStore((state) => state.setMe);
+  const handlePageError = usePageErrorHandler();
 
-	const { isPending, mutate } = useMutation({
-		mutationFn: (inputs: LoginInput) => logInApi(inputs),
-		onSuccess: (me: User) => {
-			setMe(me);
-			navigate(paths.home);
-		},
-		onError: handlePageError,
-	});
+  const { isPending, mutate } = useMutation({
+    mutationFn: (inputs: LoginInput) => logInApi(inputs),
+    onSuccess: (me: User) => {
+      setMe(me);
+      navigate(paths.home);
+    },
+    onError: handlePageError,
+  });
 
-	return {
-		isLoading: isPending,
-		email,
-		onChangeEmail: setEmail,
-		password,
-		onChangePassword: setPassword,
-		onSubmit: (e: SubmitEvent<HTMLFormElement>) => {
-			e.preventDefault();
-			mutate({ email, password });
-		},
-	};
+  return {
+    isLoading: isPending,
+    email,
+    onChangeEmail: setEmail,
+    password,
+    onChangePassword: setPassword,
+    onSubmit: (e: SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      mutate({ email, password });
+    },
+  };
 }
 
 export default function LoginPage() {
-	const loginForm = useLoginForm();
-	return (
-		<div className="">
-			<LoginForm {...loginForm} />
-		</div>
-	);
+  const loginForm = useLoginForm();
+  return (
+    <div className="flex flex-col justify-center items-center h-screen">
+      <LoginForm {...loginForm} />
+    </div>
+  );
 }
