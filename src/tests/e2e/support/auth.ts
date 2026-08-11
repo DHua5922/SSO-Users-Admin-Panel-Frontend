@@ -1,5 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 import { z } from "zod";
+import { getLoginButton } from "./locator";
 
 export async function logInTest(page: Page) {
 	const testEnvSchema = z.object({
@@ -12,18 +13,19 @@ export async function logInTest(page: Page) {
 		VITE_TEST_EMAIL: process.env.VITE_TEST_EMAIL,
 		VITE_TEST_PASSWORD: process.env.VITE_TEST_PASSWORD,
 	});
+	const loginResponse = page.waitForResponse(
+		(response) =>
+			response.url().includes("/api/v1/auth/login") &&
+			response.status() === 200,
+	);
 
 	await page.goto(testEnv.VITE_FRONTEND_BASE_URL);
 
 	await page.getByLabel("Email").fill(testEnv.VITE_TEST_EMAIL);
 	await page.getByLabel("Password").fill(testEnv.VITE_TEST_PASSWORD);
 	const [response] = await Promise.all([
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/auth/login") &&
-				response.status() === 200,
-		),
-		page.getByRole("button", { name: "Login" }).click(),
+		loginResponse,
+		getLoginButton(page).click(),
 	]);
 	const responseBody = await response.json();
 

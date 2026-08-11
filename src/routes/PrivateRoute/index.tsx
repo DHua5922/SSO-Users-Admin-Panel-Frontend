@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/navbar/Navbar";
 import PageLoader from "../../components/PageLoader";
 import { LOADING_USER_TEXT, paths } from "../../constants";
 import useCurrentUser from "../../hooks/useCurrentUser";

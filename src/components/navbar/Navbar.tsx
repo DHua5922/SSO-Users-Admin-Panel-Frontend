@@ -1,9 +1,9 @@
-import { Menu as MenuComponent } from "@dhua5922/react-kit";
-import { ChevronDown, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
-import logo from "../assets/logo.svg";
-import { paths } from "../constants";
-import Collapsible from "./Collapsible";
+import logo from "../../assets/logo.svg";
+import { OPEN_NAVIGATION_MENU_TEXT, paths } from "../../constants";
+import Collapsible from "../Collapsible";
+import NavbarLinks from "./NavbarLinks";
 
 interface Props extends HTMLAttributes<HTMLElement> {
 	username: string;
@@ -31,13 +31,13 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 					aria-controls={collapsibleId}
 					onClick={() => setExpanded((prev) => !prev)}
 					aria-label={
-						expanded ? "Close navigation menu" : "Open navigation menu"
+						expanded ? "Close navigation menu" : OPEN_NAVIGATION_MENU_TEXT
 					}
 				>
 					<Menu />
 				</button>
 
-				<Links
+				<NavbarLinks
 					username={username}
 					className="hidden md:flex items-center gap-8"
 				/>
@@ -49,40 +49,11 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 				id={collapsibleId}
 				aria-label="Mobile navigation menu"
 			>
-				<Links
+				<NavbarLinks
 					username={username}
 					className="py-2 flex flex-col items-center gap-6"
 				/>
 			</Collapsible>
 		</nav>
-	);
-}
-
-interface LinksProps extends HTMLAttributes<HTMLUListElement> {
-	username: string;
-}
-function Links({ username, ...props }: LinksProps) {
-	return (
-		<ul {...props}>
-			<li>
-				<a href={paths.home}>Home</a>
-			</li>
-
-			<li>
-				<MenuComponent>
-					<MenuComponent.Toggle
-						className="flex items-center gap-2 cursor-pointer"
-						aria-label="User menu"
-					>
-						{username}
-						<ChevronDown />
-					</MenuComponent.Toggle>
-
-					<MenuComponent.Content>
-						<MenuComponent.Item>Log out</MenuComponent.Item>
-					</MenuComponent.Content>
-				</MenuComponent>
-			</li>
-		</ul>
 	);
 }

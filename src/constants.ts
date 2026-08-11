@@ -13,3 +13,12 @@ export const testUser = {
 };
 
 export const SUCCESS_STATUS_CODE = 200;
+
+export const ME_QUERY_KEY = "me";
+
+export const OPEN_NAVIGATION_MENU_TEXT = "Open navigation menu";
+
+export const USER_MENU_TOGGLE_ARIA_LABEL = "user menu toggle";
+export const LOGOUT_BUTTON_TEXT = "Log out";
+
+export const LOGIN_TEXT = "Login";

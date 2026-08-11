@@ -1,11 +1,16 @@
 import { screen } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
-import { paths, testUser } from "../../constants";
-import { mockLoginFailureApi, mockLoginSuccessApi } from "./server/auth";
-import { mockGetMeSuccessApi } from "./server/me";
+import { LOGOUT_BUTTON_TEXT, paths, testUser } from "../../constants";
+import {
+	mockLoginFailureApi,
+	mockLoginSuccessApi,
+	mockLogoutSuccessApi,
+} from "./server/auth";
+import { mockGetMeFailureApi, mockGetMeSuccessApi } from "./server/me";
 import { findLoginButton } from "./ui/auth";
-import { findUserButton } from "./ui/home";
+import { findUserMenuToggleButton } from "./ui/home";
 import { renderApp } from "./ui/support/app";
+import { findButton } from "./ui/support/locator";
 
 test("Submit login form with valid credentials", async () => {
 	mockLoginSuccessApi();
@@ -16,7 +21,7 @@ test("Submit login form with valid credentials", async () => {
 	mockGetMeSuccessApi();
 	await submitForm(event);
 
-	expect(await findUserButton(screen)).toBeTruthy();
+	expect(await findUserMenuToggleButton(screen)).toBeTruthy();
 });
 
 test("show error message on login failure", async () => {
@@ -28,6 +33,19 @@ test("show error message on login failure", async () => {
 	await submitForm(event);
 	expect(await screen.findByRole("alert")).toBeTruthy();
 	expect(await screen.findByText(/Invalid credentials/i)).toBeTruthy();
+});
+
+test("log out user", async () => {
+	mockGetMeSuccessApi();
+	mockLogoutSuccessApi();
+
+	const { event } = renderApp(paths.home);
+	await event.click(await findUserMenuToggleButton(screen));
+
+	mockGetMeFailureApi();
+	await event.click(await findButton(screen, LOGOUT_BUTTON_TEXT));
+
+	expect(await findLoginButton(screen)).toBeTruthy();
 });
 
 async function submitForm(event: UserEvent) {

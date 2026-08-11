@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { LOGIN_TEXT } from "../../constants";
 import LoginForm from ".";
-
-const loginText = "Login";
 
 test("shows loading state", async () => {
 	const { button } = await renderLoginForm(true, "Logging in...");
@@ -10,7 +9,7 @@ test("shows loading state", async () => {
 });
 
 test("submit by pressing enter on keyboard", async () => {
-	const { event, onSubmit, button } = await renderLoginForm(false, loginText);
+	const { event, onSubmit, button } = await renderLoginForm(false, LOGIN_TEXT);
 
 	await event.type(screen.getByLabelText(/password/i), "password123{enter}");
 	expect(onSubmit).toHaveBeenCalled();
@@ -18,7 +17,7 @@ test("submit by pressing enter on keyboard", async () => {
 });
 
 test("submit by clicking on button with mouse", async () => {
-	const { event, onSubmit, button } = await renderLoginForm(false, loginText);
+	const { event, onSubmit, button } = await renderLoginForm(false, LOGIN_TEXT);
 
 	await event.click(button);
 	expect(onSubmit).toHaveBeenCalled();
