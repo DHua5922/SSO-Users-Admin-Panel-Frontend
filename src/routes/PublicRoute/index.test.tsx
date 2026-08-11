@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
+import { LOADING_USER_TEXT } from "../../constants";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import PublicRoute from ".";
 
@@ -23,7 +24,7 @@ test("show private content", () => {
 
 test("show loading state", () => {
 	renderRoute(false, true);
-	expect(screen.getByText("Loading user...")).toBeTruthy();
+	expect(screen.getByText(LOADING_USER_TEXT)).toBeTruthy();
 });
 
 function renderRoute(isLoggedIn: boolean, isLoading: boolean) {

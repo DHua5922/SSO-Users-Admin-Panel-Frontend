@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import { LOGIN_TEXT } from "../../constants";
 import Button from "../Button";
 import Field from "../Field";
 
@@ -9,8 +10,6 @@ interface Props extends HTMLAttributes<HTMLFormElement> {
 	password: string;
 	onChangePassword: (password: string) => void;
 }
-
-const LOGIN_TEXT = "Login";
 
 export default function LoginForm({
 	isLoading,

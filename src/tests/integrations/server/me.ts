@@ -11,3 +11,11 @@ export function mockGetMeSuccessApi() {
 		}),
 	);
 }
+
+export function mockGetMeFailureApi() {
+	return server.use(
+		http.get(meEndpoint, () => {
+			return HttpResponse.json("Internal Server Error", { status: 500 });
+		}),
+	);
+}

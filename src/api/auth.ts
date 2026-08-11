@@ -14,10 +14,10 @@ export async function logInApi(data: z.infer<typeof loginSchema>) {
 	return userSchema.parse(response.data);
 }
 
-export async function refreshTokensApi() {
+export async function logOutApi() {
 	const response = await authAxios({
 		method: "POST",
-		url: "/tokens/new",
+		url: "/logout",
 	});
 	return response.data;
 }

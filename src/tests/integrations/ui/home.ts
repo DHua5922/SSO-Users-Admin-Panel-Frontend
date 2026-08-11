@@ -1,8 +1,8 @@
 import type { Screen } from "@testing-library/react";
-import { testUser } from "../../../constants";
+import { USER_MENU_TOGGLE_ARIA_LABEL } from "../../../constants";
 
-export function findUserButton(screen: Screen) {
+export function findUserMenuToggleButton(screen: Screen) {
 	return screen.findByRole("button", {
-		name: new RegExp("User menu", "i"),
+		name: new RegExp(USER_MENU_TOGGLE_ARIA_LABEL, "i"),
 	});
 }
