@@ -1,18 +1,22 @@
 import { Menu as MenuComponent } from "@dhua5922/react-kit";
 import { ChevronDown, Menu } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
-import logo from "../../assets/logo.svg";
-import { paths } from "../../constants";
-import useAuthStore from "../../store/auth";
-import Collapsible from "../Collapsible";
+import logo from "../assets/logo.svg";
+import { paths } from "../constants";
+import Collapsible from "./Collapsible";
+
+interface Props extends HTMLAttributes<HTMLElement> {
+	username: string;
+}
 
 const collapsibleId = "mobile-navigation";
 
-export default function Navbar() {
+export default function Navbar({ username, className = "", ...props }: Props) {
 	const [expanded, setExpanded] = useState(false);
+	const formattedClassName = `p-6 border-b border-gray-200 ${className}`.trim();
 
 	return (
-		<nav className="p-6 border-b border-gray-200">
+		<nav className={formattedClassName} {...props}>
 			<div className="flex items-center justify-between">
 				<a href={paths.home}>
 					<figure className="w-32">
@@ -33,7 +37,10 @@ export default function Navbar() {
 					<Menu />
 				</button>
 
-				<Links className="hidden md:flex items-center gap-8" />
+				<Links
+					username={username}
+					className="hidden md:flex items-center gap-8"
+				/>
 			</div>
 
 			<Collapsible
@@ -42,15 +49,19 @@ export default function Navbar() {
 				id={collapsibleId}
 				aria-label="Mobile navigation menu"
 			>
-				<Links className="py-2 flex flex-col items-center gap-6" />
+				<Links
+					username={username}
+					className="py-2 flex flex-col items-center gap-6"
+				/>
 			</Collapsible>
 		</nav>
 	);
 }
 
-function Links(props: HTMLAttributes<HTMLUListElement>) {
-	const me = useAuthStore((state) => state.me);
-
+interface LinksProps extends HTMLAttributes<HTMLUListElement> {
+	username: string;
+}
+function Links({ username, ...props }: LinksProps) {
 	return (
 		<ul {...props}>
 			<li>
@@ -59,8 +70,11 @@ function Links(props: HTMLAttributes<HTMLUListElement>) {
 
 			<li>
 				<MenuComponent>
-					<MenuComponent.Toggle className="flex items-center gap-2 cursor-pointer">
-						{me.username}
+					<MenuComponent.Toggle
+						className="flex items-center gap-2 cursor-pointer"
+						aria-label="User menu"
+					>
+						{username}
 						<ChevronDown />
 					</MenuComponent.Toggle>
 

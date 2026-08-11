@@ -5,7 +5,6 @@ import { logInApi } from "../api/auth";
 import LoginForm from "../components/LoginForm";
 import { paths } from "../constants";
 import usePageErrorHandler from "../hooks/usePageErrorHandler";
-import type { LoginInput } from "../schemas/auth";
 import type { User } from "../schemas/user";
 import useAuthStore from "../store/auth";
 
@@ -17,7 +16,7 @@ function useLoginForm() {
 	const handlePageError = usePageErrorHandler();
 
 	const { isPending, mutate } = useMutation({
-		mutationFn: (inputs: LoginInput) => logInApi(inputs),
+		mutationFn: logInApi,
 		onSuccess: (me: User) => {
 			setMe(me);
 			navigate(paths.home);

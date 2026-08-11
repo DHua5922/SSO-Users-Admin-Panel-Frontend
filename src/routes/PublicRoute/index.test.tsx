@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
-import useAuthStore from "../../store/auth";
+import useCurrentUser from "../../hooks/useCurrentUser";
 import PublicRoute from ".";
 
-vi.mock("../../store/auth", () => ({
+vi.mock("../../hooks/useCurrentUser", () => ({
 	default: vi.fn(),
 }));
 
@@ -12,19 +12,25 @@ const privateContentText = "Private Content";
 const loginText = "Login";
 
 test("redirect to login page", () => {
-	renderApp("");
+	renderRoute(false, false);
 	expect(screen.getByText(loginText)).toBeTruthy();
 });
 
 test("show private content", () => {
-	renderApp("123");
+	renderRoute(true, false);
 	expect(screen.getByText(privateContentText)).toBeTruthy();
 });
 
-function renderApp(meId: string) {
-	const mockUseAuthStore = useAuthStore as unknown as Mock;
-	mockUseAuthStore.mockReturnValue({
-		_id: meId,
+test("show loading state", () => {
+	renderRoute(false, true);
+	expect(screen.getByText("Loading user...")).toBeTruthy();
+});
+
+function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
+	const mockUseCurrentUser = useCurrentUser as unknown as Mock;
+	mockUseCurrentUser.mockReturnValue({
+		isLoggedIn,
+		isLoading,
 	});
 
 	render(
