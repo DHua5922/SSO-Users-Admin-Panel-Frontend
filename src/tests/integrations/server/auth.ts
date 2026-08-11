@@ -1,23 +1,20 @@
 import { HttpResponse, http } from "msw";
+import { SUCCESS_STATUS_CODE, testUser } from "../../../constants";
 import { server } from "../../vitest.setup";
+
+const loginEndpoint = "*/api/v1/auth/login";
 
 export function mockLoginSuccessApi() {
 	server.use(
-		http.post("*/api/v1/auth/login", () => {
-			const sampleResponse = {
-				_id: "2w3192hed1e",
-				email: "admin@example.com",
-				username: "admin",
-				role: "admin",
-			};
-			return HttpResponse.json(sampleResponse, { status: 200 });
+		http.post(loginEndpoint, () => {
+			return HttpResponse.json(testUser, { status: SUCCESS_STATUS_CODE });
 		}),
 	);
 }
 
 export function mockLoginFailureApi() {
 	server.use(
-		http.post("*/api/v1/auth/login", () => {
+		http.post(loginEndpoint, () => {
 			return HttpResponse.json("Invalid credentials", { status: 400 });
 		}),
 	);

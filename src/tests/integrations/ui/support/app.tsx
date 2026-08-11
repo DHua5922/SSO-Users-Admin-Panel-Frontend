@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
-import Routes from "../../../routes/Routes";
+import Routes from "../../../../routes/Routes";
 
 export function renderApp(initialRoute: string) {
 	const queryClient = new QueryClient();

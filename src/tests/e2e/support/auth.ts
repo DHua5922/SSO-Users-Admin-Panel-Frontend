@@ -1,9 +1,7 @@
-/// <reference types="node" />
-
-import { expect, test } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 import { z } from "zod";
 
-test("authenticates user", async ({ page }) => {
+export async function logInTest(page: Page) {
 	const testEnvSchema = z.object({
 		VITE_FRONTEND_BASE_URL: z.url(),
 		VITE_TEST_EMAIL: z.email(),
@@ -19,7 +17,20 @@ test("authenticates user", async ({ page }) => {
 
 	await page.getByLabel("Email").fill(testEnv.VITE_TEST_EMAIL);
 	await page.getByLabel("Password").fill(testEnv.VITE_TEST_PASSWORD);
-	await page.getByRole("button", { name: "Login" }).click();
+	const [response] = await Promise.all([
+		page.waitForResponse(
+			(response) =>
+				response.url().includes("/api/v1/auth/login") &&
+				response.status() === 200,
+		),
+		page.getByRole("button", { name: "Login" }).click(),
+	]);
+	const responseBody = await response.json();
 
-	await expect(page.getByText(/Home Page/i)).toBeVisible();
-});
+	expect(responseBody).toMatchObject({
+		_id: expect.any(String),
+		email: testEnv.VITE_TEST_EMAIL,
+		username: expect.any(String),
+		role: expect.any(String),
+	});
+}

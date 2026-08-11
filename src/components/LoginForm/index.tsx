@@ -10,6 +10,8 @@ interface Props extends HTMLAttributes<HTMLFormElement> {
 	onChangePassword: (password: string) => void;
 }
 
+const LOGIN_TEXT = "Login";
+
 export default function LoginForm({
 	isLoading,
 	email,
@@ -24,7 +26,7 @@ export default function LoginForm({
 
 	return (
 		<form className={formattedClassName} {...props}>
-			<h2 className="text-3xl text-center font-medium">Login</h2>
+			<h2 className="text-3xl text-center font-medium">{LOGIN_TEXT}</h2>
 
 			<Field
 				label="Email"
@@ -49,7 +51,7 @@ export default function LoginForm({
 			/>
 
 			<Button isLoading={isLoading} loadingText="Logging in..." type="submit">
-				Login
+				{LOGIN_TEXT}
 			</Button>
 		</form>
 	);
