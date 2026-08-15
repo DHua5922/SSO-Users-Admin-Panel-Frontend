@@ -1,32 +1,32 @@
-import { useState, type ChangeEvent } from "react";
-import useUserStore from "../store";
+import { type ChangeEvent, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import useUserStore from "../store";
 
 export default function useUserTableControls() {
-  const [searchInput, setSearchInput] = useState("");
-  const [chosenRoleId, setChosenRoleId] = useState("");
+	const [searchInput, setSearchInput] = useState("");
+	const [chosenRoleId, setChosenRoleId] = useState("");
 
-  const { resetChosenUser, setShowUpsertUserModal } = useUserStore(
-    useShallow((state) => ({
-      resetChosenUser: state.resetChosenUser,
-      setShowUpsertUserModal: state.setShowUpsertUserModal,
-    })),
-  );
+	const { resetChosenUser, setShowUpsertUserModal } = useUserStore(
+		useShallow((state) => ({
+			resetChosenUser: state.resetChosenUser,
+			setShowUpsertUserModal: state.setShowUpsertUserModal,
+		})),
+	);
 
-  return {
-    searchBarProps: {
-      value: searchInput,
-      onChange: (e: ChangeEvent<HTMLInputElement>) =>
-        setSearchInput(e.target.value),
-    },
-    roleSelectControlProps: {
-      value: chosenRoleId,
-      onChange: (e: ChangeEvent<HTMLSelectElement>) =>
-        setChosenRoleId(e.target.value),
-    },
-    onClickAddUser: () => {
-      resetChosenUser();
-      setShowUpsertUserModal(true);
-    },
-  };
+	return {
+		searchBarProps: {
+			value: searchInput,
+			onChange: (e: ChangeEvent<HTMLInputElement>) =>
+				setSearchInput(e.target.value),
+		},
+		roleSelectControlProps: {
+			value: chosenRoleId,
+			onChange: (e: ChangeEvent<HTMLSelectElement>) =>
+				setChosenRoleId(e.target.value),
+		},
+		onClickAddUser: () => {
+			resetChosenUser();
+			setShowUpsertUserModal(true);
+		},
+	};
 }

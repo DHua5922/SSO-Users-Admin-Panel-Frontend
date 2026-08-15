@@ -1,12 +1,14 @@
 import { Routes as DefaultRoutes, Route } from "react-router";
-import Alerts from "../components/alert/Alerts";
-import { paths } from "../constants";
+import { LOGIN_PATH } from "../features/auth/constants";
+import { USERS_PATH } from "../features/user/constants";
+import UsersManagementPage from "../features/user/UsersManagementPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
-import useStatusStore from "../store/status";
+import Alerts from "../shared/components/alert/Alerts";
+import { HOME_PATH } from "../shared/constants";
+import useStatusStore from "../shared/store/status";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-import UsersManagementPage from "../features/user/UsersManagementPage";
 
 export default function Routes() {
   const alerts = useStatusStore((state) => state.pageAlerts);
@@ -18,12 +20,12 @@ export default function Routes() {
 
       <DefaultRoutes>
         <Route element={<PrivateRoute />}>
-          <Route path={paths.home} element={<HomePage />} />
-          <Route path={paths.users} element={<UsersManagementPage />} />
+          <Route path={HOME_PATH} element={<HomePage />} />
+          <Route path={USERS_PATH} element={<UsersManagementPage />} />
         </Route>
 
         <Route element={<PublicRoute />}>
-          <Route path={paths.login} element={<LoginPage />} />
+          <Route path={LOGIN_PATH} element={<LoginPage />} />
         </Route>
       </DefaultRoutes>
     </>

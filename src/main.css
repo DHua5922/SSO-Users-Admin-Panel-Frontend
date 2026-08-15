@@ -39,7 +39,7 @@
 	}
 	.list-message-text {
 		@apply text-center text-4xl;
-	}	
+	}
 }
 
 a {
@@ -52,7 +52,8 @@ a {
 	}
 }
 
-th, td {
+th,
+td {
 	border: 1px solid var(--dark-color);
 	padding: 0.5rem;
 }
@@ -61,7 +62,8 @@ label {
 	font-weight: 500;
 }
 
-input, select {
+input,
+select {
 	border: 1px solid var(--dark-color);
 	padding: 8px;
 	border-radius: 4px;

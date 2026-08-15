@@ -2,11 +2,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
-import { LOADING_USER_TEXT, paths } from "../../constants";
-import useCurrentUser from "../../hooks/useCurrentUser";
+import {
+	LOADING_CURRENT_USER_TEXT,
+	LOGIN_PATH,
+} from "../../features/auth/constants";
+import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
+import { HOME_PATH } from "../../shared/constants";
 import PrivateRoute from ".";
 
-vi.mock("../../hooks/useCurrentUser", () => ({
+vi.mock("../../features/auth/hooks/useCurrentUser", () => ({
 	default: vi.fn(),
 }));
 
@@ -25,7 +29,7 @@ test("redirect to login page", () => {
 
 test("show loading state", () => {
 	renderRoute(false, true);
-	expect(screen.getByText(LOADING_USER_TEXT)).toBeTruthy();
+	expect(screen.getByText(LOADING_CURRENT_USER_TEXT)).toBeTruthy();
 });
 
 function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
@@ -38,15 +42,12 @@ function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
 
 	render(
 		<QueryClientProvider client={queryClient}>
-			<MemoryRouter initialEntries={[paths.home]}>
+			<MemoryRouter initialEntries={[HOME_PATH]}>
 				<Routes>
 					<Route element={<PrivateRoute />}>
-						<Route
-							path={paths.home}
-							element={<div>{privateContentText}</div>}
-						/>
+						<Route path={HOME_PATH} element={<div>{privateContentText}</div>} />
 					</Route>
-					<Route path={paths.login} element={<div>{loginText}</div>} />
+					<Route path={LOGIN_PATH} element={<div>{loginText}</div>} />
 				</Routes>
 			</MemoryRouter>
 		</QueryClientProvider>,

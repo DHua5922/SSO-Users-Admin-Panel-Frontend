@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { type SubmitEvent, useState } from "react";
 import { useNavigate } from "react-router";
-import { logInApi } from "../api/auth";
-import LoginForm from "../components/LoginForm";
-import { paths } from "../constants";
-import usePageErrorHandler from "../hooks/usePageErrorHandler";
+import { logInApi } from "../features/auth/api/auth";
+import LoginForm from "../features/auth/components/LoginForm";
+import { HOME_PATH } from "../shared/constants";
+import usePageErrorHandler from "../shared/hooks/usePageErrorHandler";
 
 function useLoginForm() {
 	const navigate = useNavigate();
@@ -14,7 +14,7 @@ function useLoginForm() {
 
 	const { isPending, mutate } = useMutation({
 		mutationFn: logInApi,
-		onSuccess: () => navigate(paths.home),
+		onSuccess: () => navigate(HOME_PATH),
 		onError: handlePageError,
 	});
 

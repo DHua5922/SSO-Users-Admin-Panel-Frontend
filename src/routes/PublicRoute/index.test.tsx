@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
-import { LOADING_USER_TEXT } from "../../constants";
-import useCurrentUser from "../../hooks/useCurrentUser";
+import { LOADING_CURRENT_USER_TEXT } from "../../features/auth/constants";
+import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import PublicRoute from ".";
 
-vi.mock("../../hooks/useCurrentUser", () => ({
+vi.mock("../../features/auth/hooks/useCurrentUser", () => ({
 	default: vi.fn(),
 }));
 
@@ -24,7 +24,7 @@ test("show private content", () => {
 
 test("show loading state", () => {
 	renderRoute(false, true);
-	expect(screen.getByText(LOADING_USER_TEXT)).toBeTruthy();
+	expect(screen.getByText(LOADING_CURRENT_USER_TEXT)).toBeTruthy();
 });
 
 function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
