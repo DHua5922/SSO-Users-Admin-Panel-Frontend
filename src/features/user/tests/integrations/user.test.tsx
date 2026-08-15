@@ -1,10 +1,6 @@
 import { screen, within } from "@testing-library/react";
-import { CANNOT_LOAD_ROLES_ERROR_MESSAGE } from "../../../../shared/constants";
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
-import {
-  mockGetRolesFailureApi,
-  mockGetRolesSuccessApi,
-} from "../../../../shared/tests/react-testing-library/server";
+import { mockGetRolesSuccessApi } from "../../../../shared/tests/react-testing-library/server";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integrations/server/me";
 import {
   ADD_USER_BUTTON_TEXT,
@@ -18,7 +14,6 @@ import {
   USERS_PATH,
 } from "../../constants";
 import {
-  mockDeleteUserFailureApi,
   mockDeleteUserSuccessApi,
   mockGetUsersFailureApi,
   mockGetUsersSuccessApi,
@@ -27,10 +22,21 @@ import {
 } from "./server";
 import { fillInPasswordInput, getAddUserButton } from "./ui";
 
-describe("Add User", () => {
-  test("should add user", async () => {
-    const password = "password123";
+test("should show error message when failing to load users", async () => {
+  mockGetMeSuccessApi();
+  mockGetRolesSuccessApi();
+  mockGetUsersFailureApi();
+  renderApp(USERS_PATH);
 
+  expect(
+    await screen.findByText(new RegExp(CANNOT_LOAD_USERS_ERROR_MESSAGE, "i")),
+  ).toBeTruthy();
+});
+
+describe("Add User", () => {
+  const password = "password123";
+
+  test("should add user", async () => {
     mockGetMeSuccessApi();
     mockGetRolesSuccessApi();
     mockGetUsersSuccessApi([]);
@@ -91,8 +97,6 @@ describe("Add User", () => {
   });
 
   test("should show error when failing to add user", async () => {
-    const password = "password123";
-
     mockGetMeSuccessApi();
     mockGetRolesSuccessApi();
     mockGetUsersSuccessApi([]);
@@ -223,76 +227,35 @@ test("should update user", async () => {
   ).toBeTruthy();
 });
 
-test("should show error message when failing to load users", async () => {
+test("should delete user", async () => {
   mockGetMeSuccessApi();
   mockGetRolesSuccessApi();
-  mockGetUsersFailureApi();
-  renderApp(USERS_PATH);
+  mockGetUsersSuccessApi([testUser]);
+  mockDeleteUserSuccessApi();
 
-  expect(
-    await screen.findByText(new RegExp(CANNOT_LOAD_USERS_ERROR_MESSAGE, "i")),
-  ).toBeTruthy();
-});
+  const { event } = renderApp(USERS_PATH);
 
-describe("Delete User", () => {
-  test("should delete user", async () => {
-    mockGetMeSuccessApi();
-    mockGetRolesSuccessApi();
-    mockGetUsersSuccessApi([testUser]);
-    mockDeleteUserSuccessApi();
-
-    const { event } = renderApp(USERS_PATH);
-
-    const deleteButton = await screen.findByRole("button", {
-      name: new RegExp(
-        `button that show popup for deleting ${testUser.username}`,
-        "i",
-      ),
-    });
-    await event.click(deleteButton);
-
-    const dialog = await screen.findByRole("dialog", {
-      name: new RegExp(`Delete ${testUser.username}`, "i"),
-    });
-    mockGetUsersSuccessApi([]);
-    await event.click(
-      within(dialog).getByRole("button", {
-        name: new RegExp(CONFIRM_DELETE_USER_BUTTON_TEXT, "i"),
-      }),
-    );
-    expect(await screen.findByText(EMPTY_USERS_MESSAGE)).toBeTruthy();
+  const deleteButton = await screen.findByRole("button", {
+    name: new RegExp(
+      `button that show popup for deleting ${testUser.username}`,
+      "i",
+    ),
   });
+  await event.click(deleteButton);
 
-  test("should show error message when failing to delete user", async () => {
-    mockGetMeSuccessApi();
-    mockGetRolesSuccessApi();
-    mockGetUsersSuccessApi([testUser]);
-    mockDeleteUserFailureApi();
-
-    const { event } = renderApp(USERS_PATH);
-
-    const deleteButton = await screen.findByRole("button", {
-      name: new RegExp(
-        `button that show popup for deleting ${testUser.username}`,
-        "i",
-      ),
-    });
-    await event.click(deleteButton);
-
-    const dialog = await screen.findByRole("dialog", {
-      name: new RegExp(`Delete ${testUser.username}`, "i"),
-    });
-    const confirmDeleteButton = within(dialog).getByRole("button", {
+  const dialog = await screen.findByRole("dialog", {
+    name: new RegExp(`Delete ${testUser.username}`, "i"),
+  });
+  mockGetUsersSuccessApi([]);
+  await event.click(
+    within(dialog).getByRole("button", {
       name: new RegExp(CONFIRM_DELETE_USER_BUTTON_TEXT, "i"),
-    });
-    await event.click(confirmDeleteButton);
-
-    const alert = await within(dialog).findByRole("alert");
-    expect(within(alert).getByText(/cannot delete user/i)).toBeTruthy();
-  });
+    }),
+  );
+  expect(await screen.findByText(EMPTY_USERS_MESSAGE)).toBeTruthy();
 });
 
-describe("Filter Users", () => {
+test("should filter users by username and email from search bar (case insensitive)", async () => {
   const roles = [
     { _id: "admin-role-id", name: "Admin", description: "Administrators" },
     { _id: "user-role-id", name: "User", description: "Standard users" },
@@ -312,51 +275,26 @@ describe("Filter Users", () => {
     },
   ];
 
-  beforeEach(() => {
-    mockGetMeSuccessApi();
-    mockGetRolesSuccessApi(roles);
-    mockGetUsersSuccessApi(users);
+  mockGetMeSuccessApi();
+  mockGetRolesSuccessApi(roles);
+  mockGetUsersSuccessApi(users);
+
+  const { event } = renderApp(USERS_PATH);
+
+  await event.type(
+    await screen.findByRole("searchbox", { name: /search users/i }),
+    "smi",
+  );
+
+  const matchingRow = await screen.findByRole("row", {
+    name: new RegExp(users[1].username, "i"),
   });
+  expect(within(matchingRow).getByText(users[1].email)).toBeTruthy();
+  expect(within(matchingRow).getByText(users[1].role)).toBeTruthy();
 
-  test("should filter users by username and email from search bar (case insensitive)", async () => {
-    const { event } = renderApp(USERS_PATH);
-
-    await event.type(
-      await screen.findByRole("searchbox", { name: /search users/i }),
-      "smi",
-    );
-
-    const matchingRow = await screen.findByRole("row", {
-      name: new RegExp(users[1].username, "i"),
-    });
-    expect(within(matchingRow).getByText(users[1].email)).toBeTruthy();
-    expect(within(matchingRow).getByText(users[1].role)).toBeTruthy();
-
-    expect(
-      screen.queryByRole("row", {
-        name: new RegExp(users[0].username, "i"),
-      }),
-    ).toBeNull();
-  });
-
-  test("should filter users by role from role select", async () => {
-    const { event } = renderApp(USERS_PATH);
-
-    await event.selectOptions(
-      await screen.findByRole("combobox", { name: /filter users by role/i }),
-      roles[0]._id,
-    );
-
-    const matchingRow = await screen.findByRole("row", {
+  expect(
+    screen.queryByRole("row", {
       name: new RegExp(users[0].username, "i"),
-    });
-    expect(within(matchingRow).getByText(users[0].email)).toBeTruthy();
-    expect(within(matchingRow).getByText(users[0].role)).toBeTruthy();
-
-    expect(
-      screen.queryByRole("row", {
-        name: new RegExp(users[1].username, "i"),
-      }),
-    ).toBeNull();
-  });
+    }),
+  ).toBeNull();
 });

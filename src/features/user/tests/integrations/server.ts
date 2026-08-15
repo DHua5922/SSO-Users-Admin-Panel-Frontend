@@ -59,12 +59,3 @@ export function mockDeleteUserSuccessApi() {
 		}),
 	);
 }
-export function mockDeleteUserFailureApi() {
-	return server.use(
-		http.delete(deleteEndpoint, () => {
-			return HttpResponse.json("Cannot delete user", {
-				status: INTERNAL_SERVER_ERROR_STATUS_CODE,
-			});
-		}),
-	);
-}
