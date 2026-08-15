@@ -3,7 +3,7 @@ import type { UserEvent } from "@testing-library/user-event";
 import { HOME_PATH } from "../../../../shared/constants";
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import { findButton } from "../../../../shared/tests/react-testing-library/locator";
-import { testUser } from "../../../user/constants";
+import { testUser } from "../../../users/tests/fixtures";
 import { LOGIN_PATH, LOGOUT_BUTTON_TEXT } from "../../constants";
 import {
 	mockLoginFailureApi,

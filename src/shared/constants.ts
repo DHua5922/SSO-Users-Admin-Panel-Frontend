@@ -1,10 +1,3 @@
-export const testRoles = [
-  {
-    _id: "2w3192hed1e",
-    name: "admin",
-    description: "Administrator role",
-  },
-];
 export const DEFAULT_ROLE_SELECT_OPTION = "Select a role";
 export const LOADING_ROLES_TEXT = "Loading roles...";
 

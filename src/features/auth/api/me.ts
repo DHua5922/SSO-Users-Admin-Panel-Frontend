@@ -1,5 +1,5 @@
-import { createAxiosInstance } from "../../../shared/api";
-import { userSchema } from "../../user/schemas";
+import { createAxiosInstance } from "../../../shared/api/instance";
+import { userSchema } from "../../users/schemas";
 
 const meAxios = createAxiosInstance("/api/v1/me");
 

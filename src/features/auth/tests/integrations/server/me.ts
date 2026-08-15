@@ -1,7 +1,7 @@
 import { HttpResponse, http } from "msw";
 import { SUCCESS_STATUS_CODE } from "../../../../../shared/constants";
 import { server } from "../../../../../shared/tests/vitest.setup";
-import { testUser } from "../../../../user/constants";
+import { testUser } from "../../../../users/tests/fixtures";
 
 const meEndpoint = "*/api/v1/me";
 

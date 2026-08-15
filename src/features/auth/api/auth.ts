@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { loginSchema } from "../../../features/auth/schemas";
-import { userSchema } from "../../../features/user/schemas";
-import { createAxiosInstance } from "../../../shared/api";
+import { createAxiosInstance } from "../../../shared/api/instance";
+import { userSchema } from "../../users/schemas";
+import { loginSchema } from "../schemas";
 
 const authAxios = createAxiosInstance("/api/v1/auth");
 
