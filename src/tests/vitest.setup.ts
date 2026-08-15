@@ -4,8 +4,25 @@ import useStatusStore from "../store/status";
 export const server = setupServer();
 
 beforeAll(() => server.listen());
-afterEach(() => {
-	server.resetHandlers();
-	useStatusStore.setState({ pageAlerts: [] });
+
+beforeEach(() => {
+  if (!HTMLDialogElement.prototype.showModal) {
+    HTMLDialogElement.prototype.showModal = function () {
+      this.open = true;
+    };
+  }
+
+  if (!HTMLDialogElement.prototype.close) {
+    HTMLDialogElement.prototype.close = function () {
+      this.open = false;
+      this.dispatchEvent(new Event("close"));
+    };
+  }
 });
+
+afterEach(() => {
+  server.resetHandlers();
+  useStatusStore.setState({ pageAlerts: [], modalAlerts: [] });
+});
+
 afterAll(() => server.close());

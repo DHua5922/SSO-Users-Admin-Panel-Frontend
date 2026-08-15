@@ -1,5 +1,6 @@
 import { HttpResponse, http } from "msw";
-import { SUCCESS_STATUS_CODE, testUser } from "../../../constants";
+import { SUCCESS_STATUS_CODE } from "../../../constants";
+import {testUser} from "../../../features/user/constants";
 import { server } from "../../vitest.setup";
 
 const meEndpoint = "*/api/v1/me";

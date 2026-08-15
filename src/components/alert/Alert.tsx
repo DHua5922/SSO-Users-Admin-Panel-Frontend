@@ -19,12 +19,13 @@ export default function Alert({
 	...props
 }: Props) {
 	const formattedClassName =
-		`flex items-center justify-between ${variants[variant]} ${className}`.trim();
+		`p-3 flex items-center justify-between ${variants[variant]} ${className}`.trim();
 
 	return (
 		<div role="alert" className={formattedClassName} {...props}>
 			<p>{children}</p>
-			<Button aria-label="Close Alert" onClick={onRemoveAlert}>
+
+			<Button aria-label="Close Alert" className="bg-transparent!" onClick={onRemoveAlert}>
 				X
 			</Button>
 		</div>

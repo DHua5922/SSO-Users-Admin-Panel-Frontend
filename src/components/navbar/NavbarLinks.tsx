@@ -37,28 +37,32 @@ export default function NavbarLinks({ username, ...props }: Props) {
 	const onLogOut = useLinks();
 
 	return (
-		<ul {...props}>
-			<li>
-				<a href={paths.home}>Home</a>
-			</li>
+    <ul {...props}>
+      <li>
+        <a href={paths.home}>Home</a>
+      </li>
 
-			<li>
-				<MenuComponent>
-					<MenuComponent.Toggle
-						className="flex items-center gap-2 cursor-pointer"
-						aria-label={USER_MENU_TOGGLE_ARIA_LABEL}
-					>
-						{username}
-						<ChevronDown />
-					</MenuComponent.Toggle>
+      <li>
+        <a href={paths.users}>Users</a>
+      </li>
 
-					<MenuComponent.Content>
-						<MenuComponent.Item onClick={onLogOut}>
-							{LOGOUT_BUTTON_TEXT}
-						</MenuComponent.Item>
-					</MenuComponent.Content>
-				</MenuComponent>
-			</li>
-		</ul>
-	);
+      <li>
+        <MenuComponent>
+          <MenuComponent.Toggle
+            className="flex items-center gap-2 cursor-pointer"
+            aria-label={USER_MENU_TOGGLE_ARIA_LABEL}
+          >
+            {username}
+            <ChevronDown />
+          </MenuComponent.Toggle>
+
+          <MenuComponent.Content>
+            <MenuComponent.Item onClick={onLogOut}>
+              {LOGOUT_BUTTON_TEXT}
+            </MenuComponent.Item>
+          </MenuComponent.Content>
+        </MenuComponent>
+      </li>
+    </ul>
+  );
 }

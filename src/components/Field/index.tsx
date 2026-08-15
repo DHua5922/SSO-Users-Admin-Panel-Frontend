@@ -1,27 +1,33 @@
-import type { HTMLAttributes, InputHTMLAttributes } from "react";
-import "./index.modules.css";
+import type { HTMLAttributes } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-	label?: string;
-	required?: boolean;
-	inputProps: InputHTMLAttributes<HTMLInputElement>;
+  label?: string;
+  htmlFor?: string;
+  required?: boolean;
+  errorMessage?: string;
 }
 
 export default function Field({
-	label,
-	required,
-	inputProps,
-	className = "",
-	...props
+  label,
+  htmlFor,
+  required,
+  errorMessage,
+  className = "",
+  children,
+  ...props
 }: Props) {
-	return (
-		<div className={`flex flex-col gap-2 ${className}`} {...props}>
-			<label htmlFor={inputProps.id}>
-				{label}
-				{required && <span className="text-red-500">{" *"}</span>}
-			</label>
+	const formattedClassName = `flex flex-col gap-2 ${className}`.trim();
 
-			<input {...inputProps} />
-		</div>
-	);
+  return (
+    <div className={formattedClassName} {...props}>
+      <label htmlFor={htmlFor}>
+        {label}
+        {required && <span className="text-danger">{" *"}</span>}
+      </label>
+
+      {children}
+
+      {errorMessage && <span className="text-danger">{errorMessage}</span>}
+    </div>
+  );
 }

@@ -6,24 +6,26 @@ import LoginPage from "../pages/LoginPage";
 import useStatusStore from "../store/status";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import UsersManagementPage from "../features/user/UsersManagementPage";
 
 export default function Routes() {
-	const alerts = useStatusStore((state) => state.pageAlerts);
-	const removePageAlert = useStatusStore((state) => state.removePageAlert);
+  const alerts = useStatusStore((state) => state.pageAlerts);
+  const removePageAlert = useStatusStore((state) => state.removePageAlert);
 
-	return (
-		<>
-			<Alerts list={alerts} onRemoveAlert={removePageAlert} />
+  return (
+    <>
+      <Alerts list={alerts} onRemoveAlert={removePageAlert} />
 
-			<DefaultRoutes>
-				<Route element={<PrivateRoute />}>
-					<Route path={paths.home} element={<HomePage />} />
-				</Route>
+      <DefaultRoutes>
+        <Route element={<PrivateRoute />}>
+          <Route path={paths.home} element={<HomePage />} />
+          <Route path={paths.users} element={<UsersManagementPage />} />
+        </Route>
 
-				<Route element={<PublicRoute />}>
-					<Route path={paths.login} element={<LoginPage />} />
-				</Route>
-			</DefaultRoutes>
-		</>
-	);
+        <Route element={<PublicRoute />}>
+          <Route path={paths.login} element={<LoginPage />} />
+        </Route>
+      </DefaultRoutes>
+    </>
+  );
 }

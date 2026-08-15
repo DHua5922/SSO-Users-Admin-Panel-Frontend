@@ -1,6 +1,7 @@
 import { HttpResponse, http } from "msw";
-import { SUCCESS_STATUS_CODE, testUser } from "../../../constants";
+import { SUCCESS_STATUS_CODE } from "../../../constants";
 import { server } from "../../vitest.setup";
+import { testUser } from "../../../features/user/constants";
 
 const baseUrl = "*/api/v1/auth";
 const loginEndpoint = `${baseUrl}/login`;
