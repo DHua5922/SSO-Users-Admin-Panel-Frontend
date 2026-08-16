@@ -19,7 +19,7 @@ interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
 	isSubmitting: boolean;
 	email: string;
 	username: string;
-	role: string;
+	initialRole: string;
 	submitButtonText: string;
 	onSubmit: (formValues: UpsertUserFormData) => void;
 	roleSelectProps: {
@@ -33,7 +33,7 @@ interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
 interface UseFormValidationProps {
 	username: string;
 	email: string;
-	role: string;
+	initialRole: string;
 	isSubmitting: boolean;
 	isLoadingRoles: boolean;
 }
@@ -41,7 +41,7 @@ interface UseFormValidationProps {
 function useFormValidation({
 	username,
 	email,
-	role,
+	initialRole,
 	isSubmitting,
 	isLoadingRoles,
 }: UseFormValidationProps) {
@@ -55,7 +55,7 @@ function useFormValidation({
 		defaultValues: {
 			username,
 			email,
-			role,
+			role: initialRole,
 			password: "",
 			confirmPassword: "",
 		},
@@ -67,11 +67,11 @@ function useFormValidation({
 		reset({
 			username,
 			email,
-			role,
+			role: initialRole,
 			password: "",
 			confirmPassword: "",
 		});
-	}, [username, email, role, reset]);
+	}, [username, email, initialRole, reset]);
 
 	return {
 		isLoading,
@@ -86,7 +86,7 @@ export default function UpsertUserForm({
 	isSubmitting,
 	email,
 	username,
-	role,
+	initialRole,
 	submitButtonText,
 	onSubmit,
 	className = "",
@@ -99,7 +99,7 @@ export default function UpsertUserForm({
 	const { isLoading, register, handleSubmit, errors } = useFormValidation({
 		username,
 		email,
-		role,
+		initialRole,
 		isSubmitting,
 		isLoadingRoles: roleSelectProps.isLoading,
 	});

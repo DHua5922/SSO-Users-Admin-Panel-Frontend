@@ -90,7 +90,7 @@ async function renderForm({
 			onSubmit={onSubmit}
 			username=""
 			email=""
-			role=""
+			initialRole=""
 			roleSelectProps={{
 				isLoading: false,
 				isError: false,

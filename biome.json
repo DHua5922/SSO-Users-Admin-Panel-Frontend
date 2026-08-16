@@ -5,7 +5,15 @@
 	"formatter": { "enabled": true, "indentStyle": "tab" },
 	"linter": {
 		"enabled": true,
-		"rules": { "preset": "none" },
+		"rules": {
+			"preset": "none",
+			"a11y": {
+				"recommended": true,
+				"noSvgWithoutTitle": "error",
+				"useButtonType": "error",
+				"useAltText": "error"
+			}
+		},
 		"includes": ["**", "!dist"]
 	},
 	"javascript": { "formatter": { "quoteStyle": "double" } },
