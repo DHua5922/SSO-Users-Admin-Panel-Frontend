@@ -5,8 +5,8 @@ import { upsertUserApi } from "../api";
 import {
 	ADD_USER_BUTTON_TEXT,
 	UPDATE_USER_BUTTON_TEXT,
-	USERS_QUERY_KEY,
-} from "../constants";
+} from "../constants/button";
+import { USERS_QUERY_KEY } from "../constants/general";
 import type { UpsertUserFormData } from "../schemas";
 import useUserStore from "../useUserStore";
 

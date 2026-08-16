@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import { CLOSE_ALERT_BUTTON_TEXT } from "../constants";
 import Button from "./Button";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -26,7 +27,7 @@ export default function Alert({
 			<p>{children}</p>
 
 			<Button
-				aria-label="Close Alert"
+				aria-label={CLOSE_ALERT_BUTTON_TEXT}
 				className="bg-transparent!"
 				onClick={onRemoveAlert}
 			>

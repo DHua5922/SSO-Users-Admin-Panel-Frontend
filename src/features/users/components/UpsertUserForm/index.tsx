@@ -5,6 +5,13 @@ import Button from "../../../../shared/components/Button";
 import Field from "../../../../shared/components/Field";
 import type { Role } from "../../../../shared/schemas";
 import RoleSelect from "../../../roles/components/RoleSelect";
+import {
+	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_EMAIL_LABEL,
+	UPSERT_USER_FORM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_ROLE_LABEL,
+	UPSERT_USER_FORM_USERNAME_LABEL,
+} from "../../constants/input";
 import { type UpsertUserFormData, upsertUserFormSchema } from "../../schemas";
 
 interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
@@ -110,7 +117,7 @@ export default function UpsertUserForm({
 			{...props}
 		>
 			<Field
-				label="Username"
+				label={UPSERT_USER_FORM_USERNAME_LABEL}
 				htmlFor={usernameInputId}
 				required
 				errorMessage={errors.username?.message}
@@ -119,7 +126,7 @@ export default function UpsertUserForm({
 			</Field>
 
 			<Field
-				label="Role"
+				label={UPSERT_USER_FORM_ROLE_LABEL}
 				htmlFor={roleSelectId}
 				required
 				errorMessage={errors.role?.message}
@@ -133,7 +140,7 @@ export default function UpsertUserForm({
 
 			<Field
 				className="md:col-span-2"
-				label="Email"
+				label={UPSERT_USER_FORM_EMAIL_LABEL}
 				htmlFor={emailInputId}
 				required
 				errorMessage={errors.email?.message}
@@ -142,7 +149,7 @@ export default function UpsertUserForm({
 			</Field>
 
 			<Field
-				label="Password"
+				label={UPSERT_USER_FORM_PASSWORD_LABEL}
 				required={!isEditing}
 				errorMessage={errors.password?.message}
 				htmlFor={passwordInputId}
@@ -151,7 +158,7 @@ export default function UpsertUserForm({
 			</Field>
 
 			<Field
-				label="Confirm Password"
+				label={UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL}
 				required={!isEditing}
 				errorMessage={errors.confirmPassword?.message}
 				htmlFor={confirmPasswordInputId}

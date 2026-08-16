@@ -1,18 +1,20 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import { getText } from "../../../shared/tests/react-testing-library/locator";
+import { LOADING_TEXT } from "../../constants";
 import ListView from ".";
 
 test("shows error message", () => {
 	const { errorMessage } = renderListView({ isError: true });
-	expect(screen.getByText(errorMessage)).toBeTruthy();
+	expect(getText(errorMessage)).toBeTruthy();
 });
 test("shows message for empty list", () => {
 	const { emptyListMessage } = renderListView({ isEmpty: true });
-	expect(screen.getByText(emptyListMessage)).toBeTruthy();
+	expect(getText(emptyListMessage)).toBeTruthy();
 });
 
 test("shows list loading", () => {
 	const { loadingMessage } = renderListView({ isLoading: true });
-	expect(screen.getByText(loadingMessage)).toBeTruthy();
+	expect(getText(loadingMessage)).toBeTruthy();
 });
 
 test("shows list with items", () => {
@@ -21,7 +23,7 @@ test("shows list with items", () => {
 	renderListView({ list });
 
 	list.forEach((item) => {
-		expect(screen.getByText(item)).toBeTruthy();
+		expect(getText(item)).toBeTruthy();
 	});
 });
 
@@ -33,7 +35,6 @@ function renderListView({
 	isLoading = false,
 	list = [] as string[],
 }) {
-	const loadingMessage = "Loading...";
 	render(
 		<ListView
 			isError={isError}
@@ -41,7 +42,7 @@ function renderListView({
 			isEmpty={isEmpty}
 			emptyListMessage={emptyListMessage}
 			isLoading={isLoading}
-			loadingChildren={<p>{loadingMessage}</p>}
+			loadingChildren={<p>{LOADING_TEXT}</p>}
 		>
 			<ul>
 				{list.map((item, index) => (
@@ -51,5 +52,5 @@ function renderListView({
 		</ListView>,
 	);
 
-	return { errorMessage, emptyListMessage, loadingMessage };
+	return { errorMessage, emptyListMessage, loadingMessage: LOADING_TEXT };
 }

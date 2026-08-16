@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useShallow } from "zustand/react/shallow";
 import { getUsersApi } from "../api";
-import { USERS_QUERY_KEY } from "../constants";
+import { USERS_QUERY_KEY } from "../constants/general";
 import type { User } from "../schemas";
 import useUserStore from "../useUserStore";
 import { filterUsers } from "../utilities/filterUsers";

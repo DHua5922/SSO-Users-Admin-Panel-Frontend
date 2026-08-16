@@ -2,7 +2,7 @@ import { Routes as DefaultRoutes, Route } from "react-router";
 import { LOGIN_PATH } from "../../features/auth/constants";
 import LoginPage from "../../features/auth/pages/LoginPage";
 import DashboardPage from "../../features/dashboard/DashboardPage";
-import { USERS_PATH } from "../../features/users/constants";
+import { USERS_PATH } from "../../features/users/constants/general";
 import UsersManagementPage from "../../features/users/pages/UsersManagementPage";
 import Alerts from "../../shared/components/Alerts";
 import { HOME_PATH } from "../../shared/constants";

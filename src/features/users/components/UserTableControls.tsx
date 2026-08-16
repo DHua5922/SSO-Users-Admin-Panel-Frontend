@@ -2,6 +2,7 @@ import type { ComponentProps, HTMLAttributes } from "react";
 import Button from "../../../shared/components/Button";
 import Field from "../../../shared/components/Field";
 import RoleSelect from "../../roles/components/RoleSelect";
+import { SEARCH_USERS_ARIA_LABEL } from "../constants/input";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	searchBarProps: HTMLAttributes<HTMLInputElement>;
@@ -24,7 +25,7 @@ export default function UserTableControls({
 				<Field className="flex-4">
 					<input
 						type="search"
-						aria-label="Search users"
+						aria-label={SEARCH_USERS_ARIA_LABEL}
 						placeholder="Search users..."
 						{...searchBarProps}
 					/>

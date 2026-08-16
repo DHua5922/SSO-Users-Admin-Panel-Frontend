@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
 import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
 import { deleteUserApi } from "../api";
-import { USERS_QUERY_KEY } from "../constants";
+import { USERS_QUERY_KEY } from "../constants/general";
 import useUserStore from "../useUserStore";
 
 export default function useDeleteUserModal() {

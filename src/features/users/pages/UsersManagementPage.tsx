@@ -6,10 +6,8 @@ import UpsertUserForm from "../components/UpsertUserForm/index.tsx";
 import UserTable from "../components/UserTable.tsx";
 import UserTableControls from "../components/UserTableControls.tsx";
 import UserTableSkeleton from "../components/UserTableSkeleton.tsx";
-import {
-	CONFIRM_DELETE_USER_BUTTON_TEXT,
-	EMPTY_USERS_MESSAGE,
-} from "../constants.ts";
+import { CONFIRM_DELETE_USER_BUTTON_TEXT } from "../constants/button";
+import { EMPTY_USERS_MESSAGE } from "../constants/message";
 import useDeleteUserModal from "../hooks/useDeleteUserModal.ts";
 import useUpsertUserForm from "../hooks/useUpsertUserForm.ts";
 import useUpsertUserModal from "../hooks/useUpsertUserModal.ts";
@@ -18,11 +16,10 @@ import useUserTableControls from "../hooks/useUserTableControls.ts";
 
 export default function UsersManagementPage() {
 	const roles = useRoles();
-	const { searchBarProps, roleSelectControlProps, onClickAddUser } =
-		useUserTableControls();
-	const { listViewProps, userTableProps } = useUsers(
-		searchBarProps.value,
-		roleSelectControlProps.value,
+	const tableControls = useUserTableControls();
+	const users = useUsers(
+		tableControls.searchBarProps.value,
+		tableControls.roleSelectControlProps.value,
 	);
 	const upsertUserModal = useUpsertUserModal();
 	const deleteUserModal = useDeleteUserModal();
@@ -34,18 +31,20 @@ export default function UsersManagementPage() {
 
 			<div className="card">
 				<UserTableControls
-					searchBarProps={searchBarProps}
-					roleSelectProps={{ ...roles, ...roleSelectControlProps }}
-					onClickAddUser={onClickAddUser}
+					{...tableControls}
+					roleSelectProps={{
+						...roles,
+						...tableControls.roleSelectControlProps,
+					}}
 				/>
 
 				<div className="p-8 overflow-x-auto">
 					<ListView
-						{...listViewProps}
+						{...users.listViewProps}
 						emptyListMessage={EMPTY_USERS_MESSAGE}
 						loadingChildren={<UserTableSkeleton />}
 					>
-						<UserTable {...userTableProps} className="w-full" />
+						<UserTable {...users.userTableProps} className="w-full" />
 					</ListView>
 				</div>
 			</div>

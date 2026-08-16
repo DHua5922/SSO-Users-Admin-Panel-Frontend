@@ -7,3 +7,7 @@ export const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
 export const OPEN_NAVIGATION_MENU_TEXT = "Open navigation menu";
 
 export const HOME_PATH = "/";
+
+export const CLOSE_ALERT_BUTTON_TEXT = "Close Alert";
+
+export const LOADING_TEXT = "Loading...";

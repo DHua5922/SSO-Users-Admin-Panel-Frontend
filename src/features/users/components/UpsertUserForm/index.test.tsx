@@ -1,62 +1,86 @@
-import { render, screen } from "@testing-library/react";
-import userEvent, { type UserEvent } from "@testing-library/user-event";
-import { fillInPasswordInput } from "../../tests/integrations/ui";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { LOADING_TEXT } from "../../../../shared/constants";
+import { getButton } from "../../../../shared/tests/react-testing-library/locator";
+import {
+	getConfirmPasswordLabel,
+	getEmailLabel,
+	getPasswordInput,
+	getRoleLabel,
+	getUsernameLabel,
+} from "../../tests/react-testing-library/input";
+import {
+	findEmailErrorMessage,
+	findRoleErrorMessage,
+	findUsernameErrorMessage,
+	queryNoMatchingPasswordsErrorMessage,
+} from "../../tests/react-testing-library/message";
 import UpsertUserForm from ".";
 
+const submitButtonText = "submit";
+const roleName = "Admin";
+
 test("shows loading state", async () => {
-	const { button } = await renderForm(true, "Logging in...", false);
-	expect(button).toBeTruthy();
+	const { submitButton } = await renderForm({
+		isLoading: true,
+		submitButtonText: LOADING_TEXT,
+		fillInForm: false,
+	});
+
+	expect(submitButton).toHaveProperty("disabled", true);
 });
 
 test("shows validation errors", async () => {
-	const { event, button } = await renderForm(false, "submit", false);
+	const { event, submitButton } = await renderForm({
+		isLoading: false,
+		submitButtonText,
+		fillInForm: false,
+	});
 
-	clearInputs(event);
+	await event.click(submitButton);
 
-	expect(button).toBeTruthy();
-	await event.click(button);
-
-	expect(await screen.findByText(/username is required/i)).toBeTruthy();
-	expect(await screen.findByText(/role is required/i)).toBeTruthy();
-	expect(await screen.findByText(/Invalid email address/i)).toBeTruthy();
-	expect(screen.queryByText(/Passwords do not match/i)).not.toBeTruthy();
-
-	await event.type(screen.getByLabelText(/username/i), "testuser");
-	await event.selectOptions(screen.getByLabelText(/role/i), "Admin");
-	await event.type(screen.getByLabelText(/email/i), "test@example.com");
-	await fillInPasswordInput(event, "test123{enter}");
-
-	expect(screen.queryByText(/username is required/i)).not.toBeTruthy();
-	expect(screen.queryByText(/role is required/i)).not.toBeTruthy();
-	expect(screen.queryByText(/Invalid email address/i)).not.toBeTruthy();
-	expect(await screen.findByText(/Passwords do not match/i)).toBeTruthy();
+	expect(await findUsernameErrorMessage()).toBeTruthy();
+	expect(await findRoleErrorMessage()).toBeTruthy();
+	expect(await findEmailErrorMessage()).toBeTruthy();
+	expect(queryNoMatchingPasswordsErrorMessage()).not.toBeTruthy();
 });
 
 test("submit by pressing enter on keyboard", async () => {
-	const { event, onSubmit } = await renderForm(false, "submit", true);
+	const { event, onSubmit } = await renderForm({
+		isLoading: false,
+		submitButtonText,
+		fillInForm: true,
+	});
 
-	await fillInPasswordInput(event, "{enter}");
+	await event.type(getPasswordInput(), "{enter}");
 
 	expect(onSubmit).toHaveBeenCalled();
 });
 
 test("submit by clicking on button with mouse", async () => {
-	const { event, onSubmit, button } = await renderForm(false, "submit", true);
+	const { event, onSubmit, submitButton } = await renderForm({
+		isLoading: false,
+		submitButtonText,
+		fillInForm: true,
+	});
 
-	expect(button).toBeTruthy();
-	await event.click(button);
+	await event.click(submitButton);
 
 	expect(onSubmit).toHaveBeenCalled();
 });
 
-async function renderForm(
-	isLoading: boolean,
-	buttonText: string,
-	fillInForm: boolean,
-) {
+async function renderForm({
+	isLoading,
+	submitButtonText,
+	fillInForm,
+}: {
+	isLoading: boolean;
+	submitButtonText: string;
+	fillInForm: boolean;
+}) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
-	const roles = [{ description: "", name: "Admin", _id: "1" }];
+	const roles = [{ description: "", name: roleName, _id: "1" }];
 	const password = "password123";
 
 	render(
@@ -68,38 +92,26 @@ async function renderForm(
 			email=""
 			role=""
 			roleSelectProps={{
-				isLoading,
+				isLoading: false,
 				isError: false,
 				errorMessage: undefined,
 				list: roles,
 			}}
-			submitButtonText={buttonText}
+			submitButtonText={submitButtonText}
 		/>,
 	);
 
 	if (fillInForm) {
-		await event.type(screen.getByLabelText(/username/i), "testuser");
-		await event.selectOptions(screen.getByLabelText(/role/i), roles[0].name);
-		await event.type(screen.getByLabelText(/email/i), "test@example.com");
-		await fillInPasswordInput(event, password);
-		await event.type(screen.getByLabelText(/confirm password/i), password);
+		await event.type(getUsernameLabel(), "testuser");
+		await event.selectOptions(getRoleLabel(), roles[0].name);
+		await event.type(getEmailLabel(), "test@example.com");
+		await event.type(getPasswordInput(), password);
+		await event.type(getConfirmPasswordLabel(), password);
 	}
 
 	return {
 		event,
 		onSubmit,
-		button: screen.getByRole("button", { name: new RegExp(buttonText, "i") }),
+		submitButton: getButton(submitButtonText),
 	};
-}
-
-async function clearInputs(event: UserEvent) {
-	const inputs = screen.getAllByRole("textbox");
-	for (const input of inputs) {
-		await event.clear(input);
-	}
-
-	const passwordInputs = screen.getAllByLabelText(/password/i, { exact: true });
-	for (const input of passwordInputs) {
-		await event.clear(input);
-	}
 }

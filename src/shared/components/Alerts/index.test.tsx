@@ -1,5 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { CLOSE_ALERT_BUTTON_TEXT } from "../../constants";
+import {
+	getButton,
+	getText,
+	queryAlert,
+} from "../../tests/react-testing-library/locator";
 import type { Alert } from "../../types";
 import Alerts from ".";
 
@@ -12,13 +18,13 @@ test("shows alerts", () => {
 	renderAlerts(alerts);
 
 	alerts.forEach((alert) => {
-		expect(screen.getByText(alert.message)).toBeTruthy();
+		expect(getText(alert.message)).toBeTruthy();
 	});
 });
 
 test("does not show alerts when list is empty", () => {
 	renderAlerts([]);
-	expect(screen.queryByRole("alert")).toBeFalsy();
+	expect(queryAlert("")).toBeFalsy();
 });
 
 test("calls onRemoveAlert when clicking on the close button", async () => {
@@ -27,8 +33,7 @@ test("calls onRemoveAlert when clicking on the close button", async () => {
 	];
 	const { onRemoveAlert, event } = renderAlerts(alerts);
 
-	const removeButton = screen.getByRole("button", { name: /close alert/i });
-	await event.click(removeButton);
+	await event.click(getButton(CLOSE_ALERT_BUTTON_TEXT));
 
 	expect(onRemoveAlert).toHaveBeenCalledWith(alerts[0].id);
 });
@@ -36,6 +41,8 @@ test("calls onRemoveAlert when clicking on the close button", async () => {
 function renderAlerts(alerts: Alert[]) {
 	const event = userEvent.setup();
 	const onRemoveAlert = vi.fn();
+
 	render(<Alerts list={alerts} onRemoveAlert={onRemoveAlert} />);
+
 	return { onRemoveAlert, event };
 }

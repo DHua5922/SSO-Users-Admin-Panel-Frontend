@@ -1,7 +1,12 @@
 import type { HTMLAttributes } from "react";
 import Button from "../../../../shared/components/Button";
 import Field from "../../../../shared/components/Field";
-import { LOGIN_TEXT } from "../../constants";
+import {
+	LOGIN_EMAIL_INPUT_LABEL,
+	LOGIN_LOADING_TEXT,
+	LOGIN_PASSWORD_INPUT_LABEL,
+	LOGIN_TEXT,
+} from "../../constants";
 
 interface Props extends HTMLAttributes<HTMLFormElement> {
 	isLoading: boolean;
@@ -30,7 +35,7 @@ export default function LoginForm({
 		<form className={formattedClassName} {...props}>
 			<h2 className="text-3xl text-center font-medium">{LOGIN_TEXT}</h2>
 
-			<Field label="Email" htmlFor={emailInputId} required>
+			<Field label={LOGIN_EMAIL_INPUT_LABEL} htmlFor={emailInputId} required>
 				<input
 					id={emailInputId}
 					type="email"
@@ -39,7 +44,11 @@ export default function LoginForm({
 				/>
 			</Field>
 
-			<Field label="Password" htmlFor={passwordInputId} required>
+			<Field
+				label={LOGIN_PASSWORD_INPUT_LABEL}
+				htmlFor={passwordInputId}
+				required
+			>
 				<input
 					id={passwordInputId}
 					type="password"
@@ -48,7 +57,11 @@ export default function LoginForm({
 				/>
 			</Field>
 
-			<Button isLoading={isLoading} loadingText="Logging in..." type="submit">
+			<Button
+				isLoading={isLoading}
+				loadingText={LOGIN_LOADING_TEXT}
+				type="submit"
+			>
 				{LOGIN_TEXT}
 			</Button>
 		</form>

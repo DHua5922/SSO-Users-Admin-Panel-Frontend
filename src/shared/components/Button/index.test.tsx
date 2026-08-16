@@ -1,39 +1,40 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps } from "react";
+import { LOADING_TEXT } from "../../constants";
+import {
+	getButton,
+	getText,
+	queryButton,
+} from "../../tests/react-testing-library/locator";
 import Button from ".";
 
 const buttonText = "Click me";
-const buttonTextRegex = new RegExp(buttonText, "i");
 
 test("renders button with children", () => {
 	renderButton({});
-	expect(screen.getByRole("button", { name: buttonTextRegex })).toBeTruthy();
+	expect(getButton(buttonText)).toBeTruthy();
 });
 
 test("renders button with loading state", async () => {
-	const loadingTextRegex = new RegExp("Loading...", "i");
 	const { event, onClick } = renderButton({
 		isLoading: true,
-		loadingText: loadingTextRegex.source,
+		loadingText: LOADING_TEXT,
 	});
 
-	expect(screen.getByText(loadingTextRegex)).toBeTruthy();
-	expect(screen.queryByRole("button", { name: buttonTextRegex })).toBeFalsy();
+	expect(getText(LOADING_TEXT)).toBeTruthy();
+	expect(queryButton(buttonText)).not.toBeTruthy();
 
-	await event.click(screen.getByRole("button", { name: loadingTextRegex }));
+	await event.click(getButton(LOADING_TEXT));
 	expect(onClick).not.toHaveBeenCalled();
 });
 
 test("renders button with disabled state", async () => {
 	const { event, onClick } = renderButton({ disabled: true });
 
-	await event.click(screen.getByRole("button", { name: buttonTextRegex }));
+	await event.click(getButton(buttonText));
 	expect(onClick).not.toHaveBeenCalled();
-	expect(screen.getByRole("button", { name: buttonTextRegex })).toHaveProperty(
-		"disabled",
-		true,
-	);
+	expect(getButton(buttonText)).toHaveProperty("disabled", true);
 });
 
 function renderButton(props: ComponentProps<typeof Button>) {

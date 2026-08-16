@@ -6,8 +6,8 @@ import {
 import { server } from "../../../../shared/tests/vitest.setup";
 import {
 	CANNOT_LOAD_USERS_ERROR_MESSAGE,
-	CANNOT_UPLOAD_USER_ERROR_MESSAGE,
-} from "../../constants";
+	CANNOT_UPSERT_USER_ERROR_MESSAGE,
+} from "../../constants/message";
 import type { User } from "../../schemas";
 import { testUser } from "../fixtures";
 
@@ -42,7 +42,7 @@ export function mockUpsertUserSuccessApi() {
 export function mockUpsertUserFailureApi() {
 	return server.use(
 		http.put(endpoint, () => {
-			return HttpResponse.json(CANNOT_UPLOAD_USER_ERROR_MESSAGE, {
+			return HttpResponse.json(CANNOT_UPSERT_USER_ERROR_MESSAGE, {
 				status: 400,
 			});
 		}),

@@ -10,7 +10,7 @@ import {
 	LOGOUT_BUTTON_TEXT,
 	ME_QUERY_KEY,
 } from "../../features/auth/constants";
-import { USERS_PATH } from "../../features/users/constants";
+import { USERS_PATH } from "../../features/users/constants/general";
 import { HOME_PATH } from "../../shared/constants";
 import usePageErrorHandler from "../../shared/hooks/usePageErrorHandler";
 

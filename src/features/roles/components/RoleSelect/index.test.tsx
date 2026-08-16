@@ -1,14 +1,15 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import {
 	DEFAULT_ROLE_SELECT_OPTION,
 	LOADING_ROLES_TEXT,
 } from "../../../../shared/constants";
 import type { Role } from "../../../../shared/schemas";
+import { getText } from "../../../../shared/tests/react-testing-library/locator";
 import RoleSelect from ".";
 
 test("renders loading state", () => {
 	renderRoleSelect(true, false, "");
-	expect(screen.getByText(LOADING_ROLES_TEXT)).toBeTruthy();
+	expect(getText(LOADING_ROLES_TEXT)).toBeTruthy();
 });
 
 test("renders error state", () => {
@@ -16,7 +17,7 @@ test("renders error state", () => {
 
 	renderRoleSelect(false, true, errorMessage);
 
-	expect(screen.getByText(errorMessage)).toBeTruthy();
+	expect(getText(errorMessage)).toBeTruthy();
 });
 
 test("renders list of roles", () => {
@@ -29,7 +30,7 @@ test("renders list of roles", () => {
 	renderRoleSelect(false, false, "", roles);
 
 	[DEFAULT_ROLE_SELECT_OPTION, ...roleNames].forEach((text) => {
-		expect(screen.getByText(text)).toBeTruthy();
+		expect(getText(text)).toBeTruthy();
 	});
 });
 

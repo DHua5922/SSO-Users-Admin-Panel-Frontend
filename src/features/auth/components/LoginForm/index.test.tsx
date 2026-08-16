@@ -1,17 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LOGIN_TEXT } from "../../constants";
+import { getButton } from "../../../../shared/tests/react-testing-library/locator";
+import { LOGIN_LOADING_TEXT, LOGIN_TEXT } from "../../constants";
+import {
+	getEmailLabel,
+	getPasswordLabel,
+} from "../../tests/integrations/locator";
 import LoginForm from ".";
 
 test("shows loading state", async () => {
-	const { button } = await renderLoginForm(true, "Logging in...");
+	const { button } = await renderLoginForm(true, LOGIN_LOADING_TEXT);
 	expect(button).toBeTruthy();
 });
 
 test("submit by pressing enter on keyboard", async () => {
 	const { event, onSubmit, button } = await renderLoginForm(false, LOGIN_TEXT);
 
-	await event.type(screen.getByLabelText(/password/i), "password123{enter}");
+	await event.type(getPasswordLabel(), "password123{enter}");
+
 	expect(onSubmit).toHaveBeenCalled();
 	expect(button).toBeTruthy();
 });
@@ -20,6 +26,7 @@ test("submit by clicking on button with mouse", async () => {
 	const { event, onSubmit, button } = await renderLoginForm(false, LOGIN_TEXT);
 
 	await event.click(button);
+
 	expect(onSubmit).toHaveBeenCalled();
 	expect(button).toBeTruthy();
 });
@@ -40,11 +47,11 @@ async function renderLoginForm(isLoading: boolean, buttonText: string) {
 			onChangePassword={onChangePassword}
 		/>,
 	);
-	await event.type(screen.getByLabelText(/email/i), "test@example.com");
+	await event.type(getEmailLabel(), "test@example.com");
 
 	return {
 		event,
 		onSubmit,
-		button: screen.getByRole("button", { name: new RegExp(buttonText, "i") }),
+		button: getButton(buttonText),
 	};
 }
