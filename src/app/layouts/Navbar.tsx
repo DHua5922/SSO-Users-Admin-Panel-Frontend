@@ -1,6 +1,6 @@
 import { Menu } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
-import logo from "../../assets/Logo.svg";
+import logo from "../../assets/logo.svg";
 import Collapsible from "../../shared/components/Collapsible";
 import { HOME_PATH, OPEN_NAVIGATION_MENU_TEXT } from "../../shared/constants";
 import NavbarLinks from "./NavbarLinks";
