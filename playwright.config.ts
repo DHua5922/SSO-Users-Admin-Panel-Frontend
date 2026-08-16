@@ -14,7 +14,8 @@ z.url().parse(process.env.VITE_FRONTEND_BASE_URL);
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-	testDir: "./src/tests/e2e",
+	testDir: "./src",
+	testMatch: "**/tests/e2e/**/*.test.ts",
 	/* Run tests in files in sequence */
 	fullyParallel: false,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
