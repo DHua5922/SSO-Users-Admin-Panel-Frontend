@@ -5,7 +5,7 @@ export function getLink(page: Page, linkText: string) {
 	return page.getByRole("link", { name: linkText });
 }
 
-export function getHeader(page: Page, headerText: string, options = {}) {
+export function getHeading(page: Page, headerText: string, options = {}) {
 	return page.getByRole("heading", {
 		name: regexMatch(headerText),
 		exact: true,

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { logInTest } from "../../../../shared/tests/playwright/support";
+import { logInTest } from "../../../auth/tests/e2e/support";
 
 test("edit user", async ({ page }) => {
 	const password = "password123";

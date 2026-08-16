@@ -1,4 +1,3 @@
-export const DASHBOARD_PATH = "/dashboard";
 export const DASHBOARD_STATS_API_PATH = "/api/v1/dashboard/stats";
 
 export const DASHBOARD_HEADER = "Dashboard";

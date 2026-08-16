@@ -5,8 +5,8 @@ import {
 } from "../../../../features/auth/constants";
 import { OPEN_NAVIGATION_MENU_TEXT } from "../../../../shared/constants";
 import { getButton } from "../../../../shared/tests/playwright/locator";
-import { logInTest } from "../../../../shared/tests/playwright/support";
 import { getLoginButton } from "./locator";
+import { logInTest } from "./support";
 
 test("authenticates user", async ({ page }) => {
 	await logInTest(page);
