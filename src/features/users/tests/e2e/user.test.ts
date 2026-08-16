@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { logInTest } from "../../../auth/tests/e2e/support";
+import { logInTest } from "../../../../shared/tests/playwright/support";
 
 test("edit user", async ({ page }) => {
 	const password = "password123";
@@ -27,7 +27,7 @@ test("edit user", async ({ page }) => {
 		await mobileMenuButton.click();
 	}
 
-	const usersLink = page.getByRole("link", { name: /users/i });
+	const usersLink = page.getByRole("link", { name: /^users$/i });
 	await expect(usersLink).toBeVisible();
 
 	await Promise.all([

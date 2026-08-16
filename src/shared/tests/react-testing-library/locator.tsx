@@ -1,4 +1,5 @@
-import { element, regexMatch } from "./fixtures";
+import { regexMatch } from "../fixtures";
+import { element } from "./fixtures";
 
 const buttonRole = "button";
 const alertRole = "alert";
@@ -89,6 +90,13 @@ export function queryTableRow(text: string, boundary?: HTMLElement) {
 export function findSearchBox(label: string, boundary?: HTMLElement) {
 	const regex = regexMatch(label);
 	return element(boundary).findByRole("searchbox", {
+		name: regex,
+	});
+}
+
+export function getStatus(text: string, boundary?: HTMLElement) {
+	const regex = regexMatch(text);
+	return element(boundary).getByRole("status", {
 		name: regex,
 	});
 }

@@ -1,6 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 import { z } from "zod";
-import { getLoginButton } from "./locator";
+import { getLoginButton } from "../../../features/auth/tests/e2e/locator";
 
 export async function logInTest(page: Page) {
 	const testEnvSchema = z.object({

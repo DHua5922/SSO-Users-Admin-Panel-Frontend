@@ -4,8 +4,9 @@ import {
 	LOGOUT_BUTTON_TEXT,
 } from "../../../../features/auth/constants";
 import { OPEN_NAVIGATION_MENU_TEXT } from "../../../../shared/constants";
+import { getButton } from "../../../../shared/tests/playwright/locator";
+import { logInTest } from "../../../../shared/tests/playwright/support";
 import { getLoginButton } from "./locator";
-import { logInTest } from "./support";
 
 test("authenticates user", async ({ page }) => {
 	await logInTest(page);
@@ -28,26 +29,18 @@ test("redirects to login page when logging out", async ({ page }) => {
 	await logInTest(page);
 	await expect(getLogo(page)).toBeVisible();
 
-	const mobileMenuButton = page.getByRole("button", {
-		name: new RegExp(OPEN_NAVIGATION_MENU_TEXT, "i"),
-	});
-	if (await mobileMenuButton.isVisible()) {
-		await mobileMenuButton.click();
+	const mobileMenuToggleButton = getButton(page, OPEN_NAVIGATION_MENU_TEXT);
+	if (await mobileMenuToggleButton.isVisible()) {
+		await mobileMenuToggleButton.click();
 	}
 
-	const userMenuButton = page.getByRole("button", {
-		name: new RegExp(CURRENT_USER_TOGGLE_ARIA_LABEL, "i"),
-	});
+	const userMenuButton = getButton(page, CURRENT_USER_TOGGLE_ARIA_LABEL);
 	await expect(userMenuButton).toBeVisible();
 	await userMenuButton.click();
 
 	await Promise.all([
 		logoutResponse,
-		page
-			.getByRole("button", {
-				name: new RegExp(LOGOUT_BUTTON_TEXT, "i"),
-			})
-			.click(),
+		getButton(page, LOGOUT_BUTTON_TEXT).click(),
 	]);
 
 	await expect(getLoginButton(page)).toBeVisible();
