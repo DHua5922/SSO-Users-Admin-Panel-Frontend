@@ -4,10 +4,10 @@ import { dashboardStatsSchema } from "./schemas";
 const axios = createAxiosInstance("/api/v1/dashboard");
 
 export async function getDashboardStatsApi() {
-  const response = await axios({
-    method: "get",
-    url: "/stats",
-  });
+	const response = await axios({
+		method: "get",
+		url: "/stats",
+	});
 
-  return dashboardStatsSchema.parse(response.data);
+	return dashboardStatsSchema.parse(response.data);
 }

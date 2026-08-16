@@ -3,7 +3,7 @@ import { getHeader } from "../../../../shared/tests/playwright/locator";
 import { DASHBOARD_HEADER } from "../../constants";
 
 export function getDashboardHeader(page: Page) {
-  return getHeader(page, DASHBOARD_HEADER, {
-    level: 1,
-  });
+	return getHeader(page, DASHBOARD_HEADER, {
+		level: 1,
+	});
 }
