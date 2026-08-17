@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react";
 import { getText } from "../../../shared/tests/react-testing-library/locator";
-import { LOADING_TEXT } from "../../constants";
 import ListView from ".";
 
 test("shows error message", () => {
@@ -35,6 +34,7 @@ function renderListView({
 	isLoading = false,
 	list = [] as string[],
 }) {
+	const loadingMessage = "loading...";
 	render(
 		<ListView
 			isError={isError}
@@ -42,7 +42,7 @@ function renderListView({
 			isEmpty={isEmpty}
 			emptyListMessage={emptyListMessage}
 			isLoading={isLoading}
-			loadingChildren={<p>{LOADING_TEXT}</p>}
+			loadingChildren={<p>{loadingMessage}</p>}
 		>
 			<ul>
 				{list.map((item, index) => (
@@ -52,5 +52,5 @@ function renderListView({
 		</ListView>,
 	);
 
-	return { errorMessage, emptyListMessage, loadingMessage: LOADING_TEXT };
+	return { errorMessage, emptyListMessage, loadingMessage };
 }

@@ -104,3 +104,10 @@ export function getStatus(text: string, boundary?: HTMLElement) {
 		name: regex,
 	});
 }
+
+export function getSelect(text: string, boundary?: HTMLElement) {
+	const regex = regexMatch(text);
+	return element(boundary).getByRole("combobox", {
+		name: regex,
+	});
+}

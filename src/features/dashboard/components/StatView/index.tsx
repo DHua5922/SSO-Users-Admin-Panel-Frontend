@@ -6,7 +6,7 @@ interface StatViewProps {
 	label: string;
 	value: number;
 	isError: boolean;
-	errorMessage?: string;
+	errorMessage: string;
 	isLoading: boolean;
 	href: string;
 	linkLabel: string;

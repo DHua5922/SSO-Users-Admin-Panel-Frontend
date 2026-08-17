@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LOADING_TEXT } from "../../../../shared/constants";
 import { getButton } from "../../../../shared/tests/react-testing-library/locator";
 import {
 	getDescriptionLabel,
@@ -15,7 +14,7 @@ const roleName = "Admin";
 test("shows loading state", async () => {
 	const { submitButton } = await renderForm({
 		isLoading: true,
-		submitButtonText: LOADING_TEXT,
+		submitButtonText,
 	});
 
 	expect(submitButton).toHaveProperty("disabled", true);
@@ -60,6 +59,7 @@ async function renderForm({
 }) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
+	const loadingButtonText = "Submitting Role...";
 
 	render(
 		<UpsertRoleForm
@@ -67,6 +67,7 @@ async function renderForm({
 			onSubmit={onSubmit}
 			name=""
 			description=""
+			loadingButtonText={loadingButtonText}
 			submitButtonText={submitButtonText}
 		/>,
 	);
@@ -84,6 +85,6 @@ async function renderForm({
 	return {
 		event,
 		onSubmit,
-		submitButton: getButton(submitButtonText),
+		submitButton: getButton(isLoading ? loadingButtonText : submitButtonText),
 	};
 }

@@ -14,7 +14,7 @@ export async function getAllRolesApi() {
 }
 
 export async function upsertRoleApi(
-	data: UpsertRoleFormData & { _id?: Role["_id"] },
+	data: UpsertRoleFormData & { _id: Role["_id"] },
 ) {
 	const response = await axios<Role>({
 		method: "put",

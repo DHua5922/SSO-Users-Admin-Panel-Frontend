@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useShallow } from "zustand/react/shallow";
+import { parseError } from "../../../shared/utilities";
 import { getUsersApi } from "../api";
 import { USERS_QUERY_KEY } from "../constants/general";
 import type { User } from "../schemas";
@@ -45,10 +45,7 @@ export default function useUsers(searchInput: string, chosenRoleId: string) {
 			isLoading: isPending,
 			isEmpty: !filteredUsers?.length,
 			isError,
-			errorMessage:
-				axios.isAxiosError(error) && typeof error.response?.data === "string"
-					? error.response.data
-					: error?.message,
+			errorMessage: error ? parseError(error) : "",
 		},
 		userTableProps: {
 			list: filteredUsers || [],

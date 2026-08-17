@@ -7,6 +7,7 @@ interface Props extends ComponentProps<typeof Modal> {
 	question: string;
 	heroText: string;
 	isDeleting: boolean;
+	loadingButtonText: string;
 	deleteButtonText: string;
 }
 
@@ -14,6 +15,7 @@ export default function DeleteConfirmationModal({
 	onClickDelete,
 	question,
 	isDeleting,
+	loadingButtonText,
 	deleteButtonText,
 	heroText,
 	className = "",
@@ -34,6 +36,7 @@ export default function DeleteConfirmationModal({
 					className="bg-red-500! text-white!"
 					onClick={onClickDelete}
 					isLoading={isDeleting}
+					loadingText={loadingButtonText}
 				>
 					{deleteButtonText}
 				</Button>

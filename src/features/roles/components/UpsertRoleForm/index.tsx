@@ -12,10 +12,12 @@ import {
 	upsertRoleFormDataSchema,
 } from "../../schemas";
 
-interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
+interface UpsertRoleFormProps
+	extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
 	isSubmitting: boolean;
 	name: string;
 	description: string;
+	loadingButtonText: string;
 	submitButtonText: string;
 	onSubmit: (formValues: UpsertRoleFormData) => void;
 }
@@ -23,14 +25,9 @@ interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
 interface UseFormValidationProps {
 	name: string;
 	description: string;
-	isSubmitting: boolean;
 }
 
-function useFormValidation({
-	name,
-	description,
-	isSubmitting,
-}: UseFormValidationProps) {
+function useFormValidation({ name, description }: UseFormValidationProps) {
 	const {
 		register,
 		handleSubmit,
@@ -52,7 +49,6 @@ function useFormValidation({
 	}, [name, description, reset]);
 
 	return {
-		isLoading: isSubmitting,
 		register,
 		handleSubmit,
 		errors,
@@ -63,18 +59,17 @@ export default function UpsertRoleForm({
 	isSubmitting,
 	name,
 	description,
+	loadingButtonText,
 	submitButtonText,
 	onSubmit,
 	className = "",
 	...props
-}: Props) {
-	const formattedClassName =
-		`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`.trim();
+}: UpsertRoleFormProps) {
+	const formattedClassName = `flex flex-col gap-4 ${className}`.trim();
 
-	const { isLoading, register, handleSubmit, errors } = useFormValidation({
+	const { register, handleSubmit, errors } = useFormValidation({
 		name,
 		description,
-		isSubmitting,
 	});
 
 	const nameInputId = "name-input";
@@ -90,24 +85,22 @@ export default function UpsertRoleForm({
 				label={UPSERT_ROLE_FORM_NAME_LABEL}
 				htmlFor={nameInputId}
 				required
-				errorMessage={errors.name?.message}
+				errorMessage={errors.name?.message || ""}
 			>
 				<input {...register("name")} id={nameInputId} />
 			</Field>
 
 			<Field
-				className="md:col-span-2"
 				label={UPSERT_ROLE_FORM_DESCRIPTION_LABEL}
 				htmlFor={descriptionInputId}
-				errorMessage={errors.description?.message}
+				errorMessage={errors.description?.message || ""}
 			>
 				<textarea {...register("description")} id={descriptionInputId} />
 			</Field>
 
 			<Button
-				className="md:col-span-2"
-				isLoading={isLoading}
-				loadingText={submitButtonText}
+				isLoading={isSubmitting}
+				loadingText={loadingButtonText}
 				type="submit"
 			>
 				{submitButtonText}

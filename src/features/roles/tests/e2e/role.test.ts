@@ -85,7 +85,6 @@ async function addRole(page: Page) {
 		waitForApiResponse({
 			page,
 			apiEndpoint: "/api/v1/roles",
-			method: "GET",
 		}),
 		getButton(addRoleDialog, ADD_ROLE_BUTTON_TEXT).click(),
 	]);
@@ -117,7 +116,6 @@ async function editRole(page: Page) {
 		waitForApiResponse({
 			page,
 			apiEndpoint: "/api/v1/roles",
-			method: "GET",
 		}),
 		getButton(updateRoleDialog, UPDATE_ROLE_BUTTON_TEXT).click(),
 	]);
@@ -147,7 +145,6 @@ async function deleteRole(page: Page) {
 		waitForApiResponse({
 			page,
 			apiEndpoint: "/api/v1/roles",
-			method: "GET",
 		}),
 		getButton(deleteRoleDialog, CONFIRM_DELETE_ROLE_BUTTON_TEXT).click(),
 	]);

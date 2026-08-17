@@ -35,6 +35,7 @@ export default function useUpsertRoleForm() {
 		isSubmitting: isPending,
 		name: chosenRole.name,
 		description: chosenRole.description,
+		loadingButtonText: chosenRole._id ? "Updating Role..." : "Adding Role...",
 		submitButtonText: chosenRole._id
 			? UPDATE_ROLE_BUTTON_TEXT
 			: ADD_ROLE_BUTTON_TEXT,
