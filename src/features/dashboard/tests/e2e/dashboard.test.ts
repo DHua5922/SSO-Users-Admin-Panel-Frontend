@@ -14,10 +14,17 @@ import {
 	DASHBOARD_VIEW_USERS_LINK_TEXT,
 } from "../../constants";
 import { dashboardStatsSchema } from "../../schemas";
-import { getDashboardHeader } from "./locator";
+import {
+	getDashboardHeader,
+	getDashboardRoleStatsSection,
+	getDashboardUserStatsSection,
+} from "./locator";
 
 test("should show dashboard stats", async ({ page }) => {
-	const responsePromise = waitForApiResponse(page, DASHBOARD_STATS_API_PATH);
+	const responsePromise = waitForApiResponse({
+		page,
+		apiEndpoint: DASHBOARD_STATS_API_PATH,
+	});
 
 	await logInTest(page);
 
@@ -25,10 +32,22 @@ test("should show dashboard stats", async ({ page }) => {
 	const stats = dashboardStatsSchema.parse(await response.json());
 
 	await expect(getDashboardHeader(page)).toBeVisible();
-	await expect(getHeading(page, DASHBOARD_USER_STATS_HEADER)).toBeVisible();
-	await expect(getHeading(page, DASHBOARD_ROLE_STATS_HEADER)).toBeVisible();
-	await expect(getText(page, `${stats.totalUsers}`)).toBeVisible();
-	await expect(getText(page, `${stats.totalRoles}`)).toBeVisible();
-	await expect(getLink(page, DASHBOARD_VIEW_USERS_LINK_TEXT)).toBeVisible();
-	await expect(getLink(page, DASHBOARD_VIEW_ROLES_LINK_TEXT)).toBeVisible();
+
+	const usersStat = getDashboardUserStatsSection(page);
+	await expect(
+		getHeading(usersStat, DASHBOARD_USER_STATS_HEADER),
+	).toBeVisible();
+	await expect(getText(usersStat, `${stats.totalUsers}`)).toBeVisible();
+	await expect(
+		getLink(usersStat, DASHBOARD_VIEW_USERS_LINK_TEXT),
+	).toBeVisible();
+
+	const rolesStat = getDashboardRoleStatsSection(page);
+	await expect(
+		getHeading(rolesStat, DASHBOARD_ROLE_STATS_HEADER),
+	).toBeVisible();
+	await expect(getText(rolesStat, `${stats.totalRoles}`)).toBeVisible();
+	await expect(
+		getLink(rolesStat, DASHBOARD_VIEW_ROLES_LINK_TEXT),
+	).toBeVisible();
 });

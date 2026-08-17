@@ -25,7 +25,6 @@ test("redirects to login page when logging out", async ({ page }) => {
 			response.url().includes("/api/v1/auth/logout") &&
 			response.status() === 200,
 	);
-
 	await logInTest(page);
 	await expect(getLogo(page)).toBeVisible();
 

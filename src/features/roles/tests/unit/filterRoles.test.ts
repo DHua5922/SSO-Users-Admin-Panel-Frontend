@@ -1,0 +1,18 @@
+import type { Role } from "../../../../shared/schemas";
+import { filterRoles } from "../../utilities/filterRoles";
+
+const users: Role[] = [
+	{ _id: "1", name: "super", description: "Administrator role" },
+	{ _id: "2", name: "user", description: "Regular user role" },
+	{ _id: "3", name: "admin", description: "just for testing" },
+];
+
+test("filterRoles returns empty array when no users match", () => {
+	const value = filterRoles(users, "nonexistent");
+	expect(value).toEqual([]);
+});
+
+test("filterRoles returns array when filtering by name", () => {
+	const value = filterRoles(users, "admin");
+	expect(value).toEqual([users[0], users[2]]);
+});

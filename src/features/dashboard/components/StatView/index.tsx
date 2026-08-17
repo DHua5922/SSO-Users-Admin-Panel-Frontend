@@ -1,5 +1,5 @@
 import { MoveRight } from "lucide-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useId } from "react";
 import styles from "./index.module.css";
 
 interface StatViewProps {
@@ -63,9 +63,16 @@ interface HelperProps {
 	children: ReactNode;
 }
 function Helper({ label, linkLabel, href, children }: HelperProps) {
+	const headingId = useId();
+
 	return (
-		<div className="card flex flex-col gap-6 p-4">
-			<h3 className="text-xl">{label}</h3>
+		<section
+			className="card flex flex-col gap-6 p-4"
+			aria-labelledby={headingId}
+		>
+			<h3 className="text-xl" id={headingId}>
+				{label}
+			</h3>
 
 			{children}
 
@@ -75,6 +82,6 @@ function Helper({ label, linkLabel, href, children }: HelperProps) {
 					<MoveRight size={20} />
 				</a>
 			</div>
-		</div>
+		</section>
 	);
 }

@@ -2,6 +2,8 @@ import { Routes as DefaultRoutes, Route } from "react-router";
 import { LOGIN_PATH } from "../../features/auth/constants";
 import LoginPage from "../../features/auth/pages/LoginPage";
 import DashboardPage from "../../features/dashboard/pages/DashboardPage";
+import { ROLES_PATH } from "../../features/roles/constants/general";
+import RolesManagementPage from "../../features/roles/pages/RolesManagementPage";
 import { USERS_PATH } from "../../features/users/constants/general";
 import UsersManagementPage from "../../features/users/pages/UsersManagementPage";
 import Alerts from "../../shared/components/Alerts";
@@ -22,6 +24,7 @@ export default function Routes() {
 				<Route element={<PrivateRoute />}>
 					<Route path={HOME_PATH} element={<DashboardPage />} />
 					<Route path={USERS_PATH} element={<UsersManagementPage />} />
+					<Route path={ROLES_PATH} element={<RolesManagementPage />} />
 				</Route>
 
 				<Route element={<PublicRoute />}>
