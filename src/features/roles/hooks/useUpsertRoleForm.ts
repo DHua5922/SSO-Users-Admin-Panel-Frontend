@@ -32,7 +32,6 @@ export default function useUpsertRoleForm() {
 	});
 
 	return {
-		isEditing: !!chosenRole._id,
 		isSubmitting: isPending,
 		name: chosenRole.name,
 		description: chosenRole.description,

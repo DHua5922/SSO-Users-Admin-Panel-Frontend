@@ -72,10 +72,13 @@ async function renderForm({
 	);
 
 	if (fillInForm) {
-		const roles = [{ description: "test", name: roleName, _id: "1" }];
+		const formValues = {
+			name: roleName,
+			description: "test",
+		};
 
-		await event.type(getNameLabel(), roles[0].name);
-		await event.type(getDescriptionLabel(), roles[0].description);
+		await event.type(getNameLabel(), formValues.name);
+		await event.type(getDescriptionLabel(), formValues.description);
 	}
 
 	return {

@@ -66,9 +66,9 @@ test("should update role", async () => {
 		await findText(updatedRole.description, updatedRolesTable),
 	).toBeTruthy();
 	expect(
-		findShowEditRoleModalButton(updatedRole.name, updatedRolesTable),
+		await findShowEditRoleModalButton(updatedRole.name, updatedRolesTable),
 	).toBeTruthy();
 	expect(
-		findShowDeleteRoleModalButton(updatedRole.name, updatedRolesTable),
+		await findShowDeleteRoleModalButton(updatedRole.name, updatedRolesTable),
 	).toBeTruthy();
 });
