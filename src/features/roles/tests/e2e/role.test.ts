@@ -51,14 +51,14 @@ async function setup(page: Page) {
 		await mobileMenuButton.click();
 	}
 
-	const usersLink = getLink(page, "roles");
-	await expect(usersLink).toBeVisible();
+	const rolesLink = getLink(page, "roles");
+	await expect(rolesLink).toBeVisible();
 
 	const getRolesResponse = waitForApiResponse({
 		page,
 		apiEndpoint: "/api/v1/roles",
 	});
-	await Promise.all([getRolesResponse, usersLink.click()]);
+	await Promise.all([getRolesResponse, rolesLink.click()]);
 }
 
 async function addRole(page: Page) {
