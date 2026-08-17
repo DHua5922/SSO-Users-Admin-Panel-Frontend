@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from "react";
+import { type HTMLAttributes, useId } from "react";
 import Button from "../../../shared/components/Button";
 import Field from "../../../shared/components/Field";
 import { ADD_ROLE_BUTTON_TEXT } from "../constants/button";
@@ -16,16 +16,18 @@ export default function RoleTableControls({
 	...props
 }: Props) {
 	const formattedClassName = `border-b border-gray-300 p-8 ${className}`.trim();
+	const searchBarId = useId();
 
 	return (
 		<div className={formattedClassName} {...props}>
 			<div className="flex flex-col! sm:flex-row! justify-between items-stretch gap-8">
-				<Field className="flex-4">
+				<Field className="flex-4" htmlFor={searchBarId}>
 					<input
-						type="search"
 						aria-label={SEARCH_ROLES_ARIA_LABEL}
 						placeholder="Search roles..."
 						{...searchBarProps}
+						type="search"
+						id={searchBarId}
 					/>
 				</Field>
 

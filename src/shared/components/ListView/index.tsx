@@ -2,11 +2,11 @@ import { CircleX, List } from "lucide-react";
 
 interface Props {
 	isError: boolean;
-	errorMessage?: string;
+	errorMessage: string;
 	isEmpty: boolean;
 	isLoading: boolean;
 	loadingChildren: React.ReactNode;
-	emptyListMessage?: string;
+	emptyListMessage: string;
 	children: React.ReactNode;
 }
 

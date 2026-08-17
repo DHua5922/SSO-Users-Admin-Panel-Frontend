@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { parseError } from "../../../shared/utilities.ts";
 import { getAllRolesApi } from "../api.ts";
 
 export default function useRoles() {
@@ -18,9 +18,6 @@ export default function useRoles() {
 		isLoading: isPending,
 		list: roles || [],
 		isError,
-		errorMessage:
-			axios.isAxiosError(error) && typeof error.response?.data === "string"
-				? error.response.data
-				: error?.message,
+		errorMessage: error ? parseError(error) : "",
 	};
 }

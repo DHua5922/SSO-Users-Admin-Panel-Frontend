@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LOADING_TEXT } from "../../../../shared/constants";
 import { getButton } from "../../../../shared/tests/react-testing-library/locator";
 import {
 	getConfirmPasswordLabel,
@@ -23,7 +22,6 @@ const roleName = "Admin";
 test("shows loading state", async () => {
 	const { submitButton } = await renderForm({
 		isLoading: true,
-		submitButtonText: LOADING_TEXT,
 		fillInForm: false,
 	});
 
@@ -33,7 +31,6 @@ test("shows loading state", async () => {
 test("shows validation errors", async () => {
 	const { event, submitButton } = await renderForm({
 		isLoading: false,
-		submitButtonText,
 		fillInForm: false,
 	});
 
@@ -48,7 +45,6 @@ test("shows validation errors", async () => {
 test("submit by pressing enter on keyboard", async () => {
 	const { event, onSubmit } = await renderForm({
 		isLoading: false,
-		submitButtonText,
 		fillInForm: true,
 	});
 
@@ -60,7 +56,6 @@ test("submit by pressing enter on keyboard", async () => {
 test("submit by clicking on button with mouse", async () => {
 	const { event, onSubmit, submitButton } = await renderForm({
 		isLoading: false,
-		submitButtonText,
 		fillInForm: true,
 	});
 
@@ -71,17 +66,16 @@ test("submit by clicking on button with mouse", async () => {
 
 async function renderForm({
 	isLoading,
-	submitButtonText,
 	fillInForm,
 }: {
 	isLoading: boolean;
-	submitButtonText: string;
 	fillInForm: boolean;
 }) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
 	const roles = [{ description: "", name: roleName, _id: "1" }];
 	const password = "password123";
+	const loadingButtonText = "Submitting User...";
 
 	render(
 		<UpsertUserForm
@@ -91,12 +85,13 @@ async function renderForm({
 			username=""
 			email=""
 			initialRole=""
-			roleSelectProps={{
+			roleSelect={{
 				isLoading: false,
 				isError: false,
-				errorMessage: undefined,
+				errorMessage: "",
 				list: roles,
 			}}
+			loadingButtonText={loadingButtonText}
 			submitButtonText={submitButtonText}
 		/>,
 	);
@@ -112,6 +107,6 @@ async function renderForm({
 	return {
 		event,
 		onSubmit,
-		submitButton: getButton(submitButtonText),
+		submitButton: getButton(isLoading ? loadingButtonText : submitButtonText),
 	};
 }

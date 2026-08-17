@@ -14,18 +14,20 @@ import {
 } from "../../constants/input";
 import { type UpsertUserFormData, upsertUserFormSchema } from "../../schemas";
 
-interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
+interface UpsertUserFormProps
+	extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
 	isEditing: boolean;
 	isSubmitting: boolean;
 	email: string;
 	username: string;
 	initialRole: string;
+	loadingButtonText: string;
 	submitButtonText: string;
 	onSubmit: (formValues: UpsertUserFormData) => void;
-	roleSelectProps: {
+	roleSelect: {
 		isLoading: boolean;
 		isError: boolean;
-		errorMessage?: string;
+		errorMessage: string;
 		list: Role[];
 	};
 }
@@ -34,16 +36,12 @@ interface UseFormValidationProps {
 	username: string;
 	email: string;
 	initialRole: string;
-	isSubmitting: boolean;
-	isLoadingRoles: boolean;
 }
 
 function useFormValidation({
 	username,
 	email,
 	initialRole,
-	isSubmitting,
-	isLoadingRoles,
 }: UseFormValidationProps) {
 	const {
 		register,
@@ -61,8 +59,6 @@ function useFormValidation({
 		},
 	});
 
-	const isLoading = isSubmitting || isLoadingRoles;
-
 	useEffect(() => {
 		reset({
 			username,
@@ -74,7 +70,6 @@ function useFormValidation({
 	}, [username, email, initialRole, reset]);
 
 	return {
-		isLoading,
 		register,
 		handleSubmit,
 		errors,
@@ -87,21 +82,20 @@ export default function UpsertUserForm({
 	email,
 	username,
 	initialRole,
+	loadingButtonText,
 	submitButtonText,
 	onSubmit,
 	className = "",
-	roleSelectProps,
+	roleSelect,
 	...props
-}: Props) {
+}: UpsertUserFormProps) {
 	const formattedClassName =
 		`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`.trim();
 
-	const { isLoading, register, handleSubmit, errors } = useFormValidation({
+	const { register, handleSubmit, errors } = useFormValidation({
 		username,
 		email,
 		initialRole,
-		isSubmitting,
-		isLoadingRoles: roleSelectProps.isLoading,
 	});
 
 	const usernameInputId = "username-input";
@@ -109,6 +103,9 @@ export default function UpsertUserForm({
 	const roleSelectId = "role-select";
 	const passwordInputId = "password-input";
 	const confirmPasswordInputId = "confirm-password-input";
+
+	const areRolesUnavailable =
+		roleSelect.isLoading || roleSelect.isError || roleSelect.list.length === 0;
 
 	return (
 		<form
@@ -120,7 +117,7 @@ export default function UpsertUserForm({
 				label={UPSERT_USER_FORM_USERNAME_LABEL}
 				htmlFor={usernameInputId}
 				required
-				errorMessage={errors.username?.message}
+				errorMessage={errors.username?.message || ""}
 			>
 				<input {...register("username")} id={usernameInputId} />
 			</Field>
@@ -129,12 +126,18 @@ export default function UpsertUserForm({
 				label={UPSERT_USER_FORM_ROLE_LABEL}
 				htmlFor={roleSelectId}
 				required
-				errorMessage={errors.role?.message}
+				errorMessage={
+					roleSelect.isError
+						? roleSelect.errorMessage
+						: errors.role?.message || ""
+				}
 			>
 				<RoleSelect
 					{...register("role")}
 					id={roleSelectId}
-					{...roleSelectProps}
+					isLoading={roleSelect.isLoading}
+					list={roleSelect.list}
+					disabled={roleSelect.isError || roleSelect.list.length === 0}
 				/>
 			</Field>
 
@@ -143,7 +146,7 @@ export default function UpsertUserForm({
 				label={UPSERT_USER_FORM_EMAIL_LABEL}
 				htmlFor={emailInputId}
 				required
-				errorMessage={errors.email?.message}
+				errorMessage={errors.email?.message || ""}
 			>
 				<input {...register("email")} id={emailInputId} type="email" />
 			</Field>
@@ -151,7 +154,7 @@ export default function UpsertUserForm({
 			<Field
 				label={UPSERT_USER_FORM_PASSWORD_LABEL}
 				required={!isEditing}
-				errorMessage={errors.password?.message}
+				errorMessage={errors.password?.message || ""}
 				htmlFor={passwordInputId}
 			>
 				<input {...register("password")} id={passwordInputId} type="password" />
@@ -160,7 +163,7 @@ export default function UpsertUserForm({
 			<Field
 				label={UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL}
 				required={!isEditing}
-				errorMessage={errors.confirmPassword?.message}
+				errorMessage={errors.confirmPassword?.message || ""}
 				htmlFor={confirmPasswordInputId}
 			>
 				<input
@@ -172,8 +175,9 @@ export default function UpsertUserForm({
 
 			<Button
 				className="md:col-span-2"
-				isLoading={isLoading}
-				loadingText={submitButtonText}
+				isLoading={isSubmitting}
+				loadingText={loadingButtonText}
+				disabled={areRolesUnavailable}
 				type="submit"
 			>
 				{submitButtonText}

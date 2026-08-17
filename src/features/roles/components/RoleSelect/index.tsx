@@ -1,44 +1,27 @@
-import type { HTMLAttributes } from "react";
+import type { SelectHTMLAttributes } from "react";
 import {
 	DEFAULT_ROLE_SELECT_OPTION,
 	LOADING_ROLES_TEXT,
 } from "../../../../shared/constants";
 import type { Role } from "../../../../shared/schemas";
 
-interface Props extends HTMLAttributes<HTMLSelectElement> {
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
 	isLoading: boolean;
-	isError: boolean;
-	errorMessage?: string;
-	list?: Role[];
+	list: Role[];
 }
 
-export default function RoleSelect({
-	isLoading,
-	isError,
-	errorMessage,
-	list,
-	...props
-}: Props) {
-	if (isLoading) {
-		return (
-			<select {...props} aria-label={LOADING_ROLES_TEXT}>
-				<option>{LOADING_ROLES_TEXT}</option>
-			</select>
-		);
-	}
-
-	if (isError) {
-		return (
-			<select {...props} aria-label={errorMessage}>
-				<option>{errorMessage}</option>
-			</select>
-		);
-	}
-
+export default function RoleSelect({ isLoading, list, ...props }: Props) {
 	return (
-		<select {...props}>
-			<option value="">{DEFAULT_ROLE_SELECT_OPTION}</option>
-			{list?.map((role) => (
+		<select
+			{...props}
+			disabled={isLoading || props.disabled}
+			aria-busy={isLoading}
+		>
+			<option value="">
+				{isLoading ? LOADING_ROLES_TEXT : DEFAULT_ROLE_SELECT_OPTION}
+			</option>
+
+			{list.map((role) => (
 				<option key={role._id} value={role._id}>
 					{role.name}
 				</option>

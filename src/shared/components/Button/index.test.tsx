@@ -1,10 +1,8 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps } from "react";
-import { LOADING_TEXT } from "../../constants";
 import {
 	getButton,
-	getText,
 	queryButton,
 } from "../../tests/react-testing-library/locator";
 import Button from ".";
@@ -17,15 +15,15 @@ test("renders button with children", () => {
 });
 
 test("renders button with loading state", async () => {
-	const { event, onClick } = renderButton({
+	const { event, onClick, loadingText } = renderButton({
 		isLoading: true,
-		loadingText: LOADING_TEXT,
 	});
+	const button = getButton(loadingText);
 
-	expect(getText(LOADING_TEXT)).toBeTruthy();
+	expect(button).toBeTruthy();
 	expect(queryButton(buttonText)).not.toBeTruthy();
 
-	await event.click(getButton(LOADING_TEXT));
+	await event.click(button);
 	expect(onClick).not.toHaveBeenCalled();
 });
 
@@ -37,15 +35,24 @@ test("renders button with disabled state", async () => {
 	expect(getButton(buttonText)).toHaveProperty("disabled", true);
 });
 
-function renderButton(props: ComponentProps<typeof Button>) {
+function renderButton({
+	isLoading = false,
+	...props
+}: Partial<ComponentProps<typeof Button>>) {
 	const event = userEvent.setup();
 	const onClick = vi.fn();
+	const loadingText = "loading...";
 
 	render(
-		<Button {...props} onClick={onClick}>
+		<Button
+			{...props}
+			isLoading={isLoading}
+			loadingText={loadingText}
+			onClick={onClick}
+		>
 			{buttonText}
 		</Button>,
 	);
 
-	return { event, onClick };
+	return { event, onClick, loadingText };
 }

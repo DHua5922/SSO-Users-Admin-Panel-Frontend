@@ -1,9 +1,10 @@
 import type { Page } from "@playwright/test";
+import { SUCCESS_STATUS_CODE } from "../../constants";
 
 export function waitForApiResponse({
 	page,
 	apiEndpoint,
-	status = 200,
+	status = SUCCESS_STATUS_CODE,
 	method = "GET",
 }: {
 	page: Page;

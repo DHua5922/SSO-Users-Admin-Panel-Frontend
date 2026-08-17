@@ -1,3 +1,4 @@
+import { ROLES_PATH } from "../../roles/constants/general";
 import { USERS_PATH } from "../../users/constants/general";
 import StatView from "../components/StatView";
 import {
@@ -36,7 +37,7 @@ export default function DashboardPage() {
 					isError={isStatsError}
 					errorMessage={statsErrorMessage}
 					isLoading={isLoadingStats}
-					href=""
+					href={ROLES_PATH}
 					linkLabel={DASHBOARD_VIEW_ROLES_LINK_TEXT}
 				/>
 			</div>

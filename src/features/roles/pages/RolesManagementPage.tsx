@@ -44,6 +44,7 @@ export default function RolesManagementPage() {
 
 			<DeleteConfirmationModal
 				{...deleteRoleModal}
+				loadingButtonText="Deleting Role..."
 				question="Are you sure you want to delete this role? This action cannot be undone."
 				deleteButtonText={CONFIRM_DELETE_ROLE_BUTTON_TEXT}
 			/>

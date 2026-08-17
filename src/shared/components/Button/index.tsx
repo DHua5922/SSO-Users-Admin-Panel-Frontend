@@ -1,5 +1,4 @@
 import type { ButtonHTMLAttributes } from "react";
-import { LOADING_TEXT } from "../../constants";
 import styles from "./index.module.css";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,7 +10,7 @@ export default function Button({
 	children,
 	className = "",
 	isLoading,
-	loadingText = LOADING_TEXT,
+	loadingText = "Loading...",
 	disabled,
 	...props
 }: Props) {

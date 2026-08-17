@@ -12,7 +12,7 @@
 		"biome:fix": "pnpm biome:check --write",
 		"check:unused": "pnpm knip",
 		"typescript:check": "tsc -b",
-		"test:unit": "vitest run --coverage src/features/*/tests/unit",
+		"test:unit": "vitest run --coverage src/features/*/tests/unit src/shared/tests/unit",
 		"test:component": "vitest run --coverage src/shared/components src/features/*/components src/app/routes",
 		"test:integrations": "vitest run --coverage src/features/*/tests/integrations",
 		"test:e2e": "playwright test",

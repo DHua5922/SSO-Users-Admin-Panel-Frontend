@@ -2,7 +2,7 @@ import { type HTMLAttributes } from "react";
 import styles from "./index.module.css";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-	expanded?: boolean;
+	expanded: boolean;
 }
 
 export default function Collapsible({

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useShallow } from "zustand/react/shallow";
 import type { Role } from "../../../shared/schemas";
+import { parseError } from "../../../shared/utilities";
 import { getAllRolesApi } from "../api";
 import { ROLES_QUERY_KEY } from "../constants/general";
 import useRoleStore from "../useRoleStore";
@@ -45,10 +45,7 @@ export default function useRoleListView(searchInput: string) {
 			isLoading: isPending,
 			isEmpty: !filteredRoles?.length,
 			isError,
-			errorMessage:
-				axios.isAxiosError(error) && typeof error.response?.data === "string"
-					? error.response.data
-					: error?.message,
+			errorMessage: error ? parseError(error) : "",
 		},
 		roleTableProps: {
 			list: filteredRoles || [],

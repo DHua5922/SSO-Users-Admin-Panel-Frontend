@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { ApiError, DefaultError } from "js-ts-kit";
 import { getDashboardStatsApi } from "../api";
 
 export function useDashboardStats() {
@@ -9,13 +9,14 @@ export function useDashboardStats() {
 		retry: false,
 	});
 
+	const errorMessage = ApiError.isApiError(error)
+		? ApiError.default(error)
+		: DefaultError.message(error);
+
 	return {
 		stats: data,
 		isStatsError: isError,
-		statsErrorMessage:
-			axios.isAxiosError(error) && typeof error.response?.data === "string"
-				? error.response.data
-				: error?.message,
+		statsErrorMessage: errorMessage || "",
 		isLoadingStats: isLoading,
 	};
 }

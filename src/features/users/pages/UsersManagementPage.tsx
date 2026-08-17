@@ -32,7 +32,7 @@ export default function UsersManagementPage() {
 			<div className="card">
 				<UserTableControls
 					{...tableControls}
-					roleSelectProps={{
+					roleSelect={{
 						...roles,
 						...tableControls.roleSelectControlProps,
 					}}
@@ -50,11 +50,12 @@ export default function UsersManagementPage() {
 			</div>
 
 			<Modal {...upsertUserModal}>
-				<UpsertUserForm {...upsertUserForm} roleSelectProps={roles} />
+				<UpsertUserForm {...upsertUserForm} roleSelect={roles} />
 			</Modal>
 
 			<DeleteConfirmationModal
 				{...deleteUserModal}
+				loadingButtonText="Deleting User..."
 				question="Are you sure you want to delete this user? This action cannot be undone."
 				deleteButtonText={CONFIRM_DELETE_USER_BUTTON_TEXT}
 			/>
