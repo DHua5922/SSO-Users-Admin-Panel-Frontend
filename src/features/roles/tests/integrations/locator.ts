@@ -15,19 +15,13 @@ export function findShowEditRoleModalButton(
 	roleName: string,
 	container?: HTMLElement,
 ) {
-	return findButton(
-		`button that show popup for editing ${roleName}`,
-		container,
-	);
+	return findButton(`Edit role ${roleName}`, container);
 }
 export function findShowDeleteRoleModalButton(
 	roleName: string,
 	container?: HTMLElement,
 ) {
-	return findButton(
-		`button that show popup for deleting ${roleName}`,
-		container,
-	);
+	return findButton(`Delete role ${roleName}`, container);
 }
 
 export function getConfirmDeleteRoleButton(container?: HTMLElement) {

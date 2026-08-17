@@ -13,7 +13,6 @@ import {
 } from "../../schemas";
 
 interface Props extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
-	isEditing: boolean;
 	isSubmitting: boolean;
 	name: string;
 	description: string;
@@ -61,7 +60,6 @@ function useFormValidation({
 }
 
 export default function UpsertRoleForm({
-	isEditing,
 	isSubmitting,
 	name,
 	description,
@@ -103,11 +101,7 @@ export default function UpsertRoleForm({
 				htmlFor={descriptionInputId}
 				errorMessage={errors.description?.message}
 			>
-				<input
-					{...register("description")}
-					id={descriptionInputId}
-					type="textarea"
-				/>
+				<textarea {...register("description")} id={descriptionInputId} />
 			</Field>
 
 			<Button

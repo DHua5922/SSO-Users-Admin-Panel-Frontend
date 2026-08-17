@@ -20,7 +20,7 @@ export default function useRoleListView(searchInput: string) {
 	const {
 		isPending,
 		isError,
-		data: users,
+		data: roles,
 		error,
 	} = useQuery({
 		queryKey: [ROLES_QUERY_KEY],
@@ -28,7 +28,7 @@ export default function useRoleListView(searchInput: string) {
 		retry: false,
 	});
 
-	const filteredRoles = filterRoles(users || [], searchInput);
+	const filteredRoles = filterRoles(roles || [], searchInput);
 
 	const onClickEditRole = (role: Role) => {
 		setShowUpsertRoleModal(true);

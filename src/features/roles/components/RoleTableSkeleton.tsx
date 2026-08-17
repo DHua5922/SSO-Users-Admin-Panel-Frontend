@@ -13,6 +13,10 @@ export default function RoleTableSkeleton() {
 					</td>
 
 					<td>
+						<div className="skeleton skeleton-text" />
+					</td>
+
+					<td>
 						<div className="center">
 							<Icon name="edit" />
 						</div>

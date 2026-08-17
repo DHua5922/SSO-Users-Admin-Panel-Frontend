@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { expect, type Page, test } from "@playwright/test";
 import { OPEN_NAVIGATION_MENU_TEXT } from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
@@ -20,16 +21,19 @@ import {
 	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants/input";
 
+const id = randomUUID();
+
 const newRole = {
-	name: `new role ${Date.now()}`,
-	description: `Description for new role ${Date.now()}`,
-};
-const updatedRole = {
-	name: `updated role ${Date.now()}`,
-	description: `Description for updated role ${Date.now()}`,
+	name: `new role ${id}`,
+	description: `Description for new role ${id}`,
 };
 
-test("edit role", async ({ page }) => {
+const updatedRole = {
+	name: `updated role ${id}`,
+	description: `Description for updated role ${id}`,
+};
+
+test("manages a role", async ({ page }) => {
 	await setup(page);
 	await addRole(page);
 	await editRole(page);
@@ -91,10 +95,7 @@ async function addRole(page: Page) {
 }
 
 async function editRole(page: Page) {
-	const editRoleButton = getButton(
-		page,
-		`button that show popup for editing ${newRole.name}`,
-	);
+	const editRoleButton = getButton(page, `Edit role ${newRole.name}`);
 	await expect(editRoleButton).toBeVisible();
 	await editRoleButton.click();
 
@@ -131,10 +132,7 @@ async function editRole(page: Page) {
 }
 
 async function deleteRole(page: Page) {
-	const deleteRoleButton = getButton(
-		page,
-		`button that show popup for deleting ${updatedRole.name}`,
-	);
+	const deleteRoleButton = getButton(page, `Delete role ${updatedRole.name}`);
 	await expect(deleteRoleButton).toBeVisible();
 	await deleteRoleButton.click();
 

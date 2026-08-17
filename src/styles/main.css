@@ -64,7 +64,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
 	border: 1px solid var(--dark-color);
 	padding: 8px;
 	border-radius: 4px;

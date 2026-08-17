@@ -63,7 +63,6 @@ async function renderForm({
 
 	render(
 		<UpsertRoleForm
-			isEditing={false}
 			isSubmitting={isLoading}
 			onSubmit={onSubmit}
 			name=""

@@ -29,14 +29,14 @@ export default function RoleTable({
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickEditRole(role)}
-								aria-label={`button that show popup for editing ${role.name}`}
+								aria-label={`Edit role ${role.name}`}
 							>
 								<Icon name="edit" />
 							</Button>,
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickDeleteRole(role)}
-								aria-label={`button that show popup for deleting ${role.name}`}
+								aria-label={`Delete role ${role.name}`}
 							>
 								<Icon name="delete" />
 							</Button>,
