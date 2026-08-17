@@ -8,7 +8,7 @@ import {
 import { useDashboardStats } from "../hooks/useDashboardStats";
 
 export default function DashboardPage() {
-	const { stats, isStatsError, statsError, isLoadingStats } =
+	const { stats, isStatsError, statsErrorMessage, isLoadingStats } =
 		useDashboardStats();
 
 	return (
@@ -24,7 +24,7 @@ export default function DashboardPage() {
 					label="Total Users"
 					value={stats?.totalUsers || 0}
 					isError={isStatsError}
-					errorMessage={statsError?.message || ""}
+					errorMessage={statsErrorMessage}
 					isLoading={isLoadingStats}
 					href={USERS_PATH}
 					linkLabel={DASHBOARD_VIEW_USERS_LINK_TEXT}
@@ -34,7 +34,7 @@ export default function DashboardPage() {
 					label="Total Roles"
 					value={stats?.totalRoles || 0}
 					isError={isStatsError}
-					errorMessage={statsError?.message || ""}
+					errorMessage={statsErrorMessage}
 					isLoading={isLoadingStats}
 					href=""
 					linkLabel={DASHBOARD_VIEW_ROLES_LINK_TEXT}

@@ -1,18 +1,18 @@
 import { expect, test } from "@playwright/test";
-import { logInTest } from "../../../../shared/tests/playwright/support";
+import { logInTest } from "../../../auth/tests/e2e/support";
 
 test("edit user", async ({ page }) => {
 	const password = "password123";
 
 	const newUser = {
-		username: "new user",
-		email: "newuser@example.com",
+		username: `new user ${Date.now()}`,
+		email: `newuser${Date.now()}@example.com`,
 		role: "admin",
 	};
 	const updatedUser = {
 		...newUser,
-		username: "updated user",
-		email: "updateduser@example.com",
+		username: `updated user ${Date.now()}`,
+		email: `updateduser${Date.now()}@example.com`,
 	};
 
 	await logInTest(page);

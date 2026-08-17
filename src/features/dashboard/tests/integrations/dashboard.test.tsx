@@ -1,22 +1,29 @@
+import { HOME_PATH } from "../../../../shared/constants";
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
-import { findText } from "../../../../shared/tests/react-testing-library/locator";
-import { DASHBOARD_PATH, DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
+import {
+	findAllText,
+	findText,
+} from "../../../../shared/tests/react-testing-library/locator";
+import { mockGetMeSuccessApi } from "../../../auth/tests/integrations/server/me";
+import { DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
 import {
 	mockGetDashboardStatsFailureApi,
 	mockGetDashboardStatsSuccessApi,
 } from "./server";
 
-test("should show dashboard stats", () => {
+test("should show dashboard stats", async () => {
+	mockGetMeSuccessApi();
 	mockGetDashboardStatsSuccessApi();
-	renderApp(DASHBOARD_PATH);
+	renderApp(HOME_PATH);
 
-	expect(findText("10")).toBeTruthy();
-	expect(findText("5")).toBeTruthy();
+	expect(await findText("10")).toBeTruthy();
+	expect(await findText("5")).toBeTruthy();
 });
 
-test("should show error when failing to get dashboard stats", () => {
+test("should show error when failing to get dashboard stats", async () => {
+	mockGetMeSuccessApi();
 	mockGetDashboardStatsFailureApi();
-	renderApp(DASHBOARD_PATH);
+	renderApp(HOME_PATH);
 
-	expect(findText(DASHBOARD_STATS_ERROR_MESSAGE)).toBeTruthy();
+	expect(await findAllText(DASHBOARD_STATS_ERROR_MESSAGE)).toHaveLength(2);
 });

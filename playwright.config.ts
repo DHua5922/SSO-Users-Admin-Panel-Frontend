@@ -16,14 +16,14 @@ z.url().parse(process.env.VITE_FRONTEND_BASE_URL);
 export default defineConfig({
 	testDir: "./src",
 	testMatch: "**/tests/e2e/**/*.test.ts",
-	/* Run tests in files in sequence */
-	fullyParallel: false,
+	/* Run tests in files in parallel */
+	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
 	/* Retry on CI only */
 	retries: process.env.CI ? 2 : 0,
 	/* Opt out of parallel tests on CI. */
-	workers: 1,
+	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: "html",
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

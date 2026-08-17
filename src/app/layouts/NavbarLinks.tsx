@@ -10,6 +10,7 @@ import {
 	LOGOUT_BUTTON_TEXT,
 	ME_QUERY_KEY,
 } from "../../features/auth/constants";
+import { ROLES_PATH } from "../../features/roles/constants/general";
 import { USERS_PATH } from "../../features/users/constants/general";
 import { HOME_PATH } from "../../shared/constants";
 import usePageErrorHandler from "../../shared/hooks/usePageErrorHandler";
@@ -46,6 +47,10 @@ export default function NavbarLinks({ username, ...props }: Props) {
 
 			<li>
 				<a href={USERS_PATH}>Users</a>
+			</li>
+
+			<li>
+				<a href={ROLES_PATH}>Roles</a>
 			</li>
 
 			<li>

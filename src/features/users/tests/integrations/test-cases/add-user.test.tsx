@@ -45,7 +45,7 @@ test("should add user", async () => {
 	mockUpsertUserSuccessApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const dialog = await commonProcess(event);
+	const dialog = await openAndFillAddUserForm(event);
 	mockGetUsersSuccessApi([testUser]);
 	await event.click(getAddUserButton(dialog));
 
@@ -65,15 +65,14 @@ test("should show error when failing to add user", async () => {
 	mockUpsertUserFailureApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const dialog = await commonProcess(event);
-
+	const dialog = await openAndFillAddUserForm(event);
 	await event.click(getAddUserButton(dialog));
 
 	const alert = await findAlert("", dialog);
 	expect(getText(CANNOT_UPSERT_USER_ERROR_MESSAGE, alert)).toBeTruthy();
 });
 
-async function commonProcess(event: UserEvent) {
+async function openAndFillAddUserForm(event: UserEvent) {
 	expect(await findText(EMPTY_USERS_MESSAGE)).toBeTruthy();
 
 	const showAddUserModalButton = getAddUserButton();

@@ -6,15 +6,15 @@ import {
 import { server } from "../../../../shared/tests/vitest.setup";
 import { DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
 
-const endpoint = "/api/v1/dashboard/stats";
+const endpoint = "*/api/v1/dashboard/stats";
 
 export function mockGetDashboardStatsSuccessApi() {
 	server.use(
 		http.get(endpoint, () => {
 			return HttpResponse.json(
 				{
-					usersCount: 10,
-					rolesCount: 5,
+					totalUsers: 10,
+					totalRoles: 5,
 				},
 				{ status: SUCCESS_STATUS_CODE },
 			);

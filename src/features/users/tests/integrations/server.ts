@@ -51,11 +51,8 @@ export function mockUpsertUserFailureApi() {
 
 export function mockDeleteUserSuccessApi() {
 	return server.use(
-		http.delete(deleteEndpoint, ({ params }) => {
-			return HttpResponse.json(
-				{ ...testUser, id: params.id },
-				{ status: SUCCESS_STATUS_CODE },
-			);
+		http.delete(deleteEndpoint, () => {
+			return HttpResponse.json(testUser, { status: SUCCESS_STATUS_CODE });
 		}),
 	);
 }

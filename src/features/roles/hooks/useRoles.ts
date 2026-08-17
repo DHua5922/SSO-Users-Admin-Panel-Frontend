@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { getAllRolesApi } from "../api/role.ts";
+import { getAllRolesApi } from "../api.ts";
 
 export default function useRoles() {
 	const {

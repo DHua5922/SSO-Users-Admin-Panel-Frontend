@@ -13,6 +13,10 @@ export function findText(text: string, boundary?: HTMLElement) {
 	const regex = regexMatch(text, undefined, true);
 	return element(boundary).findByText(regex);
 }
+export function findAllText(text: string, boundary?: HTMLElement) {
+	const regex = regexMatch(text, undefined, true);
+	return element(boundary).findAllByText(regex);
+}
 export function queryText(text: string, boundary?: HTMLElement) {
 	const regex = regexMatch(text, undefined, true);
 	return element(boundary).queryByText(regex);
