@@ -26,7 +26,13 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 			<div className="flex items-center justify-between">
 				<a href={HOME_PATH}>
 					<figure className="w-32">
-						<img src={logo} alt={APP_LOGO_ALT_TEXT} className="max-w-full" />
+						<img
+							src={logo}
+							alt={APP_LOGO_ALT_TEXT}
+							className="max-w-full"
+							width={128}
+							height={128}
+						/>
 					</figure>
 				</a>
 

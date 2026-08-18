@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps } from "react";
+import { LOADING_TEXT } from "../../constants";
 import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
 import {
 	getButton,
@@ -50,7 +51,7 @@ function renderButton({
 }: Partial<ComponentProps<typeof Button>>) {
 	const event = userEvent.setup();
 	const onClick = vi.fn();
-	const loadingText = "loading...";
+	const loadingText = LOADING_TEXT;
 
 	render(
 		<Button

@@ -25,3 +25,5 @@ export const METHOD_POST = "POST";
 export const METHOD_PUT = "PUT";
 
 export const NEW_TOKENS_API_ROUTE = "/tokens/new";
+
+export const LOADING_TEXT = "Loading...";
