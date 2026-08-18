@@ -2,7 +2,11 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expectNoAccessibilityViolations } from "../../../../shared/tests/react-testing-library/accessibility";
 import { getButton } from "../../../../shared/tests/react-testing-library/locator";
-import { LOGIN_LOADING_TEXT, LOGIN_TEXT } from "../../constants";
+import {
+	GUEST_LOGIN_TEXT,
+	LOGIN_LOADING_TEXT,
+	LOGIN_TEXT,
+} from "../../constants";
 import {
 	getEmailLabel,
 	getPasswordLabel,
@@ -37,15 +41,26 @@ test("submit by clicking on button with mouse", async () => {
 	expect(button).toBeTruthy();
 });
 
+test("login as guest by clicking the guest button", async () => {
+	const { event, onGuestLogin } = await renderLoginForm(false, LOGIN_TEXT);
+
+	await event.click(getButton(GUEST_LOGIN_TEXT));
+
+	expect(onGuestLogin).toHaveBeenCalledOnce();
+});
+
 async function renderLoginForm(isLoading: boolean, buttonText: string) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
 	const onChangeEmail = vi.fn();
 	const onChangePassword = vi.fn();
+	const onGuestLogin = vi.fn();
 
 	render(
 		<LoginForm
 			isLoading={isLoading}
+			isGuestLoginLoading={false}
+			onGuestLogin={onGuestLogin}
 			onSubmit={onSubmit}
 			email=""
 			onChangeEmail={onChangeEmail}
@@ -58,6 +73,7 @@ async function renderLoginForm(isLoading: boolean, buttonText: string) {
 	return {
 		event,
 		onSubmit,
+		onGuestLogin,
 		button: getButton(buttonText),
 	};
 }

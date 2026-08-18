@@ -5,6 +5,7 @@ import {
 } from "../../../../shared/tests/react-testing-library/locator";
 import {
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
+	GUEST_LOGIN_TEXT,
 	LOGIN_EMAIL_INPUT_LABEL,
 	LOGIN_PASSWORD_INPUT_LABEL,
 	LOGIN_TEXT,
@@ -12,6 +13,10 @@ import {
 
 export function findLoginButton() {
 	return findButton(LOGIN_TEXT);
+}
+
+export function findGuestLoginButton() {
+	return findButton(GUEST_LOGIN_TEXT);
 }
 
 export function findCurrentUserMenuToggleButton() {

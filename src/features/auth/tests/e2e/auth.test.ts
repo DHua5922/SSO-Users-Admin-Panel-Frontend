@@ -2,6 +2,9 @@ import { expect, type Page, test } from "@playwright/test";
 import {
 	AUTH_BASE_API_ROUTE,
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
+	GUEST_LOGIN_PATH,
+	GUEST_LOGIN_TEXT,
+	LOGIN_PATH,
 	LOGOUT_BUTTON_TEXT,
 } from "../../../../features/auth/constants";
 import {
@@ -13,6 +16,20 @@ import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import { getButton } from "../../../../shared/tests/playwright/locator";
 import { getLoginButton } from "./locator";
 import { logInTest } from "./support";
+
+test("logs in as a guest", async ({ page }) => {
+	const loginResponse = waitForApiResponse({
+		page,
+		apiEndpoint: `${AUTH_BASE_API_ROUTE}${GUEST_LOGIN_PATH}`,
+		method: METHOD_POST,
+	});
+
+	await page.goto(`${process.env.VITE_FRONTEND_BASE_URL}${LOGIN_PATH}`);
+
+	await Promise.all([loginResponse, getButton(page, GUEST_LOGIN_TEXT).click()]);
+
+	await expect(getLogo(page)).toBeVisible();
+});
 
 test("authenticates user", async ({ page }) => {
 	await logInTest(page);
