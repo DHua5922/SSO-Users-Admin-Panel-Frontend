@@ -7,8 +7,17 @@ export default function PageLoader({
 }: HTMLAttributes<HTMLDivElement>) {
 	const formattedClassName = `flex items-center ${className}`.trim();
 	return (
-		<div className={formattedClassName} {...props}>
-			<svg className="size-5 animate-spin" viewBox="0 0 24 24" />
+		<div
+			role="status"
+			aria-live="polite"
+			className={formattedClassName}
+			{...props}
+		>
+			<svg
+				aria-hidden="true"
+				className="size-5 animate-spin"
+				viewBox="0 0 24 24"
+			/>
 			{children}
 		</div>
 	);

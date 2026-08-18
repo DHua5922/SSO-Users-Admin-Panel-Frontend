@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import { expectNoAccessibilityViolations } from "../../../../shared/tests/react-testing-library/accessibility";
 import {
 	getStatus,
 	getText,
@@ -37,6 +38,18 @@ test("should show stat", () => {
 
 	expect(getText(`${statValue}`)).toBeTruthy();
 });
+
+test.each([
+	{ isLoading: false, isError: false, errorMessage: "" },
+	{ isLoading: true, isError: false, errorMessage: "" },
+	{ isLoading: false, isError: true, errorMessage: "Error message" },
+])(
+	"has no automatically detectable accessibility violations",
+	async ({ isLoading, isError, errorMessage }) => {
+		renderStatView({ isLoading, isError, errorMessage });
+		await expectNoAccessibilityViolations();
+	},
+);
 
 function renderStatView({
 	value = defaultValue,

@@ -1,8 +1,8 @@
 import { type HTMLAttributes, useId } from "react";
-import Button from "../../../shared/components/Button";
-import Field from "../../../shared/components/Field";
-import { ADD_ROLE_BUTTON_TEXT } from "../constants/button";
-import { SEARCH_ROLES_ARIA_LABEL } from "../constants/input";
+import Button from "../../../../shared/components/Button";
+import Field from "../../../../shared/components/Field";
+import { ADD_ROLE_BUTTON_TEXT } from "../../constants/button";
+import { SEARCH_ROLES_ARIA_LABEL } from "../../constants/input";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	searchBarProps: HTMLAttributes<HTMLInputElement>;

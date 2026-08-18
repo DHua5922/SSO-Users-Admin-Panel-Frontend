@@ -43,7 +43,7 @@ export default function StatView({
 	if (isError)
 		return (
 			<Helper {...helperProps}>
-				<p className={`${valueClassName} text-xl! text-red-500`}>
+				<p role="alert" className={`${valueClassName} text-xl! text-red-500`}>
 					{errorMessage}
 				</p>
 			</Helper>
@@ -79,7 +79,7 @@ function Helper({ label, linkLabel, href, children }: HelperProps) {
 			<div className="flex items-center justify-end gap-2">
 				<a className={styles.link} href={href}>
 					{linkLabel}
-					<MoveRight size={20} />
+					<MoveRight aria-hidden="true" size={20} />
 				</a>
 			</div>
 		</section>

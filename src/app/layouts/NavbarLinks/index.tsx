@@ -3,17 +3,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import type { HTMLAttributes } from "react";
 import { useNavigate } from "react-router";
-import { logOutApi } from "../../features/auth/api/auth";
+import { logOutApi } from "../../../features/auth/api/auth";
 import {
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
 	LOGIN_PATH,
 	LOGOUT_BUTTON_TEXT,
 	ME_QUERY_KEY,
-} from "../../features/auth/constants";
-import { ROLES_PATH } from "../../features/roles/constants/general";
-import { USERS_PATH } from "../../features/users/constants/general";
-import { HOME_PATH } from "../../shared/constants";
-import usePageErrorHandler from "../../shared/hooks/usePageErrorHandler";
+} from "../../../features/auth/constants";
+import { ROLES_PATH } from "../../../features/roles/constants/general";
+import { USERS_PATH } from "../../../features/users/constants/general";
+import { HOME_PATH } from "../../../shared/constants";
+import usePageErrorHandler from "../../../shared/hooks/usePageErrorHandler";
+import styles from "./index.module.css";
 
 interface Props extends HTMLAttributes<HTMLUListElement> {
 	username: string;
@@ -60,11 +61,14 @@ export default function NavbarLinks({ username, ...props }: Props) {
 						aria-label={CURRENT_USER_TOGGLE_ARIA_LABEL}
 					>
 						{username}
-						<ChevronDown />
+						<ChevronDown aria-hidden="true" />
 					</MenuComponent.Toggle>
 
 					<MenuComponent.Content>
-						<MenuComponent.Item onClick={onLogOut}>
+						<MenuComponent.Item
+							className={styles["menu-item"]}
+							onClick={onLogOut}
+						>
 							{LOGOUT_BUTTON_TEXT}
 						</MenuComponent.Item>
 					</MenuComponent.Content>

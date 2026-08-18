@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import { REQUIRED_FIELD_ACCESSIBLE_TEXT } from "../../constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	label?: string;
@@ -20,14 +21,32 @@ export default function Field({
 
 	return (
 		<div className={formattedClassName} {...props}>
-			<label htmlFor={htmlFor}>
-				{label}
-				{required && <span className="text-danger">{" *"}</span>}
-			</label>
+			{label && (
+				<label htmlFor={htmlFor}>
+					{label}
+					{required && (
+						<>
+							<span aria-hidden="true" className="text-danger">
+								{" *"}
+							</span>
+							<span className="sr-only">
+								{` ${REQUIRED_FIELD_ACCESSIBLE_TEXT}`}
+							</span>
+						</>
+					)}
+				</label>
+			)}
 
 			{children}
 
-			{errorMessage && <span className="text-danger">{errorMessage}</span>}
+			{errorMessage && (
+				<span
+					id={htmlFor ? `${htmlFor}-error` : undefined}
+					className="text-danger"
+				>
+					{errorMessage}
+				</span>
+			)}
 		</div>
 	);
 }

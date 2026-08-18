@@ -46,7 +46,7 @@ export function getSection(page: Page | Locator, sectionTitle: string) {
 
 export function getLabel(labelText: string, page: Page | Locator) {
 	const regex = new RegExp(
-		`^${regexMatch(labelText).source}(?:\\s*\\*)?$`,
+		`^${regexMatch(labelText).source}(?:\\s*\\*)?(?:\\s*\\(required\\))?$`,
 		"i",
 	);
 	return page.getByLabel(regex);

@@ -1,15 +1,21 @@
 import { Menu } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
 import logo from "../../assets/logo.svg";
+import Button from "../../shared/components/Button";
 import Collapsible from "../../shared/components/Collapsible";
-import { HOME_PATH, OPEN_NAVIGATION_MENU_TEXT } from "../../shared/constants";
+import {
+	APP_LOGO_ALT_TEXT,
+	CLOSE_NAVIGATION_MENU_TEXT,
+	HOME_PATH,
+	MOBILE_NAVIGATION_ARIA_LABEL,
+	MOBILE_NAVIGATION_ID,
+	OPEN_NAVIGATION_MENU_TEXT,
+} from "../../shared/constants";
 import NavbarLinks from "./NavbarLinks";
 
 interface Props extends HTMLAttributes<HTMLElement> {
 	username: string;
 }
-
-const collapsibleId = "mobile-navigation";
 
 export default function Navbar({ username, className = "", ...props }: Props) {
 	const [expanded, setExpanded] = useState(false);
@@ -20,22 +26,22 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 			<div className="flex items-center justify-between">
 				<a href={HOME_PATH}>
 					<figure className="w-32">
-						<img src={logo} alt="Logo" className="max-w-full" />
+						<img src={logo} alt={APP_LOGO_ALT_TEXT} className="max-w-full" />
 					</figure>
 				</a>
 
-				<button
+				<Button
 					type="button"
 					className="md:hidden cursor-pointer bg-transparent"
 					aria-expanded={expanded}
-					aria-controls={collapsibleId}
+					aria-controls={MOBILE_NAVIGATION_ID}
 					onClick={() => setExpanded((prev) => !prev)}
 					aria-label={
-						expanded ? "Close navigation menu" : OPEN_NAVIGATION_MENU_TEXT
+						expanded ? CLOSE_NAVIGATION_MENU_TEXT : OPEN_NAVIGATION_MENU_TEXT
 					}
 				>
-					<Menu />
-				</button>
+					<Menu aria-hidden="true" />
+				</Button>
 
 				<NavbarLinks
 					username={username}
@@ -46,8 +52,9 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 			<Collapsible
 				expanded={expanded}
 				aria-hidden={!expanded}
-				id={collapsibleId}
-				aria-label="Mobile navigation menu"
+				inert={!expanded}
+				id={MOBILE_NAVIGATION_ID}
+				aria-label={MOBILE_NAVIGATION_ARIA_LABEL}
 			>
 				<NavbarLinks
 					username={username}

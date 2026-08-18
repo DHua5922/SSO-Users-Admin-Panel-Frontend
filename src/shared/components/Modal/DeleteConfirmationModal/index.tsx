@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
-import Button from "../Button";
-import Modal from "./Modal";
+import Button from "../../Button";
+import Modal from "../Modal";
 
 interface Props extends ComponentProps<typeof Modal> {
 	onClickDelete: () => void;
@@ -33,7 +33,7 @@ export default function DeleteConfirmationModal({
 
 			<div className="text-center">
 				<Button
-					className="bg-red-500! text-white!"
+					className="bg-red-700! text-white!"
 					onClick={onClickDelete}
 					isLoading={isDeleting}
 					loadingText={loadingButtonText}

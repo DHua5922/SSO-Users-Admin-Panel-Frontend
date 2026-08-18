@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { expectNoAccessibilityViolations } from "../../../../shared/tests/react-testing-library/accessibility";
 import { getButton } from "../../../../shared/tests/react-testing-library/locator";
 import {
 	getConfirmPasswordLabel,
@@ -40,6 +41,16 @@ test("shows validation errors", async () => {
 	expect(await findRoleErrorMessage()).toBeTruthy();
 	expect(await findEmailErrorMessage()).toBeTruthy();
 	expect(queryNoMatchingPasswordsErrorMessage()).not.toBeTruthy();
+	expect(getUsernameLabel().getAttribute("aria-invalid")).toBe("true");
+	expect(getUsernameLabel().getAttribute("aria-describedby")).toBe(
+		"username-input-error",
+	);
+	await expectNoAccessibilityViolations();
+});
+
+test("has no automatically detectable accessibility violations", async () => {
+	await renderForm({ isLoading: false, fillInForm: false });
+	await expectNoAccessibilityViolations();
 });
 
 test("submit by pressing enter on keyboard", async () => {

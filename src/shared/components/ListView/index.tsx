@@ -27,8 +27,8 @@ export default function ListView({
 
 	if (isError) {
 		return (
-			<div className="list-message-container">
-				<CircleX className="text-danger" size={iconSize} />
+			<div className="list-message-container" role="alert">
+				<CircleX aria-hidden="true" className="text-danger" size={iconSize} />
 				<p className="list-message-text text-danger">{errorMessage}</p>
 			</div>
 		);
@@ -37,7 +37,7 @@ export default function ListView({
 	if (isEmpty) {
 		return (
 			<div className="list-message-container">
-				<List size={iconSize} />
+				<List aria-hidden="true" size={iconSize} />
 				<p className="list-message-text text-gray-500">{emptyListMessage}</p>
 			</div>
 		);

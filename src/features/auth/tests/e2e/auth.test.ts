@@ -5,6 +5,7 @@ import {
 	LOGOUT_BUTTON_TEXT,
 } from "../../../../features/auth/constants";
 import {
+	APP_LOGO_ALT_TEXT,
 	METHOD_POST,
 	OPEN_NAVIGATION_MENU_TEXT,
 } from "../../../../shared/constants";
@@ -51,5 +52,5 @@ test("redirects to login page when logging out", async ({ page }) => {
 });
 
 function getLogo(page: Page) {
-	return page.getByAltText(/logo/i);
+	return page.getByAltText(APP_LOGO_ALT_TEXT);
 }

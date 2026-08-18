@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps } from "react";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
 import {
 	getButton,
 	queryButton,
@@ -34,6 +35,14 @@ test("renders button with disabled state", async () => {
 	expect(onClick).not.toHaveBeenCalled();
 	expect(getButton(buttonText)).toHaveProperty("disabled", true);
 });
+
+test.each([{}, { isLoading: true }, { disabled: true }])(
+	"has no automatically detectable accessibility violations",
+	async (props) => {
+		renderButton(props);
+		await expectNoAccessibilityViolations();
+	},
+);
 
 function renderButton({
 	isLoading = false,

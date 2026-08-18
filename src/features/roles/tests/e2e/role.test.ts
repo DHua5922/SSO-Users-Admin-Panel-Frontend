@@ -1,14 +1,9 @@
 import { expect, type Page, test } from "@playwright/test";
-import {
-	METHOD_DELETE,
-	METHOD_PUT,
-	OPEN_NAVIGATION_MENU_TEXT,
-} from "../../../../shared/constants";
+import { METHOD_DELETE, METHOD_PUT } from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getButton,
 	getDialog,
-	getLink,
 	getTableRow,
 	getText,
 } from "../../../../shared/tests/playwright/locator";
@@ -16,6 +11,8 @@ import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_ROLE_BUTTON_TEXT,
 	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
+	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	UPDATE_ROLE_BUTTON_TEXT,
 } from "../../constants/button";
 import { ADD_ROLE_MODAL_TITLE, ROLES_API_ROUTE } from "../../constants/general";
@@ -23,6 +20,7 @@ import {
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants/input";
+import { goToRolesPage, openAddRoleDialog } from "../playwright";
 
 const id = crypto.randomUUID();
 
@@ -45,29 +43,11 @@ test("manages a role", async ({ page }) => {
 
 async function setup(page: Page) {
 	await logInTest(page);
-
-	const mobileMenuButton = getButton(page, OPEN_NAVIGATION_MENU_TEXT);
-	const usesMobileNavigation = await page.evaluate(
-		() => window.matchMedia("(max-width: 767px)").matches,
-	);
-	if (usesMobileNavigation) {
-		await mobileMenuButton.click();
-	}
-
-	const rolesLink = getLink(page, "roles");
-	await expect(rolesLink).toBeVisible();
-
-	const getRolesResponse = waitForApiResponse({
-		page,
-		apiEndpoint: ROLES_API_ROUTE,
-	});
-	await Promise.all([getRolesResponse, rolesLink.click()]);
+	await goToRolesPage(page);
 }
 
 async function addRole(page: Page) {
-	const addRoleButton = getButton(page, ADD_ROLE_BUTTON_TEXT);
-	await expect(addRoleButton).toBeVisible();
-	await addRoleButton.click();
+	await openAddRoleDialog(page);
 
 	const addRoleDialog = getDialog(page, ADD_ROLE_MODAL_TITLE);
 	await expect(addRoleDialog).toBeVisible();
@@ -97,7 +77,10 @@ async function addRole(page: Page) {
 }
 
 async function editRole(page: Page) {
-	const editRoleButton = getButton(page, `Edit role ${newRole.name}`);
+	const editRoleButton = getButton(
+		page,
+		`${EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${newRole.name}`,
+	);
 	await expect(editRoleButton).toBeVisible();
 	await editRoleButton.click();
 
@@ -133,7 +116,10 @@ async function editRole(page: Page) {
 }
 
 async function deleteRole(page: Page) {
-	const deleteRoleButton = getButton(page, `Delete role ${updatedRole.name}`);
+	const deleteRoleButton = getButton(
+		page,
+		`${DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${updatedRole.name}`,
+	);
 	await expect(deleteRoleButton).toBeVisible();
 	await deleteRoleButton.click();
 

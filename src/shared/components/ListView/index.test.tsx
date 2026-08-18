@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
 import { getText } from "../../../shared/tests/react-testing-library/locator";
 import ListView from ".";
 
@@ -25,6 +26,19 @@ test("shows list with items", () => {
 		expect(getText(item)).toBeTruthy();
 	});
 });
+
+test.each([
+	{ isError: true },
+	{ isEmpty: true },
+	{ isLoading: true },
+	{ list: ["Item 1"] },
+])(
+	"has no automatically detectable accessibility violations",
+	async (props) => {
+		renderListView(props);
+		await expectNoAccessibilityViolations();
+	},
+);
 
 function renderListView({
 	isError = false,

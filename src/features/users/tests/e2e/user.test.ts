@@ -1,15 +1,10 @@
 import { expect, test } from "@playwright/test";
-import {
-	METHOD_DELETE,
-	METHOD_PUT,
-	OPEN_NAVIGATION_MENU_TEXT,
-} from "../../../../shared/constants";
+import { METHOD_DELETE, METHOD_PUT } from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getButton,
 	getDialog,
 	getLabel,
-	getLink,
 	getTableRow,
 	getText,
 } from "../../../../shared/tests/playwright/locator";
@@ -17,6 +12,8 @@ import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_USER_BUTTON_TEXT,
 	CONFIRM_DELETE_USER_BUTTON_TEXT,
+	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
 	UPDATE_USER_BUTTON_TEXT,
 } from "../../constants/button";
 import { ADD_USER_MODAL_TITLE, USERS_API_ROUTE } from "../../constants/general";
@@ -27,6 +24,7 @@ import {
 	UPSERT_USER_FORM_ROLE_LABEL,
 	UPSERT_USER_FORM_USERNAME_LABEL,
 } from "../../constants/input";
+import { goToUsersPage, openAddUserModal } from "../playwright";
 
 test("edit user", async ({ page }) => {
 	const password = "password123";
@@ -43,29 +41,8 @@ test("edit user", async ({ page }) => {
 	};
 
 	await logInTest(page);
-
-	const mobileMenuButton = getButton(page, OPEN_NAVIGATION_MENU_TEXT);
-	const usesMobileNavigation = await page.evaluate(
-		() => window.matchMedia("(max-width: 767px)").matches,
-	);
-	if (usesMobileNavigation) {
-		await mobileMenuButton.click();
-	}
-
-	const usersLink = getLink(page, "users");
-	await expect(usersLink).toBeVisible();
-
-	await Promise.all([
-		waitForApiResponse({
-			page,
-			apiEndpoint: USERS_API_ROUTE,
-		}),
-		usersLink.click(),
-	]);
-
-	const addUserButton = getButton(page, ADD_USER_BUTTON_TEXT);
-	await expect(addUserButton).toBeVisible();
-	await addUserButton.click();
+	await goToUsersPage(page);
+	await openAddUserModal(page);
 
 	const dialog = getDialog(page, ADD_USER_MODAL_TITLE);
 	await expect(dialog).toBeVisible();
@@ -100,7 +77,7 @@ test("edit user", async ({ page }) => {
 
 	const editUserButton = getButton(
 		page,
-		`button that show popup for editing ${newUser.username}`,
+		`${EDIT_USER_BUTTON_ARIA_LABEL_PREFIX} ${newUser.username}`,
 	);
 	await expect(editUserButton).toBeVisible();
 	await editUserButton.click();
@@ -130,7 +107,7 @@ test("edit user", async ({ page }) => {
 
 	const deleteUserButton = getButton(
 		page,
-		`button that show popup for deleting ${updatedUser.username}`,
+		`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${updatedUser.username}`,
 	);
 	await expect(deleteUserButton).toBeVisible();
 	await deleteUserButton.click();

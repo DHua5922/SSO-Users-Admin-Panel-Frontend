@@ -1,8 +1,8 @@
 import ListView from "../../../shared/components/ListView/index.tsx";
-import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal.tsx";
-import Modal from "../../../shared/components/Modal/Modal.tsx";
-import RoleTable from "../components/RoleTable.tsx";
-import RoleTableControls from "../components/RoleTableControls.tsx";
+import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal/index.tsx";
+import Modal from "../../../shared/components/Modal/Modal/index.tsx";
+import RoleTable from "../components/RoleTable/index.tsx";
+import RoleTableControls from "../components/RoleTableControls/index.tsx";
 import RoleTableSkeleton from "../components/RoleTableSkeleton.tsx";
 import UpsertRoleForm from "../components/UpsertRoleForm/index.tsx";
 import { CONFIRM_DELETE_ROLE_BUTTON_TEXT } from "../constants/button.ts";
