@@ -7,6 +7,7 @@ import {
 } from "../../features/auth/constants";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import { HOME_PATH } from "../../shared/constants";
+import { getText } from "../../shared/tests/react-testing-library/locator";
 import PublicRoute from "./PublicRoute";
 
 vi.mock("../../features/auth/hooks/useCurrentUser", () => ({
@@ -18,17 +19,17 @@ const loginText = "Login";
 
 test("redirect to login page", () => {
 	renderRoute(false, false);
-	expect(screen.getByText(loginText)).toBeTruthy();
+	expect(getText(loginText)).toBeTruthy();
 });
 
 test("show private content", () => {
 	renderRoute(true, false);
-	expect(screen.getByText(privateContentText)).toBeTruthy();
+	expect(getText(privateContentText)).toBeTruthy();
 });
 
 test("show loading state", () => {
 	renderRoute(false, true);
-	expect(screen.getByText(LOADING_CURRENT_USER_TEXT)).toBeTruthy();
+	expect(getText(LOADING_CURRENT_USER_TEXT)).toBeTruthy();
 });
 
 function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
