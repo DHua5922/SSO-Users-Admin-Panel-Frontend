@@ -11,6 +11,8 @@ import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_ROLE_BUTTON_TEXT,
 	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
+	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	UPDATE_ROLE_BUTTON_TEXT,
 } from "../../constants/button";
 import { ADD_ROLE_MODAL_TITLE, ROLES_API_ROUTE } from "../../constants/general";
@@ -75,7 +77,10 @@ async function addRole(page: Page) {
 }
 
 async function editRole(page: Page) {
-	const editRoleButton = getButton(page, `Edit role ${newRole.name}`);
+	const editRoleButton = getButton(
+		page,
+		`${EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${newRole.name}`,
+	);
 	await expect(editRoleButton).toBeVisible();
 	await editRoleButton.click();
 
@@ -111,7 +116,10 @@ async function editRole(page: Page) {
 }
 
 async function deleteRole(page: Page) {
-	const deleteRoleButton = getButton(page, `Delete role ${updatedRole.name}`);
+	const deleteRoleButton = getButton(
+		page,
+		`${DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${updatedRole.name}`,
+	);
 	await expect(deleteRoleButton).toBeVisible();
 	await deleteRoleButton.click();
 

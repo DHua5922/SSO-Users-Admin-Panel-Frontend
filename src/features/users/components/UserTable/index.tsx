@@ -1,6 +1,11 @@
 import type { HTMLAttributes } from "react";
 import Button from "../../../../shared/components/Button";
 import Icon from "../../../../shared/components/Icon";
+import {
+	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
+} from "../../constants/button";
+import { USERS_TABLE_ARIA_LABEL } from "../../constants/general";
 import type { User } from "../../schemas";
 import UserTableHeaders from "../UserTableHeaders";
 
@@ -17,7 +22,7 @@ export default function UserTable({
 	...props
 }: Props) {
 	return (
-		<table {...props}>
+		<table aria-label={USERS_TABLE_ARIA_LABEL} {...props}>
 			<UserTableHeaders />
 
 			<tbody>
@@ -30,14 +35,14 @@ export default function UserTable({
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickEditUser(user)}
-								aria-label={`button that show popup for editing ${user.username}`}
+								aria-label={`${EDIT_USER_BUTTON_ARIA_LABEL_PREFIX} ${user.username}`}
 							>
 								<Icon name="edit" />
 							</Button>,
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickDeleteUser(user)}
-								aria-label={`button that show popup for deleting ${user.username}`}
+								aria-label={`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${user.username}`}
 							>
 								<Icon name="delete" />
 							</Button>,

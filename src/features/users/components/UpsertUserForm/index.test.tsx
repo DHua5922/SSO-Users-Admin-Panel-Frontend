@@ -41,6 +41,10 @@ test("shows validation errors", async () => {
 	expect(await findRoleErrorMessage()).toBeTruthy();
 	expect(await findEmailErrorMessage()).toBeTruthy();
 	expect(queryNoMatchingPasswordsErrorMessage()).not.toBeTruthy();
+	expect(getUsernameLabel().getAttribute("aria-invalid")).toBe("true");
+	expect(getUsernameLabel().getAttribute("aria-describedby")).toBe(
+		"username-input-error",
+	);
 	await expectNoAccessibilityViolations();
 });
 

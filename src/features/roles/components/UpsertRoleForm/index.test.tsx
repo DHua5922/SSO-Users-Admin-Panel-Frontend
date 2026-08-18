@@ -29,6 +29,10 @@ test("shows validation errors", async () => {
 	await event.click(submitButton);
 
 	expect(await findNameErrorMessage()).toBeTruthy();
+	expect(getNameLabel().getAttribute("aria-invalid")).toBe("true");
+	expect(getNameLabel().getAttribute("aria-describedby")).toBe(
+		"name-input-error",
+	);
 	await expectNoAccessibilityViolations();
 });
 

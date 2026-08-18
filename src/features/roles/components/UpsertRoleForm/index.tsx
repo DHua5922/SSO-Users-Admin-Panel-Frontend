@@ -74,6 +74,8 @@ export default function UpsertRoleForm({
 
 	const nameInputId = "name-input";
 	const descriptionInputId = "description-input";
+	const nameErrorMessage = errors.name?.message || "";
+	const descriptionErrorMessage = errors.description?.message || "";
 
 	return (
 		<form
@@ -85,17 +87,32 @@ export default function UpsertRoleForm({
 				label={UPSERT_ROLE_FORM_NAME_LABEL}
 				htmlFor={nameInputId}
 				required
-				errorMessage={errors.name?.message || ""}
+				errorMessage={nameErrorMessage}
 			>
-				<input {...register("name")} id={nameInputId} />
+				<input
+					{...register("name")}
+					id={nameInputId}
+					aria-required="true"
+					aria-invalid={Boolean(nameErrorMessage)}
+					aria-describedby={
+						nameErrorMessage ? `${nameInputId}-error` : undefined
+					}
+				/>
 			</Field>
 
 			<Field
 				label={UPSERT_ROLE_FORM_DESCRIPTION_LABEL}
 				htmlFor={descriptionInputId}
-				errorMessage={errors.description?.message || ""}
+				errorMessage={descriptionErrorMessage}
 			>
-				<textarea {...register("description")} id={descriptionInputId} />
+				<textarea
+					{...register("description")}
+					id={descriptionInputId}
+					aria-invalid={Boolean(descriptionErrorMessage)}
+					aria-describedby={
+						descriptionErrorMessage ? `${descriptionInputId}-error` : undefined
+					}
+				/>
 			</Field>
 
 			<Button

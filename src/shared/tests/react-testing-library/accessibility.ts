@@ -7,7 +7,14 @@ export async function expectNoAccessibilityViolations(
 	const results = await axe.run(context, {
 		runOnly: {
 			type: "tag",
-			values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
+			values: [
+				"wcag2a",
+				"wcag2aa",
+				"wcag21a",
+				"wcag21aa",
+				"wcag22a",
+				"wcag22aa",
+			],
 		},
 		// JSDOM does not calculate layout or computed colors. Playwright covers
 		// color contrast in a real browser.

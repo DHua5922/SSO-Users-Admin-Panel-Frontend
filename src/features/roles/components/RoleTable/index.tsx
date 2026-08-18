@@ -2,6 +2,11 @@ import type { HTMLAttributes } from "react";
 import Button from "../../../../shared/components/Button";
 import Icon from "../../../../shared/components/Icon";
 import type { Role } from "../../../../shared/schemas";
+import {
+	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
+} from "../../constants/button";
+import { ROLES_TABLE_ARIA_LABEL } from "../../constants/general";
 import RoleTableHeaders from "../RoleTableHeaders";
 
 interface Props extends HTMLAttributes<HTMLTableElement> {
@@ -17,7 +22,7 @@ export default function RoleTable({
 	...props
 }: Props) {
 	return (
-		<table {...props}>
+		<table aria-label={ROLES_TABLE_ARIA_LABEL} {...props}>
 			<RoleTableHeaders />
 
 			<tbody>
@@ -30,7 +35,7 @@ export default function RoleTable({
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickEditRole(role)}
-								aria-label={`Edit role ${role.name}`}
+								aria-label={`${EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${role.name}`}
 							>
 								<Icon name="edit" />
 							</Button>,
@@ -38,7 +43,7 @@ export default function RoleTable({
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickDeleteRole(role)}
-								aria-label={`Delete role ${role.name}`}
+								aria-label={`${DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${role.name}`}
 							>
 								<Icon name="delete" />
 							</Button>,

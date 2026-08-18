@@ -7,7 +7,11 @@ import {
 	LOGIN_PATH,
 } from "../../../features/auth/constants";
 import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
-import { HOME_PATH } from "../../../shared/constants";
+import {
+	HOME_PATH,
+	MAIN_CONTENT_ID,
+	SKIP_TO_MAIN_CONTENT_TEXT,
+} from "../../../shared/constants";
 import PrivateRoute from ".";
 
 vi.mock("../../../features/auth/hooks/useCurrentUser", () => ({
@@ -20,6 +24,17 @@ const loginText = "Login";
 test("show private content", () => {
 	renderRoute(true, false);
 	expect(screen.getByText(privateContentText)).toBeTruthy();
+});
+
+test("provides a link to skip repeated navigation", () => {
+	renderRoute(true, false);
+
+	const skipLink = screen.getByRole("link", {
+		name: SKIP_TO_MAIN_CONTENT_TEXT,
+	});
+	const main = screen.getByRole("main");
+	expect(skipLink.getAttribute("href")).toBe(`#${MAIN_CONTENT_ID}`);
+	expect(main.id).toBe(MAIN_CONTENT_ID);
 });
 
 test("redirect to login page", () => {

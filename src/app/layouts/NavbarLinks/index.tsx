@@ -61,7 +61,7 @@ export default function NavbarLinks({ username, ...props }: Props) {
 						aria-label={CURRENT_USER_TOGGLE_ARIA_LABEL}
 					>
 						{username}
-						<ChevronDown />
+						<ChevronDown aria-hidden="true" />
 					</MenuComponent.Toggle>
 
 					<MenuComponent.Content>

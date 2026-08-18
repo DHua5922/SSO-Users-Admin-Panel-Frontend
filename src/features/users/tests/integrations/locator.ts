@@ -5,6 +5,8 @@ import {
 import {
 	ADD_USER_BUTTON_TEXT,
 	CONFIRM_DELETE_USER_BUTTON_TEXT,
+	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
 } from "../../constants/button";
 
 export function getAddUserButton(container?: HTMLElement) {
@@ -16,7 +18,7 @@ export function findShowEditUserModalButton(
 	container?: HTMLElement,
 ) {
 	return findButton(
-		`button that show popup for editing ${username}`,
+		`${EDIT_USER_BUTTON_ARIA_LABEL_PREFIX} ${username}`,
 		container,
 	);
 }
@@ -25,7 +27,7 @@ export function findShowDeleteUserModalButton(
 	container?: HTMLElement,
 ) {
 	return findButton(
-		`button that show popup for deleting ${username}`,
+		`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${username}`,
 		container,
 	);
 }

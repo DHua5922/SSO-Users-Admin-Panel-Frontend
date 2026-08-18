@@ -12,6 +12,8 @@ import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_USER_BUTTON_TEXT,
 	CONFIRM_DELETE_USER_BUTTON_TEXT,
+	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
+	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
 	UPDATE_USER_BUTTON_TEXT,
 } from "../../constants/button";
 import { ADD_USER_MODAL_TITLE, USERS_API_ROUTE } from "../../constants/general";
@@ -75,7 +77,7 @@ test("edit user", async ({ page }) => {
 
 	const editUserButton = getButton(
 		page,
-		`button that show popup for editing ${newUser.username}`,
+		`${EDIT_USER_BUTTON_ARIA_LABEL_PREFIX} ${newUser.username}`,
 	);
 	await expect(editUserButton).toBeVisible();
 	await editUserButton.click();
@@ -105,7 +107,7 @@ test("edit user", async ({ page }) => {
 
 	const deleteUserButton = getButton(
 		page,
-		`button that show popup for deleting ${updatedUser.username}`,
+		`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${updatedUser.username}`,
 	);
 	await expect(deleteUserButton).toBeVisible();
 	await deleteUserButton.click();

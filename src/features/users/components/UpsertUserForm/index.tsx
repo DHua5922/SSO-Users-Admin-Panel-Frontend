@@ -103,6 +103,13 @@ export default function UpsertUserForm({
 	const roleSelectId = "role-select";
 	const passwordInputId = "password-input";
 	const confirmPasswordInputId = "confirm-password-input";
+	const usernameErrorMessage = errors.username?.message || "";
+	const roleErrorMessage = roleSelect.isError
+		? roleSelect.errorMessage
+		: errors.role?.message || "";
+	const emailErrorMessage = errors.email?.message || "";
+	const passwordErrorMessage = errors.password?.message || "";
+	const confirmPasswordErrorMessage = errors.confirmPassword?.message || "";
 
 	const areRolesUnavailable =
 		roleSelect.isLoading || roleSelect.isError || roleSelect.list.length === 0;
@@ -117,24 +124,33 @@ export default function UpsertUserForm({
 				label={UPSERT_USER_FORM_USERNAME_LABEL}
 				htmlFor={usernameInputId}
 				required
-				errorMessage={errors.username?.message || ""}
+				errorMessage={usernameErrorMessage}
 			>
-				<input {...register("username")} id={usernameInputId} />
+				<input
+					{...register("username")}
+					id={usernameInputId}
+					aria-required="true"
+					aria-invalid={Boolean(usernameErrorMessage)}
+					aria-describedby={
+						usernameErrorMessage ? `${usernameInputId}-error` : undefined
+					}
+				/>
 			</Field>
 
 			<Field
 				label={UPSERT_USER_FORM_ROLE_LABEL}
 				htmlFor={roleSelectId}
 				required
-				errorMessage={
-					roleSelect.isError
-						? roleSelect.errorMessage
-						: errors.role?.message || ""
-				}
+				errorMessage={roleErrorMessage}
 			>
 				<RoleSelect
 					{...register("role")}
 					id={roleSelectId}
+					aria-required="true"
+					aria-invalid={Boolean(roleErrorMessage)}
+					aria-describedby={
+						roleErrorMessage ? `${roleSelectId}-error` : undefined
+					}
 					isLoading={roleSelect.isLoading}
 					list={roleSelect.list}
 					disabled={roleSelect.isError || roleSelect.list.length === 0}
@@ -146,30 +162,53 @@ export default function UpsertUserForm({
 				label={UPSERT_USER_FORM_EMAIL_LABEL}
 				htmlFor={emailInputId}
 				required
-				errorMessage={errors.email?.message || ""}
+				errorMessage={emailErrorMessage}
 			>
-				<input {...register("email")} id={emailInputId} type="email" />
+				<input
+					{...register("email")}
+					id={emailInputId}
+					type="email"
+					aria-required="true"
+					aria-invalid={Boolean(emailErrorMessage)}
+					aria-describedby={
+						emailErrorMessage ? `${emailInputId}-error` : undefined
+					}
+				/>
 			</Field>
 
 			<Field
 				label={UPSERT_USER_FORM_PASSWORD_LABEL}
 				required={!isEditing}
-				errorMessage={errors.password?.message || ""}
+				errorMessage={passwordErrorMessage}
 				htmlFor={passwordInputId}
 			>
-				<input {...register("password")} id={passwordInputId} type="password" />
+				<input
+					{...register("password")}
+					id={passwordInputId}
+					type="password"
+					aria-invalid={Boolean(passwordErrorMessage)}
+					aria-describedby={
+						passwordErrorMessage ? `${passwordInputId}-error` : undefined
+					}
+				/>
 			</Field>
 
 			<Field
 				label={UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL}
 				required={!isEditing}
-				errorMessage={errors.confirmPassword?.message || ""}
+				errorMessage={confirmPasswordErrorMessage}
 				htmlFor={confirmPasswordInputId}
 			>
 				<input
 					{...register("confirmPassword")}
 					id={confirmPasswordInputId}
 					type="password"
+					aria-invalid={Boolean(confirmPasswordErrorMessage)}
+					aria-describedby={
+						confirmPasswordErrorMessage
+							? `${confirmPasswordInputId}-error`
+							: undefined
+					}
 				/>
 			</Field>
 

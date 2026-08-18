@@ -23,12 +23,19 @@ export function queryText(text: string, boundary?: HTMLElement) {
 }
 
 export function getLabel(text: string, boundary?: HTMLElement) {
-	const regex = new RegExp(`^${regexMatch(text).source}(?:\\s*\\*)?$`, "i");
+	const regex = labelRegex(text);
 	return element(boundary).getByLabelText(regex);
 }
 export function findLabel(text: string, boundary?: HTMLElement) {
-	const regex = new RegExp(`^${regexMatch(text).source}(?:\\s*\\*)?$`, "i");
+	const regex = labelRegex(text);
 	return element(boundary).findByLabelText(regex);
+}
+
+function labelRegex(text: string) {
+	return new RegExp(
+		`^${regexMatch(text).source}(?:\\s*\\*)?(?:\\s*\\(required\\))?$`,
+		"i",
+	);
 }
 
 export function findButton(text: string, boundary?: HTMLElement) {
