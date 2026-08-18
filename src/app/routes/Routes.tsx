@@ -7,6 +7,7 @@ import Alerts from "../../shared/components/Alerts";
 import PageLoader from "../../shared/components/PageLoader";
 import { HOME_PATH } from "../../shared/constants";
 import useStatusStore from "../../shared/useStatusStore";
+import NotFoundPage from "./NotFoundPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -39,6 +40,8 @@ export default function Routes() {
 				<Route element={<PublicRoute />}>
 					<Route path={LOGIN_PATH} element={<LoginPage />} />
 				</Route>
+
+				<Route path="*" element={<NotFoundPage />} />
 			</DefaultRoutes>
 		</Suspense>
 	);
