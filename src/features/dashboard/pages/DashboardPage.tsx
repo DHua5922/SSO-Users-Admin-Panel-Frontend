@@ -15,10 +15,10 @@ export default function DashboardPage() {
 	return (
 		<div className="flex flex-col max-w-[1000px] w-full mx-auto py-8 px-4 gap-4">
 			<h1 className="text-4xl font-bold">{DASHBOARD_HEADER}</h1>
-			<h3 className="text-lg">
+			<h2 className="text-lg">
 				Welcome to the dashboard! This is where you can manage your users and
 				view important information.
-			</h3>
+			</h2>
 
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<StatView
