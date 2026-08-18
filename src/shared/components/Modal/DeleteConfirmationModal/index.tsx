@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
-import Button from "../Button";
-import Modal from "./Modal";
+import Button from "../../Button";
+import Modal from "../Modal";
 
 interface Props extends ComponentProps<typeof Modal> {
 	onClickDelete: () => void;

@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from "react";
-import Button from "../../../shared/components/Button";
-import Icon from "../../../shared/components/Icon";
-import type { User } from "../schemas";
-import UserTableHeaders from "./UserTableHeaders";
+import Button from "../../../../shared/components/Button";
+import Icon from "../../../../shared/components/Icon";
+import type { User } from "../../schemas";
+import UserTableHeaders from "../UserTableHeaders";
 
 interface Props extends HTMLAttributes<HTMLTableElement> {
 	list: User[];

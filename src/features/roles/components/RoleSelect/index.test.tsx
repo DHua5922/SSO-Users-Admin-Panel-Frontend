@@ -3,11 +3,17 @@ import {
 	DEFAULT_ROLE_SELECT_OPTION,
 	LOADING_ROLES_TEXT,
 } from "../../../../shared/constants";
+import { expectNoAccessibilityViolations } from "../../../../shared/tests/react-testing-library/accessibility";
 import {
 	getSelect,
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import RoleSelect from ".";
+
+const roles = [
+	{ _id: "1", name: "Admin", description: "Admin role" },
+	{ _id: "2", name: "User", description: "User role" },
+];
 
 test("renders loading state", () => {
 	render(<RoleSelect isLoading={true} list={[]} />);
@@ -18,10 +24,6 @@ test("renders loading state", () => {
 });
 
 test("renders list of roles", () => {
-	const roles = [
-		{ _id: "1", name: "Admin", description: "Admin role" },
-		{ _id: "2", name: "User", description: "User role" },
-	];
 	const roleNames = roles.map((role) => role.name);
 
 	render(<RoleSelect isLoading={false} list={roles} />);
@@ -30,3 +32,17 @@ test("renders list of roles", () => {
 		expect(getText(text)).toBeTruthy();
 	});
 });
+
+test.each([true, false])(
+	"has no automatically detectable accessibility violations",
+	async (isLoading) => {
+		render(
+			<RoleSelect
+				aria-label="Choose role"
+				isLoading={isLoading}
+				list={isLoading ? [] : roles}
+			/>,
+		);
+		await expectNoAccessibilityViolations();
+	},
+);

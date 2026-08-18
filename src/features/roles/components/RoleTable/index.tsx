@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from "react";
-import Button from "../../../shared/components/Button";
-import Icon from "../../../shared/components/Icon";
-import type { Role } from "../../../shared/schemas";
-import RoleTableHeaders from "./RoleTableHeaders";
+import Button from "../../../../shared/components/Button";
+import Icon from "../../../../shared/components/Icon";
+import type { Role } from "../../../../shared/schemas";
+import RoleTableHeaders from "../RoleTableHeaders";
 
 interface Props extends HTMLAttributes<HTMLTableElement> {
 	list: Role[];
@@ -26,6 +26,7 @@ export default function RoleTable({
 						{[
 							role.name,
 							role.description,
+
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickEditRole(role)}
@@ -33,6 +34,7 @@ export default function RoleTable({
 							>
 								<Icon name="edit" />
 							</Button>,
+
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickDeleteRole(role)}

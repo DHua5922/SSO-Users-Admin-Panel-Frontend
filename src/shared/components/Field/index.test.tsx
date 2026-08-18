@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
 import {
 	getLabel,
 	getText,
@@ -27,6 +28,17 @@ test("renders field with error message", () => {
 	expect(getText(requiredIndicator)).toBeTruthy();
 	expect(getText(errorMessage)).toBeTruthy();
 });
+
+test.each([
+	{ required: false, errorMessage: "" },
+	{ required: true, errorMessage: "This field is required" },
+])(
+	"has no automatically detectable accessibility violations",
+	async ({ required, errorMessage }) => {
+		renderField(required, errorMessage);
+		await expectNoAccessibilityViolations();
+	},
+);
 
 function renderField(required: boolean, errorMessage: string) {
 	const inputId = "input";

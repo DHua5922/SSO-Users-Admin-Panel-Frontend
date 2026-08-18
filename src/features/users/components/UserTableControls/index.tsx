@@ -1,9 +1,9 @@
 import { type HTMLAttributes, useId } from "react";
-import Button from "../../../shared/components/Button";
-import Field from "../../../shared/components/Field";
-import type { Role } from "../../../shared/schemas";
-import RoleSelect from "../../roles/components/RoleSelect";
-import { SEARCH_USERS_ARIA_LABEL } from "../constants/input";
+import Button from "../../../../shared/components/Button";
+import Field from "../../../../shared/components/Field";
+import type { Role } from "../../../../shared/schemas";
+import RoleSelect from "../../../roles/components/RoleSelect";
+import { SEARCH_USERS_ARIA_LABEL } from "../../constants/input";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	searchBarProps: HTMLAttributes<HTMLInputElement>;

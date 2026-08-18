@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { expectNoAccessibilityViolations } from "../../../../shared/tests/react-testing-library/accessibility";
 import { getButton } from "../../../../shared/tests/react-testing-library/locator";
 import {
 	getDescriptionLabel,
@@ -28,6 +29,12 @@ test("shows validation errors", async () => {
 	await event.click(submitButton);
 
 	expect(await findNameErrorMessage()).toBeTruthy();
+	await expectNoAccessibilityViolations();
+});
+
+test("has no automatically detectable accessibility violations", async () => {
+	await renderForm({ submitButtonText });
+	await expectNoAccessibilityViolations();
 });
 
 test("submit by pressing enter on keyboard", async () => {

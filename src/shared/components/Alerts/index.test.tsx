@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CLOSE_ALERT_BUTTON_TEXT } from "../../constants";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
 import {
 	getButton,
 	getText,
@@ -9,17 +10,22 @@ import {
 import type { Alert } from "../../types";
 import Alerts from ".";
 
-test("shows alerts", () => {
-	const alerts: Alert[] = [
-		{ id: "1", variant: "success", message: "Success alert" },
-		{ id: "2", variant: "danger", message: "Danger alert" },
-	];
+const alerts: Alert[] = [
+	{ id: "1", variant: "success", message: "Saved successfully" },
+	{ id: "2", variant: "danger", message: "Could not save" },
+];
 
+test("shows alerts", () => {
 	renderAlerts(alerts);
 
 	alerts.forEach((alert) => {
 		expect(getText(alert.message)).toBeTruthy();
 	});
+});
+
+test("has no automatically detectable accessibility violations", async () => {
+	renderAlerts(alerts);
+	await expectNoAccessibilityViolations();
 });
 
 test("does not show alerts when list is empty", () => {
@@ -28,14 +34,11 @@ test("does not show alerts when list is empty", () => {
 });
 
 test("calls onRemoveAlert when clicking on the close button", async () => {
-	const alerts: Alert[] = [
-		{ id: "1", variant: "danger", message: "danger alert" },
-	];
-	const { onRemoveAlert, event } = renderAlerts(alerts);
+	const { onRemoveAlert, event } = renderAlerts([alerts[1]]);
 
 	await event.click(getButton(CLOSE_ALERT_BUTTON_TEXT));
 
-	expect(onRemoveAlert).toHaveBeenCalledWith(alerts[0].id);
+	expect(onRemoveAlert).toHaveBeenCalledWith(alerts[1].id);
 });
 
 function renderAlerts(alerts: Alert[]) {

@@ -1,10 +1,10 @@
 import ListView from "../../../shared/components/ListView/index.tsx";
-import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal.tsx";
-import Modal from "../../../shared/components/Modal/Modal.tsx";
+import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal/index.tsx";
+import Modal from "../../../shared/components/Modal/Modal/index.tsx";
 import useRoles from "../../roles/hooks/useRoles.ts";
 import UpsertUserForm from "../components/UpsertUserForm/index.tsx";
-import UserTable from "../components/UserTable.tsx";
-import UserTableControls from "../components/UserTableControls.tsx";
+import UserTable from "../components/UserTable/index.tsx";
+import UserTableControls from "../components/UserTableControls/index.tsx";
 import UserTableSkeleton from "../components/UserTableSkeleton.tsx";
 import { CONFIRM_DELETE_USER_BUTTON_TEXT } from "../constants/button";
 import { EMPTY_USERS_MESSAGE } from "../constants/message";

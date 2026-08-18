@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { expectNoAccessibilityViolations } from "../../../../shared/tests/react-testing-library/accessibility";
 import { getButton } from "../../../../shared/tests/react-testing-library/locator";
 import { LOGIN_LOADING_TEXT, LOGIN_TEXT } from "../../constants";
 import {
@@ -11,6 +12,11 @@ import LoginForm from ".";
 test("shows loading state", async () => {
 	const { button } = await renderLoginForm(true, LOGIN_LOADING_TEXT);
 	expect(button).toBeTruthy();
+});
+
+test("has no automatically detectable accessibility violations", async () => {
+	await renderLoginForm(false, LOGIN_TEXT);
+	await expectNoAccessibilityViolations();
 });
 
 test("submit by pressing enter on keyboard", async () => {
