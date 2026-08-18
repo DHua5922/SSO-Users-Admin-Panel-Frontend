@@ -5,8 +5,7 @@ export default function PageLoader({
 	className = "",
 	...props
 }: HTMLAttributes<HTMLDivElement>) {
-	const formattedClassName =
-		`h-screen justify-center flex-1 flex items-center gap-6 ${className}`.trim();
+	const formattedClassName = `h-screen center flex-1 gap-6 ${className}`.trim();
 	return (
 		<div
 			role="status"
