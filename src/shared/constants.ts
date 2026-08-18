@@ -11,8 +11,6 @@ export const MOBILE_NAVIGATION_ARIA_LABEL = "Mobile navigation menu";
 export const MOBILE_NAVIGATION_ID = "mobile-navigation";
 
 export const APP_LOGO_ALT_TEXT = "SSO Users Admin Panel home";
-export const MAIN_CONTENT_ID = "main-content";
-export const SKIP_TO_MAIN_CONTENT_TEXT = "Skip to main content";
 export const REQUIRED_FIELD_ACCESSIBLE_TEXT = "(required)";
 
 export const HOME_PATH = "/";

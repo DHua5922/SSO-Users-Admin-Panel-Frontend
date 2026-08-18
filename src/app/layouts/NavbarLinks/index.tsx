@@ -20,7 +20,7 @@ interface Props extends HTMLAttributes<HTMLUListElement> {
 	username: string;
 }
 
-function useLinks() {
+function useLogout() {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
@@ -38,7 +38,7 @@ function useLinks() {
 }
 
 export default function NavbarLinks({ username, ...props }: Props) {
-	const onLogOut = useLinks();
+	const onLogOut = useLogout();
 
 	return (
 		<ul {...props}>
@@ -64,7 +64,7 @@ export default function NavbarLinks({ username, ...props }: Props) {
 						<ChevronDown aria-hidden="true" />
 					</MenuComponent.Toggle>
 
-					<MenuComponent.Content>
+					<MenuComponent.Content className={styles["menu-content"]}>
 						<MenuComponent.Item
 							className={styles["menu-item"]}
 							onClick={onLogOut}

@@ -3,11 +3,28 @@
 :root {
 	--light-color: #ffffff;
 	--dark-color: #071b42;
+	--surface-color: #ffffff;
+	--surface-border-color: #e5e7eb;
+	--surface-shadow-color: #d1d5db;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+	--light-color: #071b42;
+	--dark-color: #f8fafc;
+	--surface-color: #0f264f;
+	--surface-border-color: #334a73;
+	--surface-shadow-color: #020617;
 }
 
 * {
 	box-sizing: border-box;
 	font-family: "Barlow", sans-serif;
+}
+
+body {
+	background-color: var(--light-color);
+	color: var(--dark-color);
 }
 
 @layer components {
@@ -19,7 +36,10 @@
 	}
 
 	.card {
-		@apply rounded-lg border border-gray-200 bg-white shadow-xl shadow-gray-300;
+		@apply rounded-lg border shadow-xl;
+		background-color: var(--surface-color);
+		border-color: var(--surface-border-color);
+		box-shadow: 0 20px 25px -5px var(--surface-shadow-color);
 	}
 
 	.center {
@@ -65,6 +85,7 @@ label {
 input,
 select,
 textarea {
+	background-color: var(--surface-color);
 	border: 1px solid var(--dark-color);
 	padding: 8px;
 	border-radius: 4px;

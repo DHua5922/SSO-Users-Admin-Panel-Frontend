@@ -4,7 +4,7 @@ import Button from "../../shared/components/Button";
 export default function NotFoundPage() {
 	const navigate = useNavigate();
 	return (
-		<div className="h-screen flex flex-col gap-8 justify-center items-center">
+		<div className="h-screen center flex-col gap-8">
 			<h1 className="text-4xl font-bold">404 - Page Not Found</h1>
 			<Button onClick={() => navigate(-1)}>Back</Button>
 		</div>

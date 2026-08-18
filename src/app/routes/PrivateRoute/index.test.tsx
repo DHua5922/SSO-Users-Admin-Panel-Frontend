@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
 import {
@@ -7,11 +8,18 @@ import {
 	LOGIN_PATH,
 } from "../../../features/auth/constants";
 import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
+import { HOME_PATH } from "../../../shared/constants";
 import {
-	HOME_PATH,
-	MAIN_CONTENT_ID,
-	SKIP_TO_MAIN_CONTENT_TEXT,
-} from "../../../shared/constants";
+	getButton,
+	getText,
+} from "../../../shared/tests/react-testing-library/locator";
+import {
+	DARK_MODE_TEXT,
+	DARK_THEME,
+	LIGHT_THEME,
+	THEME_ATTRIBUTE_NAME,
+	THEME_STORAGE_KEY,
+} from "../../constants";
 import PrivateRoute from ".";
 
 vi.mock("../../../features/auth/hooks/useCurrentUser", () => ({
@@ -23,28 +31,36 @@ const loginText = "Login";
 
 test("show private content", () => {
 	renderRoute(true, false);
-	expect(screen.getByText(privateContentText)).toBeTruthy();
+	expect(getText(privateContentText)).toBeTruthy();
 });
 
-test("provides a link to skip repeated navigation", () => {
+test("toggles and stores the color theme", async () => {
+	localStorage.setItem(THEME_STORAGE_KEY, LIGHT_THEME);
+	const event = userEvent.setup();
 	renderRoute(true, false);
 
-	const skipLink = screen.getByRole("link", {
-		name: SKIP_TO_MAIN_CONTENT_TEXT,
-	});
-	const main = screen.getByRole("main");
-	expect(skipLink.getAttribute("href")).toBe(`#${MAIN_CONTENT_ID}`);
-	expect(main.id).toBe(MAIN_CONTENT_ID);
+	const themeButton = getButton(DARK_MODE_TEXT);
+	expect(themeButton.getAttribute("aria-pressed")).toBe("false");
+	await event.click(themeButton);
+
+	expect(document.documentElement.getAttribute(THEME_ATTRIBUTE_NAME)).toBe(
+		DARK_THEME,
+	);
+	expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe(DARK_THEME);
+	expect(themeButton.getAttribute("aria-pressed")).toBe("true");
+
+	localStorage.removeItem(THEME_STORAGE_KEY);
+	document.documentElement.removeAttribute(THEME_ATTRIBUTE_NAME);
 });
 
 test("redirect to login page", () => {
 	renderRoute(false, false);
-	expect(screen.getByText(loginText)).toBeTruthy();
+	expect(getText(loginText)).toBeTruthy();
 });
 
 test("show loading state", () => {
 	renderRoute(false, true);
-	expect(screen.getByText(LOADING_CURRENT_USER_TEXT)).toBeTruthy();
+	expect(getText(LOADING_CURRENT_USER_TEXT)).toBeTruthy();
 });
 
 function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
