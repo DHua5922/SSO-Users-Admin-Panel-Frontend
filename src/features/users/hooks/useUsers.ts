@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
-import { parseError } from "../../../shared/utilities";
+import { parseError } from "../../../shared/utilities/parseError";
 import { getUsersApi } from "../api";
 import { USERS_QUERY_KEY } from "../constants/general";
 import type { User } from "../schemas";
-import useUserStore from "../useUserStore";
+import useUserManagementStore from "../store/useUserManagementStore";
 import { filterUsers } from "../utilities/filterUsers";
 
 export default function useUsers(searchInput: string, chosenRoleId: string) {
 	const { setShowUpsertUserModal, setShowDeleteUserModal, setChosenUser } =
-		useUserStore(
+		useUserManagementStore(
 			useShallow((state) => ({
 				setShowUpsertUserModal: state.setShowUpsertUserModal,
 				setShowDeleteUserModal: state.setShowDeleteUserModal,

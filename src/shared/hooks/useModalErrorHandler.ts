@@ -1,8 +1,8 @@
-import useStatusStore from "../useStatusStore";
-import { parseError } from "../utilities";
+import useAlertStore from "../store/useAlertStore";
+import { parseError } from "../utilities/parseError";
 
 export default function useModalErrorHandler() {
-	const addModalAlert = useStatusStore((state) => state.addModalAlert);
+	const addModalAlert = useAlertStore((state) => state.addModalAlert);
 
 	return (err: unknown) => {
 		addModalAlert({

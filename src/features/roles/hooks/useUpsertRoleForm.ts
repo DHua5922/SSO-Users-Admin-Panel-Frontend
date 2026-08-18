@@ -8,16 +8,17 @@ import {
 } from "../constants/button";
 import { ROLES_QUERY_KEY } from "../constants/general";
 import type { UpsertRoleFormData } from "../schemas";
-import useRoleStore from "../useRoleStore";
+import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useUpsertRoleForm() {
-	const { setShowUpsertRoleModal, chosenRole, resetChosenRole } = useRoleStore(
-		useShallow((state) => ({
-			setShowUpsertRoleModal: state.setShowUpsertRoleModal,
-			chosenRole: state.chosenRole,
-			resetChosenRole: state.resetChosenRole,
-		})),
-	);
+	const { setShowUpsertRoleModal, chosenRole, resetChosenRole } =
+		useRoleManagementStore(
+			useShallow((state) => ({
+				setShowUpsertRoleModal: state.setShowUpsertRoleModal,
+				chosenRole: state.chosenRole,
+				resetChosenRole: state.resetChosenRole,
+			})),
+		);
 	const queryClient = useQueryClient();
 
 	const { mutate, isPending } = useMutation({

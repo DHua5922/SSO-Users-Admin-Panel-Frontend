@@ -3,11 +3,11 @@ import { useShallow } from "zustand/react/shallow";
 import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
 import { deleteRoleApi } from "../api";
 import { ROLES_QUERY_KEY } from "../constants/general";
-import useRoleStore from "../useRoleStore";
+import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useDeleteRoleModal() {
 	const { chosenRole, showDeleteRoleModal, setShowDeleteRoleModal } =
-		useRoleStore(
+		useRoleManagementStore(
 			useShallow((state) => ({
 				chosenRole: state.chosenRole,
 				showDeleteRoleModal: state.showDeleteRoleModal,

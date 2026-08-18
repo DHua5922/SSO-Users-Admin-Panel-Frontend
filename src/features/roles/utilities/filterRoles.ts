@@ -1,4 +1,4 @@
-import type { Role } from "../../../shared/schemas";
+import type { Role } from "../schemas";
 
 export function filterRoles(list: Role[], searchInput: string) {
 	return list.filter((role) => {

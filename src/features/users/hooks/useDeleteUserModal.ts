@@ -3,11 +3,11 @@ import { useShallow } from "zustand/react/shallow";
 import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
 import { deleteUserApi } from "../api";
 import { USERS_QUERY_KEY } from "../constants/general";
-import useUserStore from "../useUserStore";
+import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useDeleteUserModal() {
 	const { chosenUser, showDeleteUserModal, setShowDeleteUserModal } =
-		useUserStore(
+		useUserManagementStore(
 			useShallow((state) => ({
 				chosenUser: state.chosenUser,
 				showDeleteUserModal: state.showDeleteUserModal,

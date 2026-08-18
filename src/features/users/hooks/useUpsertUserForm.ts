@@ -8,16 +8,17 @@ import {
 } from "../constants/button";
 import { USERS_QUERY_KEY } from "../constants/general";
 import type { UpsertUserFormData } from "../schemas";
-import useUserStore from "../useUserStore";
+import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useUpsertUserForm() {
-	const { setShowUpsertUserModal, chosenUser, resetChosenUser } = useUserStore(
-		useShallow((state) => ({
-			setShowUpsertUserModal: state.setShowUpsertUserModal,
-			chosenUser: state.chosenUser,
-			resetChosenUser: state.resetChosenUser,
-		})),
-	);
+	const { setShowUpsertUserModal, chosenUser, resetChosenUser } =
+		useUserManagementStore(
+			useShallow((state) => ({
+				setShowUpsertUserModal: state.setShowUpsertUserModal,
+				chosenUser: state.chosenUser,
+				resetChosenUser: state.resetChosenUser,
+			})),
+		);
 	const queryClient = useQueryClient();
 
 	const { mutate, isPending } = useMutation({

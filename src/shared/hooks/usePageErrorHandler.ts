@@ -1,8 +1,8 @@
-import useStatusStore from "../useStatusStore";
-import { parseError } from "../utilities";
+import useAlertStore from "../store/useAlertStore";
+import { parseError } from "../utilities/parseError";
 
 export default function usePageErrorHandler() {
-	const addPageAlert = useStatusStore((state) => state.addPageAlert);
+	const addPageAlert = useAlertStore((state) => state.addPageAlert);
 
 	return (err: unknown) => {
 		addPageAlert({

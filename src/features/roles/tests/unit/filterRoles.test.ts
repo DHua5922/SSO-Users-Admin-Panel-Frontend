@@ -1,4 +1,4 @@
-import type { Role } from "../../../../shared/schemas";
+import type { Role } from "../../schemas";
 import { filterRoles } from "../../utilities/filterRoles";
 
 const roles: Role[] = [

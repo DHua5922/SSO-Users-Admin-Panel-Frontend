@@ -3,10 +3,10 @@ import {
 	BAD_REQUEST_STATUS_CODE,
 	SUCCESS_STATUS_CODE,
 } from "../../../../shared/constants";
-import type { Role } from "../../../../shared/schemas";
 import { server } from "../../../../shared/tests/vitest.setup";
 import { ROLES_API_ROUTE } from "../../constants/general";
 import { CANNOT_UPSERT_ROLE_ERROR_MESSAGE } from "../../constants/message";
+import type { Role } from "../../schemas";
 import { testRoles } from "../fixtures";
 
 const endpoint = `*${ROLES_API_ROUTE}`;

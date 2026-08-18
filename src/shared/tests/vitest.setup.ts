@@ -1,5 +1,5 @@
 import { setupServer } from "msw/node";
-import useStatusStore from "../useStatusStore";
+import useAlertStore from "../store/useAlertStore";
 
 export const server = setupServer();
 
@@ -22,7 +22,7 @@ beforeEach(() => {
 
 afterEach(() => {
 	server.resetHandlers();
-	useStatusStore.setState({ pageAlerts: [], modalAlerts: [] });
+	useAlertStore.setState({ pageAlerts: [], modalAlerts: [] });
 });
 
 afterAll(() => server.close());

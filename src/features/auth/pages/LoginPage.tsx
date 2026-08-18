@@ -6,7 +6,7 @@ import usePageErrorHandler from "../../../shared/hooks/usePageErrorHandler";
 import { logInApi, logInAsGuestApi } from "../api/auth";
 import LoginForm from "../components/LoginForm";
 
-function useLoginForm() {
+function useLoginPage() {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -39,7 +39,7 @@ function useLoginForm() {
 }
 
 export default function LoginPage() {
-	const loginForm = useLoginForm();
+	const loginForm = useLoginPage();
 	return (
 		<div className="center flex-col h-screen">
 			<LoginForm {...loginForm} />

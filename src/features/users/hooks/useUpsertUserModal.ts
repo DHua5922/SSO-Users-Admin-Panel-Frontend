@@ -1,9 +1,9 @@
 import { useShallow } from "zustand/react/shallow";
-import useUserStore from "../useUserStore";
+import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useUpsertUserModal() {
 	const { chosenUser, showUpsertUserModal, setShowUpsertUserModal } =
-		useUserStore(
+		useUserManagementStore(
 			useShallow((state) => ({
 				chosenUser: state.chosenUser,
 				showUpsertUserModal: state.showUpsertUserModal,
