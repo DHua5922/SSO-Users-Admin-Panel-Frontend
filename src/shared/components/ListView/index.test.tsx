@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
 import { getText } from "../../../shared/tests/react-testing-library/locator";
+import { LOADING_TEXT } from "../../constants";
 import ListView from ".";
 
 test("shows error message", () => {
@@ -48,7 +49,7 @@ function renderListView({
 	isLoading = false,
 	list = [] as string[],
 }) {
-	const loadingMessage = "loading...";
+	const loadingMessage = LOADING_TEXT;
 	render(
 		<ListView
 			isError={isError}
