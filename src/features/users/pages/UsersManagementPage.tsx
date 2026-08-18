@@ -31,7 +31,8 @@ export default function UsersManagementPage() {
 
 			<div className="card">
 				<UserTableControls
-					{...tableControls}
+					searchBarProps={tableControls.searchBarProps}
+					onClickAddUser={tableControls.onClickAddUser}
 					roleSelect={{
 						...roles,
 						...tableControls.roleSelectControlProps,

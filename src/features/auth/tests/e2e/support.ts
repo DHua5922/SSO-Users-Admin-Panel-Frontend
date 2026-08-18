@@ -1,5 +1,4 @@
 import { expect, type Page } from "@playwright/test";
-import { z } from "zod";
 import { METHOD_POST } from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import { getLabel } from "../../../../shared/tests/playwright/locator";
@@ -9,26 +8,17 @@ import {
 	LOGIN_PASSWORD_INPUT_LABEL,
 	LOGIN_PATH,
 } from "../../constants";
+import { loadPage } from "../playwright";
 import { getLoginButton } from "./locator";
 
 export async function logInTest(page: Page) {
-	const testEnvSchema = z.object({
-		VITE_FRONTEND_BASE_URL: z.url(),
-		VITE_TEST_EMAIL: z.email(),
-		VITE_TEST_PASSWORD: z.string(),
-	});
-	const testEnv = testEnvSchema.parse({
-		VITE_FRONTEND_BASE_URL: process.env.VITE_FRONTEND_BASE_URL,
-		VITE_TEST_EMAIL: process.env.VITE_TEST_EMAIL,
-		VITE_TEST_PASSWORD: process.env.VITE_TEST_PASSWORD,
-	});
 	const loginResponse = waitForApiResponse({
 		page,
 		apiEndpoint: `${AUTH_BASE_API_ROUTE}${LOGIN_PATH}`,
 		method: METHOD_POST,
 	});
 
-	await page.goto(testEnv.VITE_FRONTEND_BASE_URL);
+	const testEnv = await loadPage(page);
 
 	await getLabel(LOGIN_EMAIL_INPUT_LABEL, page).fill(testEnv.VITE_TEST_EMAIL);
 	await getLabel(LOGIN_PASSWORD_INPUT_LABEL, page).fill(
