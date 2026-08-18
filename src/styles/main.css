@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-	--primary-color: #0878ff;
 	--light-color: #ffffff;
 	--dark-color: #071b42;
 }
@@ -71,11 +70,22 @@ textarea {
 	border-radius: 4px;
 
 	&:focus-visible {
-		outline: 3px solid var(--primary-color);
+		outline: 3px solid var(--dark-color);
 	}
 }
 
 label,
 input {
 	color: var(--dark-color);
+}
+
+button {
+	&:focus-visible {
+		outline: 2px solid var(--dark-color);
+		outline-offset: 4px;
+	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
 }
