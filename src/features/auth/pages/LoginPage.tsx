@@ -3,7 +3,7 @@ import { type SubmitEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import { HOME_PATH } from "../../../shared/constants";
 import usePageErrorHandler from "../../../shared/hooks/usePageErrorHandler";
-import { logInApi } from "../api/auth";
+import { logInApi, logInAsGuestApi } from "../api/auth";
 import LoginForm from "../components/LoginForm";
 
 function useLoginForm() {
@@ -12,21 +12,28 @@ function useLoginForm() {
 	const [password, setPassword] = useState("");
 	const handlePageError = usePageErrorHandler();
 
-	const { isPending, mutate } = useMutation({
+	const loginMutation = useMutation({
 		mutationFn: logInApi,
+		onSuccess: () => navigate(HOME_PATH),
+		onError: handlePageError,
+	});
+	const guestLoginMutation = useMutation({
+		mutationFn: logInAsGuestApi,
 		onSuccess: () => navigate(HOME_PATH),
 		onError: handlePageError,
 	});
 
 	return {
-		isLoading: isPending,
+		isLoading: loginMutation.isPending,
+		isGuestLoginLoading: guestLoginMutation.isPending,
+		onGuestLogin: () => guestLoginMutation.mutate(),
 		email,
 		onChangeEmail: setEmail,
 		password,
 		onChangePassword: setPassword,
 		onSubmit: (e: SubmitEvent<HTMLFormElement>) => {
 			e.preventDefault();
-			mutate({ email, password });
+			loginMutation.mutate({ email, password });
 		},
 	};
 }

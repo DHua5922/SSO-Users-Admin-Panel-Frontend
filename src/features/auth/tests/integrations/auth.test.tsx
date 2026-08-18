@@ -11,10 +11,12 @@ import { LOGIN_PATH, LOGOUT_BUTTON_TEXT } from "../../constants";
 import {
 	findCurrentUserMenuToggleButton,
 	findEmailLabel,
+	findGuestLoginButton,
 	findLoginButton,
 	findPasswordLabel,
 } from "./locator";
 import {
+	mockGuestLoginSuccessApi,
 	mockLoginFailureApi,
 	mockLoginSuccessApi,
 	mockLogoutSuccessApi,
@@ -30,6 +32,16 @@ test("Submit login form with valid credentials", async () => {
 	mockGetMeSuccessApi();
 	await submitForm(event);
 
+	expect(await findCurrentUserMenuToggleButton()).toBeTruthy();
+});
+
+test("log in as a guest", async () => {
+	mockGuestLoginSuccessApi();
+
+	const { event } = renderApp(LOGIN_PATH);
+	await event.click(await findGuestLoginButton());
+
+	mockGetMeSuccessApi();
 	expect(await findCurrentUserMenuToggleButton()).toBeTruthy();
 });
 

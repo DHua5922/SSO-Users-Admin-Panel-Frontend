@@ -2,6 +2,8 @@ import type { HTMLAttributes } from "react";
 import Button from "../../../../shared/components/Button";
 import Field from "../../../../shared/components/Field";
 import {
+	GUEST_LOGIN_LOADING_TEXT,
+	GUEST_LOGIN_TEXT,
 	LOGIN_EMAIL_INPUT_LABEL,
 	LOGIN_LOADING_TEXT,
 	LOGIN_PASSWORD_INPUT_LABEL,
@@ -10,6 +12,8 @@ import {
 
 interface Props extends HTMLAttributes<HTMLFormElement> {
 	isLoading: boolean;
+	isGuestLoginLoading: boolean;
+	onGuestLogin: () => void;
 	email: string;
 	onChangeEmail: (email: string) => void;
 	password: string;
@@ -18,6 +22,8 @@ interface Props extends HTMLAttributes<HTMLFormElement> {
 
 export default function LoginForm({
 	isLoading,
+	isGuestLoginLoading,
+	onGuestLogin,
 	email,
 	onChangeEmail,
 	password,
@@ -62,8 +68,19 @@ export default function LoginForm({
 				isLoading={isLoading}
 				loadingText={LOGIN_LOADING_TEXT}
 				type="submit"
+				disabled={isGuestLoginLoading}
 			>
 				{LOGIN_TEXT}
+			</Button>
+
+			<Button
+				isLoading={isGuestLoginLoading}
+				loadingText={GUEST_LOGIN_LOADING_TEXT}
+				type="button"
+				disabled={isLoading}
+				onClick={onGuestLogin}
+			>
+				{GUEST_LOGIN_TEXT}
 			</Button>
 		</form>
 	);
