@@ -8,8 +8,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variants = {
-	danger: "bg-red-500 text-white",
-	success: "bg-green-500 text-white",
+	danger: "bg-red-700 text-white",
+	success: "bg-green-700 text-white",
 };
 
 export default function Alert({
