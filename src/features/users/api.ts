@@ -1,12 +1,14 @@
 import { z } from "zod";
 import { createAxiosInstance } from "../../shared/api/instance";
+import { METHOD_DELETE, METHOD_GET, METHOD_PUT } from "../../shared/constants";
+import { USERS_API_ROUTE } from "./constants/general";
 import { type UpsertUser, type User, userSchema } from "./schemas";
 
-const axios = createAxiosInstance("/api/v1/users");
+const axios = createAxiosInstance(USERS_API_ROUTE);
 
 export async function getUsersApi() {
 	const response = await axios<User[]>({
-		method: "get",
+		method: METHOD_GET,
 	});
 
 	return z.array(userSchema).parse(response.data);
@@ -14,7 +16,7 @@ export async function getUsersApi() {
 
 export async function upsertUserApi(data: UpsertUser) {
 	const response = await axios<User>({
-		method: "put",
+		method: METHOD_PUT,
 		data,
 	});
 
@@ -23,7 +25,7 @@ export async function upsertUserApi(data: UpsertUser) {
 
 export async function deleteUserApi(userId: User["_id"]) {
 	const response = await axios<User>({
-		method: "delete",
+		method: METHOD_DELETE,
 		url: `/${userId}`,
 	});
 

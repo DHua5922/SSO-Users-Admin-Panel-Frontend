@@ -1,5 +1,32 @@
 import { expect, test } from "@playwright/test";
+import {
+	METHOD_DELETE,
+	METHOD_PUT,
+	OPEN_NAVIGATION_MENU_TEXT,
+} from "../../../../shared/constants";
+import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
+import {
+	getButton,
+	getDialog,
+	getLabel,
+	getLink,
+	getTableRow,
+	getText,
+} from "../../../../shared/tests/playwright/locator";
 import { logInTest } from "../../../auth/tests/e2e/support";
+import {
+	ADD_USER_BUTTON_TEXT,
+	CONFIRM_DELETE_USER_BUTTON_TEXT,
+	UPDATE_USER_BUTTON_TEXT,
+} from "../../constants/button";
+import { ADD_USER_MODAL_TITLE, USERS_API_ROUTE } from "../../constants/general";
+import {
+	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_EMAIL_LABEL,
+	UPSERT_USER_FORM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_ROLE_LABEL,
+	UPSERT_USER_FORM_USERNAME_LABEL,
+} from "../../constants/input";
 
 test("edit user", async ({ page }) => {
 	const password = "password123";
@@ -17,9 +44,7 @@ test("edit user", async ({ page }) => {
 
 	await logInTest(page);
 
-	const mobileMenuButton = page.getByRole("button", {
-		name: /open navigation menu/i,
-	});
+	const mobileMenuButton = getButton(page, OPEN_NAVIGATION_MENU_TEXT);
 	const usesMobileNavigation = await page.evaluate(
 		() => window.matchMedia("(max-width: 767px)").matches,
 	);
@@ -27,119 +52,107 @@ test("edit user", async ({ page }) => {
 		await mobileMenuButton.click();
 	}
 
-	const usersLink = page.getByRole("link", { name: /^users$/i });
+	const usersLink = getLink(page, "users");
 	await expect(usersLink).toBeVisible();
 
 	await Promise.all([
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/users") &&
-				response.status() === 200 &&
-				response.request().method() === "GET",
-		),
+		waitForApiResponse({
+			page,
+			apiEndpoint: USERS_API_ROUTE,
+		}),
 		usersLink.click(),
 	]);
 
-	const addUserButton = page.getByRole("button", { name: /add user/i });
+	const addUserButton = getButton(page, ADD_USER_BUTTON_TEXT);
 	await expect(addUserButton).toBeVisible();
 	await addUserButton.click();
 
-	const dialog = page.getByRole("dialog", { name: /add user/i });
+	const dialog = getDialog(page, ADD_USER_MODAL_TITLE);
 	await expect(dialog).toBeVisible();
 
-	await dialog.getByLabel(/Username/i).fill(newUser.username);
-	await dialog.getByLabel(/Email/i).fill(newUser.email);
-	await dialog.getByLabel(/Role/i).selectOption(newUser.role);
-	await dialog.getByLabel(/^Password\s*\*?$/i, { exact: true }).fill(password);
-	await dialog.getByLabel(/Confirm Password/i, { exact: true }).fill(password);
+	await getLabel(UPSERT_USER_FORM_USERNAME_LABEL, dialog).fill(
+		newUser.username,
+	);
+	await getLabel(UPSERT_USER_FORM_EMAIL_LABEL, dialog).fill(newUser.email);
+	await getLabel(UPSERT_USER_FORM_ROLE_LABEL, dialog).selectOption(
+		newUser.role,
+	);
+	await getLabel(UPSERT_USER_FORM_PASSWORD_LABEL, dialog).fill(password);
+	await getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL, dialog).fill(
+		password,
+	);
 
 	await Promise.all([
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/users") &&
-				response.status() === 200 &&
-				response.request().method() === "PUT",
-		),
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/users") &&
-				response.status() === 200 &&
-				response.request().method() === "GET",
-		),
-		dialog.getByRole("button", { name: /add user/i }).click(),
+		waitForApiResponse({
+			page,
+			apiEndpoint: USERS_API_ROUTE,
+			method: METHOD_PUT,
+		}),
+		waitForApiResponse({
+			page,
+			apiEndpoint: USERS_API_ROUTE,
+		}),
+		getButton(dialog, ADD_USER_BUTTON_TEXT).click(),
 	]);
 
-	await expect(page.getByText(newUser.username)).toBeVisible();
-	await expect(page.getByText(newUser.email)).toBeVisible();
+	await expect(getText(page, newUser.username)).toBeVisible();
+	await expect(getText(page, newUser.email)).toBeVisible();
 
-	const editUserButton = page.getByRole("button", {
-		name: new RegExp(
-			`button that show popup for editing ${newUser.username}`,
-			"i",
-		),
-	});
+	const editUserButton = getButton(
+		page,
+		`button that show popup for editing ${newUser.username}`,
+	);
 	await expect(editUserButton).toBeVisible();
 	await editUserButton.click();
 
-	const updateUserDialog = page.getByRole("dialog", {
-		name: new RegExp(`edit ${newUser.username}`, "i"),
-	});
+	const updateUserDialog = getDialog(page, `edit ${newUser.username}`);
 	await expect(updateUserDialog).toBeVisible();
-	await updateUserDialog.getByLabel(/Username/i).fill(updatedUser.username);
-	await updateUserDialog.getByLabel(/Email/i).fill(updatedUser.email);
+	await getLabel(UPSERT_USER_FORM_USERNAME_LABEL, updateUserDialog).fill(
+		updatedUser.username,
+	);
+	await getLabel(UPSERT_USER_FORM_EMAIL_LABEL, updateUserDialog).fill(
+		updatedUser.email,
+	);
 
 	await Promise.all([
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/users") &&
-				response.status() === 200 &&
-				response.request().method() === "PUT",
-		),
-		updateUserDialog.getByRole("button", { name: /update user/i }).click(),
+		waitForApiResponse({
+			page,
+			apiEndpoint: USERS_API_ROUTE,
+			method: METHOD_PUT,
+		}),
+		getButton(updateUserDialog, UPDATE_USER_BUTTON_TEXT).click(),
 	]);
 
-	const row = page.getByRole("row", {
-		name: new RegExp(`${updatedUser.username} ${updatedUser.email}`, "i"),
-	});
+	const row = getTableRow(page, `${updatedUser.username} ${updatedUser.email}`);
 	await expect(row).toBeVisible();
-	await expect(row.getByText(updatedUser.username)).toBeVisible();
-	await expect(row.getByText(updatedUser.email)).toBeVisible();
+	await expect(getText(row, updatedUser.username)).toBeVisible();
+	await expect(getText(row, updatedUser.email)).toBeVisible();
 
-	const deleteUserButton = page.getByRole("button", {
-		name: new RegExp(
-			`button that show popup for deleting ${updatedUser.username}`,
-			"i",
-		),
-	});
+	const deleteUserButton = getButton(
+		page,
+		`button that show popup for deleting ${updatedUser.username}`,
+	);
 	await expect(deleteUserButton).toBeVisible();
 	await deleteUserButton.click();
 
-	const deleteUserDialog = page.getByRole("dialog", {
-		name: new RegExp(`delete ${updatedUser.username}`, "i"),
-	});
+	const deleteUserDialog = getDialog(page, `delete ${updatedUser.username}`);
 	await expect(deleteUserDialog).toBeVisible();
 	await Promise.all([
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/users") &&
-				response.status() === 200 &&
-				response.request().method() === "DELETE",
-		),
-		page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v1/users") &&
-				response.status() === 200 &&
-				response.request().method() === "GET",
-		),
-		deleteUserDialog
-			.getByRole("button", {
-				name: /i accept the consequences. delete user./i,
-			})
-			.click(),
+		waitForApiResponse({
+			page,
+			apiEndpoint: USERS_API_ROUTE,
+			method: METHOD_DELETE,
+		}),
+		waitForApiResponse({
+			page,
+			apiEndpoint: USERS_API_ROUTE,
+		}),
+		getButton(deleteUserDialog, CONFIRM_DELETE_USER_BUTTON_TEXT).click(),
 	]);
 
-	const updatedRow = page.getByRole("row", {
-		name: new RegExp(`${updatedUser.username} ${updatedUser.email}`, "i"),
-	});
+	const updatedRow = getTableRow(
+		page,
+		`${updatedUser.username} ${updatedUser.email}`,
+	);
 	await expect(updatedRow).toHaveCount(0);
 });

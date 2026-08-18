@@ -1,4 +1,6 @@
 import axios from "axios";
+import { LOGIN_PATH } from "../../features/auth/constants";
+import { NEW_TOKENS_API_ROUTE } from "../constants";
 import { refreshTokensApi } from "./token";
 
 export function createAxiosInstance(path: string) {
@@ -19,9 +21,9 @@ export function createAxiosInstance(path: string) {
 
 			if (
 				config.retry ||
-				error.response?.config?.url?.includes("/tokens/new")
+				error.response?.config?.url?.includes(NEW_TOKENS_API_ROUTE)
 			) {
-				window.location.assign("/login");
+				window.location.assign(LOGIN_PATH);
 			}
 
 			return Promise.reject(error);

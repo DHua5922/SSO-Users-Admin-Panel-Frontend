@@ -13,3 +13,6 @@ export const LOGIN_PATH = "/login";
 
 export const LOGIN_EMAIL_INPUT_LABEL = "Email";
 export const LOGIN_PASSWORD_INPUT_LABEL = "Password";
+
+export const ME_API_ROUTE = "/api/v1/me";
+export const AUTH_BASE_API_ROUTE = "/api/v1/auth";

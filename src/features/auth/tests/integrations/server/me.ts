@@ -2,8 +2,9 @@ import { HttpResponse, http } from "msw";
 import { SUCCESS_STATUS_CODE } from "../../../../../shared/constants";
 import { server } from "../../../../../shared/tests/vitest.setup";
 import { testUser } from "../../../../users/tests/fixtures";
+import { ME_API_ROUTE } from "../../../constants";
 
-const meEndpoint = "*/api/v1/me";
+const meEndpoint = `*${ME_API_ROUTE}`;
 
 export function mockGetMeSuccessApi() {
 	return server.use(

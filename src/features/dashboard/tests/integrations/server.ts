@@ -4,9 +4,12 @@ import {
 	SUCCESS_STATUS_CODE,
 } from "../../../../shared/constants";
 import { server } from "../../../../shared/tests/vitest.setup";
-import { DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
+import {
+	DASHBOARD_STATS_API_PATH,
+	DASHBOARD_STATS_ERROR_MESSAGE,
+} from "../../constants";
 
-const endpoint = "*/api/v1/dashboard/stats";
+const endpoint = `*${DASHBOARD_STATS_API_PATH}`;
 
 export function mockGetDashboardStatsSuccessApi() {
 	server.use(
