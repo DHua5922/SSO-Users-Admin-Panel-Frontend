@@ -1,10 +1,14 @@
 import { HttpResponse, http } from "msw";
-import { SUCCESS_STATUS_CODE } from "../../../../../shared/constants";
+import {
+	BAD_REQUEST_STATUS_CODE,
+	SUCCESS_STATUS_CODE,
+} from "../../../../../shared/constants";
 import { server } from "../../../../../shared/tests/vitest.setup";
 import { testUser } from "../../../../users/tests/fixtures";
+import { AUTH_BASE_API_ROUTE, LOGIN_PATH } from "../../../constants";
 
-const baseUrl = "*/api/v1/auth";
-const loginEndpoint = `${baseUrl}/login`;
+const baseUrl = `*${AUTH_BASE_API_ROUTE}`;
+const loginEndpoint = `${baseUrl}${LOGIN_PATH}`;
 
 export function mockLoginSuccessApi() {
 	server.use(
@@ -17,7 +21,9 @@ export function mockLoginSuccessApi() {
 export function mockLoginFailureApi() {
 	server.use(
 		http.post(loginEndpoint, () => {
-			return HttpResponse.json("Invalid credentials", { status: 400 });
+			return HttpResponse.json("Invalid credentials", {
+				status: BAD_REQUEST_STATUS_CODE,
+			});
 		}),
 	);
 }

@@ -43,3 +43,11 @@ export function getSection(page: Page | Locator, sectionTitle: string) {
 		name: regexMatch(sectionTitle, undefined, true),
 	});
 }
+
+export function getLabel(labelText: string, page: Page | Locator) {
+	const regex = new RegExp(
+		`^${regexMatch(labelText).source}(?:\\s*\\*)?$`,
+		"i",
+	);
+	return page.getByLabel(regex);
+}

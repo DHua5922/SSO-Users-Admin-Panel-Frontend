@@ -1,8 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
-import { LOADING_CURRENT_USER_TEXT } from "../../../features/auth/constants";
+import {
+	LOADING_CURRENT_USER_TEXT,
+	LOGIN_PATH,
+} from "../../../features/auth/constants";
 import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
+import { HOME_PATH } from "../../../shared/constants";
 import PublicRoute from ".";
 
 vi.mock("../../../features/auth/hooks/useCurrentUser", () => ({
@@ -35,12 +39,12 @@ function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
 	});
 
 	render(
-		<MemoryRouter initialEntries={["/login"]}>
+		<MemoryRouter initialEntries={[LOGIN_PATH]}>
 			<Routes>
 				<Route element={<PublicRoute />}>
-					<Route path="/login" element={<div>{loginText}</div>} />
+					<Route path={LOGIN_PATH} element={<div>{loginText}</div>} />
 				</Route>
-				<Route path="/" element={<div>{privateContentText}</div>} />
+				<Route path={HOME_PATH} element={<div>{privateContentText}</div>} />
 			</Routes>
 		</MemoryRouter>,
 	);

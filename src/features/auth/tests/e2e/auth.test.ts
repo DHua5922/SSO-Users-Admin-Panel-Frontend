@@ -1,9 +1,14 @@
 import { expect, type Page, test } from "@playwright/test";
 import {
+	AUTH_BASE_API_ROUTE,
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
 	LOGOUT_BUTTON_TEXT,
 } from "../../../../features/auth/constants";
-import { OPEN_NAVIGATION_MENU_TEXT } from "../../../../shared/constants";
+import {
+	METHOD_POST,
+	OPEN_NAVIGATION_MENU_TEXT,
+} from "../../../../shared/constants";
+import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import { getButton } from "../../../../shared/tests/playwright/locator";
 import { getLoginButton } from "./locator";
 import { logInTest } from "./support";
@@ -20,11 +25,11 @@ test("persistent login after refresh", async ({ page }) => {
 });
 
 test("redirects to login page when logging out", async ({ page }) => {
-	const logoutResponse = page.waitForResponse(
-		(response) =>
-			response.url().includes("/api/v1/auth/logout") &&
-			response.status() === 200,
-	);
+	const logoutResponse = waitForApiResponse({
+		page,
+		apiEndpoint: `${AUTH_BASE_API_ROUTE}/logout`,
+		method: METHOD_POST,
+	});
 	await logInTest(page);
 	await expect(getLogo(page)).toBeVisible();
 

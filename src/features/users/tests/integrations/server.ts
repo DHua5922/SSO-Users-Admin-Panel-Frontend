@@ -1,9 +1,11 @@
 import { HttpResponse, http } from "msw";
 import {
+	BAD_REQUEST_STATUS_CODE,
 	INTERNAL_SERVER_ERROR_STATUS_CODE,
 	SUCCESS_STATUS_CODE,
 } from "../../../../shared/constants";
 import { server } from "../../../../shared/tests/vitest.setup";
+import { USERS_API_ROUTE } from "../../constants/general";
 import {
 	CANNOT_LOAD_USERS_ERROR_MESSAGE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
@@ -11,8 +13,7 @@ import {
 import type { User } from "../../schemas";
 import { testUser } from "../fixtures";
 
-const endpoint = "*/api/v1/users";
-const deleteEndpoint = `${endpoint}/:id`;
+const endpoint = `*${USERS_API_ROUTE}`;
 
 export function mockGetUsersSuccessApi(list: User[]) {
 	server.use(
@@ -43,7 +44,7 @@ export function mockUpsertUserFailureApi() {
 	return server.use(
 		http.put(endpoint, () => {
 			return HttpResponse.json(CANNOT_UPSERT_USER_ERROR_MESSAGE, {
-				status: 400,
+				status: BAD_REQUEST_STATUS_CODE,
 			});
 		}),
 	);
@@ -51,7 +52,7 @@ export function mockUpsertUserFailureApi() {
 
 export function mockDeleteUserSuccessApi() {
 	return server.use(
-		http.delete(deleteEndpoint, () => {
+		http.delete(`${endpoint}/:id`, () => {
 			return HttpResponse.json(testUser, { status: SUCCESS_STATUS_CODE });
 		}),
 	);

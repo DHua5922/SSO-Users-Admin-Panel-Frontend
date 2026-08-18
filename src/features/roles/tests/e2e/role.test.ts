@@ -1,6 +1,9 @@
-import { randomUUID } from "node:crypto";
 import { expect, type Page, test } from "@playwright/test";
-import { OPEN_NAVIGATION_MENU_TEXT } from "../../../../shared/constants";
+import {
+	METHOD_DELETE,
+	METHOD_PUT,
+	OPEN_NAVIGATION_MENU_TEXT,
+} from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getButton,
@@ -15,13 +18,13 @@ import {
 	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
 	UPDATE_ROLE_BUTTON_TEXT,
 } from "../../constants/button";
-import { ADD_ROLE_MODAL_TITLE } from "../../constants/general";
+import { ADD_ROLE_MODAL_TITLE, ROLES_API_ROUTE } from "../../constants/general";
 import {
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants/input";
 
-const id = randomUUID();
+const id = crypto.randomUUID();
 
 const newRole = {
 	name: `new role ${id}`,
@@ -56,7 +59,7 @@ async function setup(page: Page) {
 
 	const getRolesResponse = waitForApiResponse({
 		page,
-		apiEndpoint: "/api/v1/roles",
+		apiEndpoint: ROLES_API_ROUTE,
 	});
 	await Promise.all([getRolesResponse, rolesLink.click()]);
 }
@@ -79,12 +82,12 @@ async function addRole(page: Page) {
 	await Promise.all([
 		waitForApiResponse({
 			page,
-			apiEndpoint: "/api/v1/roles",
-			method: "PUT",
+			apiEndpoint: ROLES_API_ROUTE,
+			method: METHOD_PUT,
 		}),
 		waitForApiResponse({
 			page,
-			apiEndpoint: "/api/v1/roles",
+			apiEndpoint: ROLES_API_ROUTE,
 		}),
 		getButton(addRoleDialog, ADD_ROLE_BUTTON_TEXT).click(),
 	]);
@@ -110,12 +113,12 @@ async function editRole(page: Page) {
 	await Promise.all([
 		waitForApiResponse({
 			page,
-			apiEndpoint: "/api/v1/roles",
-			method: "PUT",
+			apiEndpoint: ROLES_API_ROUTE,
+			method: METHOD_PUT,
 		}),
 		waitForApiResponse({
 			page,
-			apiEndpoint: "/api/v1/roles",
+			apiEndpoint: ROLES_API_ROUTE,
 		}),
 		getButton(updateRoleDialog, UPDATE_ROLE_BUTTON_TEXT).click(),
 	]);
@@ -139,12 +142,12 @@ async function deleteRole(page: Page) {
 	await Promise.all([
 		waitForApiResponse({
 			page,
-			apiEndpoint: "/api/v1/roles",
-			method: "DELETE",
+			apiEndpoint: ROLES_API_ROUTE,
+			method: METHOD_DELETE,
 		}),
 		waitForApiResponse({
 			page,
-			apiEndpoint: "/api/v1/roles",
+			apiEndpoint: ROLES_API_ROUTE,
 		}),
 		getButton(deleteRoleDialog, CONFIRM_DELETE_ROLE_BUTTON_TEXT).click(),
 	]);
