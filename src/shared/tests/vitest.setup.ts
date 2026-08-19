@@ -1,4 +1,6 @@
 import { setupServer } from "msw/node";
+import useRoleManagementStore from "../../features/roles/store/useRoleManagementStore";
+import useUserManagementStore from "../../features/users/store/useUserManagementStore";
 import useAlertStore from "../store/useAlertStore";
 
 export const server = setupServer();
@@ -23,6 +25,16 @@ beforeEach(() => {
 afterEach(() => {
 	server.resetHandlers();
 	useAlertStore.setState({ pageAlerts: [], modalAlerts: [] });
+	useRoleManagementStore.setState({
+		showUpsertRoleModal: false,
+		showDeleteRoleModal: false,
+		chosenRole: null,
+	});
+	useUserManagementStore.setState({
+		showUpsertUserModal: false,
+		showDeleteUserModal: false,
+		chosenUser: null,
+	});
 });
 
 afterAll(() => server.close());

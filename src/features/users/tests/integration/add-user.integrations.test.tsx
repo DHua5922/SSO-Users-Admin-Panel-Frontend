@@ -9,11 +9,12 @@ import {
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
-import { ADD_USER_MODAL_TITLE, USERS_PATH } from "../../constants/general";
 import {
+	ADD_USER_MODAL_TITLE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
 	EMPTY_USERS_MESSAGE,
-} from "../../constants/message";
+	USERS_PATH,
+} from "../../constants";
 import { testUser } from "../fixtures";
 import {
 	getConfirmPasswordLabel,

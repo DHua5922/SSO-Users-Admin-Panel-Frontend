@@ -4,8 +4,8 @@ import Icon from "../../../shared/components/Icon";
 import {
 	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
-} from "../constants/button";
-import { ROLES_TABLE_ARIA_LABEL } from "../constants/general";
+	ROLES_TABLE_ARIA_LABEL,
+} from "../constants";
 import type { Role } from "../schemas";
 import RoleTableHeaders from "./RoleTableHeaders";
 

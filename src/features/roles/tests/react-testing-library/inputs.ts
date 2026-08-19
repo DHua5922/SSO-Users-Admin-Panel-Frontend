@@ -6,7 +6,7 @@ import {
 	SEARCH_ROLES_ARIA_LABEL,
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
-} from "../../constants/input";
+} from "../../constants";
 
 export function getNameLabel(container?: HTMLElement) {
 	return getLabel(UPSERT_ROLE_FORM_NAME_LABEL, container);

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { parseError } from "../../../shared/utilities/parseError";
 import { getAllRolesApi } from "../api.ts";
+import { ROLES_QUERY_KEY } from "../constants";
 
 export default function useRoles() {
 	const {
@@ -9,7 +10,7 @@ export default function useRoles() {
 		isError,
 		error,
 	} = useQuery({
-		queryKey: ["roles"],
+		queryKey: [ROLES_QUERY_KEY],
 		queryFn: getAllRolesApi,
 		retry: false,
 	});

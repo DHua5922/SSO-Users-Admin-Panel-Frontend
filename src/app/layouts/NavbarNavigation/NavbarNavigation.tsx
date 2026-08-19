@@ -2,7 +2,7 @@ import { Menu as MenuComponent } from "@dhua5922/react-kit";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import type { HTMLAttributes } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { logOutApi } from "../../../features/auth/api/auth";
 import {
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
@@ -10,8 +10,8 @@ import {
 	LOGOUT_BUTTON_TEXT,
 	ME_QUERY_KEY,
 } from "../../../features/auth/constants";
-import { ROLES_PATH } from "../../../features/roles/constants/general";
-import { USERS_PATH } from "../../../features/users/constants/general";
+import { ROLES_PATH } from "../../../features/roles/constants";
+import { USERS_PATH } from "../../../features/users/constants";
 import { HOME_PATH } from "../../../shared/constants";
 import usePageErrorHandler from "../../../shared/hooks/usePageErrorHandler";
 import styles from "./NavbarNavigation.module.css";
@@ -43,15 +43,15 @@ export default function NavbarNavigation({ username, ...props }: Props) {
 	return (
 		<ul {...props}>
 			<li>
-				<a href={HOME_PATH}>Home</a>
+				<NavLink to={HOME_PATH}>Home</NavLink>
 			</li>
 
 			<li>
-				<a href={USERS_PATH}>Users</a>
+				<NavLink to={USERS_PATH}>Users</NavLink>
 			</li>
 
 			<li>
-				<a href={ROLES_PATH}>Roles</a>
+				<NavLink to={ROLES_PATH}>Roles</NavLink>
 			</li>
 
 			<li>

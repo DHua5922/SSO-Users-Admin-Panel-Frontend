@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { REQUIRED_NAME_ERROR_MESSAGE } from "./constants/message";
+import { REQUIRED_NAME_ERROR_MESSAGE } from "./constants";
 
 export const roleSchema = z.object({
-	_id: z.string(),
+	_id: z.string().min(1),
 	name: z.string().min(1, REQUIRED_NAME_ERROR_MESSAGE),
 	description: z.string(),
 });

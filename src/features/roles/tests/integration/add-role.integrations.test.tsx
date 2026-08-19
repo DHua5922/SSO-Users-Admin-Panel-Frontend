@@ -8,13 +8,18 @@ import {
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { ADD_ROLE_MODAL_TITLE, ROLES_PATH } from "../../constants/general";
 import {
+	ADD_ROLE_MODAL_TITLE,
 	CANNOT_UPSERT_ROLE_ERROR_MESSAGE,
 	EMPTY_ROLES_MESSAGE,
-} from "../../constants/message";
+	ROLES_PATH,
+} from "../../constants";
 import { testRoles } from "../fixtures";
-import { mockGetRolesSuccessApi } from "../mocks/roleHandlers";
+import {
+	mockGetRolesSuccessApi,
+	mockUpsertRoleFailureApi,
+	mockUpsertRoleSuccessApi,
+} from "../mocks/roleHandlers";
 import {
 	getDescriptionLabel,
 	getNameLabel,
@@ -24,10 +29,6 @@ import {
 	findShowEditRoleModalButton,
 	getAddRoleButton,
 } from "./locators";
-import {
-	mockUpsertRoleFailureApi,
-	mockUpsertRoleSuccessApi,
-} from "./mocks/roleHandlers";
 
 beforeEach(() => {
 	mockGetMeSuccessApi();

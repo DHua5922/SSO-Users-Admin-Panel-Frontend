@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
 import { parseError } from "../../../shared/utilities/parseError";
 import { getAllRolesApi } from "../api";
-import { ROLES_QUERY_KEY } from "../constants/general";
+import { ROLES_QUERY_KEY } from "../constants";
 import type { Role } from "../schemas";
 import useRoleManagementStore from "../store/useRoleManagementStore";
 import { filterRoles } from "../utilities/filterRoles";

@@ -6,8 +6,7 @@ import {
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
-import { USERS_PATH } from "../../constants/general";
-import { CANNOT_LOAD_USERS_ERROR_MESSAGE } from "../../constants/message";
+import { CANNOT_LOAD_USERS_ERROR_MESSAGE, USERS_PATH } from "../../constants";
 import { findSearchBar } from "../react-testing-library/inputs";
 import {
 	mockGetUsersFailureApi,

@@ -7,19 +7,21 @@ import {
 	getLabel,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { UPDATE_ROLE_BUTTON_TEXT } from "../../constants/button";
-import { ROLES_PATH } from "../../constants/general";
 import {
+	ROLES_PATH,
+	UPDATE_ROLE_BUTTON_TEXT,
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
-} from "../../constants/input";
+} from "../../constants";
 import { testRoles } from "../fixtures";
-import { mockGetRolesSuccessApi } from "../mocks/roleHandlers";
+import {
+	mockGetRolesSuccessApi,
+	mockUpsertRoleSuccessApi,
+} from "../mocks/roleHandlers";
 import {
 	findShowDeleteRoleModalButton,
 	findShowEditRoleModalButton,
 } from "./locators";
-import { mockUpsertRoleSuccessApi } from "./mocks/roleHandlers";
 
 test("should update role", async () => {
 	const updatedRole = {

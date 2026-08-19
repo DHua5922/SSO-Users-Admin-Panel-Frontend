@@ -9,8 +9,11 @@ import {
 	getDialog,
 	getLink,
 } from "../../../../shared/tests/playwright/locator";
-import { ADD_ROLE_BUTTON_TEXT } from "../../constants/button";
-import { ADD_ROLE_MODAL_TITLE, ROLES_API_ROUTE } from "../../constants/general";
+import {
+	ADD_ROLE_BUTTON_TEXT,
+	ADD_ROLE_MODAL_TITLE,
+	ROLES_API_ROUTE,
+} from "../../constants";
 
 export async function goToRolesPage(page: Page) {
 	await openMobileMenu(page);

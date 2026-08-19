@@ -5,8 +5,10 @@ import RoleTable from "../components/RoleTable.tsx";
 import RoleTableControls from "../components/RoleTableControls.tsx";
 import RoleTableSkeleton from "../components/RoleTableSkeleton.tsx";
 import UpsertRoleForm from "../components/UpsertRoleForm.tsx";
-import { CONFIRM_DELETE_ROLE_BUTTON_TEXT } from "../constants/button.ts";
-import { EMPTY_ROLES_MESSAGE } from "../constants/message.ts";
+import {
+	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
+	EMPTY_ROLES_MESSAGE,
+} from "../constants";
 import useDeleteRoleModal from "../hooks/useDeleteRoleModal.ts";
 import useRoleListView from "../hooks/useRoleListView.ts";
 import useRoleTableControls from "../hooks/useRoleTableControls.ts";

@@ -6,8 +6,10 @@ import UpsertUserForm from "../components/UpsertUserForm.tsx";
 import UserTable from "../components/UserTable.tsx";
 import UserTableControls from "../components/UserTableControls.tsx";
 import UserTableSkeleton from "../components/UserTableSkeleton.tsx";
-import { CONFIRM_DELETE_USER_BUTTON_TEXT } from "../constants/button";
-import { EMPTY_USERS_MESSAGE } from "../constants/message";
+import {
+	CONFIRM_DELETE_USER_BUTTON_TEXT,
+	EMPTY_USERS_MESSAGE,
+} from "../constants";
 import useDeleteUserModal from "../hooks/useDeleteUserModal.ts";
 import useUpsertUserForm from "../hooks/useUpsertUserForm.ts";
 import useUpsertUserModal from "../hooks/useUpsertUserModal.ts";

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createAxiosInstance } from "../../shared/api/instance";
 import { METHOD_DELETE, METHOD_GET, METHOD_PUT } from "../../shared/constants";
-import { USERS_API_ROUTE } from "./constants/general";
+import { USERS_API_ROUTE } from "./constants";
 import { type UpsertUser, type User, userSchema } from "./schemas";
 
 const axios = createAxiosInstance(USERS_API_ROUTE);

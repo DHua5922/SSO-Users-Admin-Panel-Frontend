@@ -1,13 +1,13 @@
 import { BrowserRouter } from "react-router";
-import { useTheme } from "./hooks/useTheme";
+import { ThemeProvider } from "./providers/ThemeProvider";
 import Routes from "./routes/Routes";
 
 export default function App() {
-	useTheme();
-
 	return (
-		<BrowserRouter>
-			<Routes />
-		</BrowserRouter>
+		<ThemeProvider>
+			<BrowserRouter>
+				<Routes />
+			</BrowserRouter>
+		</ThemeProvider>
 	);
 }

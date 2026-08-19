@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Routes as DefaultRoutes, Route } from "react-router";
 import { LOGIN_PATH } from "../../features/auth/constants";
-import { ROLES_PATH } from "../../features/roles/constants/general";
-import { USERS_PATH } from "../../features/users/constants/general";
+import { ROLES_PATH } from "../../features/roles/constants";
+import { USERS_PATH } from "../../features/users/constants";
 import AlertList from "../../shared/components/AlertList";
 import PageLoader from "../../shared/components/PageLoader";
 import { HOME_PATH } from "../../shared/constants";

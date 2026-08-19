@@ -5,8 +5,7 @@ import {
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
-import { USERS_PATH } from "../../constants/general";
-import { EMPTY_USERS_MESSAGE } from "../../constants/message";
+import { EMPTY_USERS_MESSAGE, USERS_PATH } from "../../constants";
 import { testUser } from "../fixtures";
 import {
 	findShowDeleteUserModalButton,

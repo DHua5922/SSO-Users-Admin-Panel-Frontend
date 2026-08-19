@@ -7,7 +7,7 @@ import {
 	NO_MATCHING_PASSWORDS_ERROR_MESSAGE,
 	REQUIRED_ROLE_ERROR_MESSAGE,
 	REQUIRED_USERNAME_ERROR_MESSAGE,
-} from "../../constants/message";
+} from "../../constants";
 
 export function findUsernameErrorMessage() {
 	return findText(REQUIRED_USERNAME_ERROR_MESSAGE);

@@ -9,8 +9,11 @@ import {
 	getDialog,
 	getLink,
 } from "../../../../shared/tests/playwright/locator";
-import { ADD_USER_BUTTON_TEXT } from "../../constants/button";
-import { ADD_USER_MODAL_TITLE, USERS_API_ROUTE } from "../../constants/general";
+import {
+	ADD_USER_BUTTON_TEXT,
+	ADD_USER_MODAL_TITLE,
+	USERS_API_ROUTE,
+} from "../../constants";
 
 export async function goToUsersPage(page: Page) {
 	await openMobileMenu(page);

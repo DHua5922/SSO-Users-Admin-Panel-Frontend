@@ -7,7 +7,7 @@ import {
 	CONFIRM_DELETE_USER_BUTTON_TEXT,
 	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
-} from "../../constants/button";
+} from "../../constants";
 
 export function getAddUserButton(container?: HTMLElement) {
 	return getButton(ADD_USER_BUTTON_TEXT, container);

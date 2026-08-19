@@ -8,13 +8,13 @@ import {
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
-import { UPDATE_USER_BUTTON_TEXT } from "../../constants/button";
-import { USERS_PATH } from "../../constants/general";
 import {
+	UPDATE_USER_BUTTON_TEXT,
 	UPSERT_USER_FORM_EMAIL_LABEL,
 	UPSERT_USER_FORM_ROLE_LABEL,
 	UPSERT_USER_FORM_USERNAME_LABEL,
-} from "../../constants/input";
+	USERS_PATH,
+} from "../../constants";
 import { testUser } from "../fixtures";
 import {
 	findShowDeleteUserModalButton,

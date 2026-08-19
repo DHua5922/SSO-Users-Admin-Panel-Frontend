@@ -4,15 +4,16 @@ import {
 	findText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { ROLES_PATH } from "../../constants/general";
-import { EMPTY_ROLES_MESSAGE } from "../../constants/message";
+import { EMPTY_ROLES_MESSAGE, ROLES_PATH } from "../../constants";
 import { testRoles } from "../fixtures";
-import { mockGetRolesSuccessApi } from "../mocks/roleHandlers";
+import {
+	mockDeleteRoleSuccessApi,
+	mockGetRolesSuccessApi,
+} from "../mocks/roleHandlers";
 import {
 	findShowDeleteRoleModalButton,
 	getConfirmDeleteRoleButton,
 } from "./locators";
-import { mockDeleteRoleSuccessApi } from "./mocks/roleHandlers";
 
 test("should delete role", async () => {
 	mockGetMeSuccessApi();

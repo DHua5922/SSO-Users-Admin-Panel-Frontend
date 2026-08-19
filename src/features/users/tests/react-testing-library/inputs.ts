@@ -9,7 +9,7 @@ import {
 	UPSERT_USER_FORM_PASSWORD_LABEL,
 	UPSERT_USER_FORM_ROLE_LABEL,
 	UPSERT_USER_FORM_USERNAME_LABEL,
-} from "../../constants/input";
+} from "../../constants";
 
 export function getUsernameLabel(container?: HTMLElement) {
 	return getLabel(UPSERT_USER_FORM_USERNAME_LABEL, container);

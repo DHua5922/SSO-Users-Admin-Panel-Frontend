@@ -7,7 +7,7 @@ import {
 	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
 	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
-} from "../../constants/button";
+} from "../../constants";
 
 export function getAddRoleButton(container?: HTMLElement) {
 	return getButton(ADD_ROLE_BUTTON_TEXT, container);

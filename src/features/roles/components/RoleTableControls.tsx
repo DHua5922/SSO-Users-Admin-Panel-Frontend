@@ -1,8 +1,7 @@
 import { type HTMLAttributes, useId } from "react";
 import Button from "../../../shared/components/Button/Button";
 import Field from "../../../shared/components/Field";
-import { ADD_ROLE_BUTTON_TEXT } from "../constants/button";
-import { SEARCH_ROLES_ARIA_LABEL } from "../constants/input";
+import { ADD_ROLE_BUTTON_TEXT, SEARCH_ROLES_ARIA_LABEL } from "../constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	searchBarProps: HTMLAttributes<HTMLInputElement>;

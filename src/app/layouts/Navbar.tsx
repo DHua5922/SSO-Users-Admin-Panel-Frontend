@@ -1,5 +1,6 @@
 import { Menu, Moon, Sun } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
+import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
 import Button from "../../shared/components/Button/Button";
 import Collapsible from "../../shared/components/Collapsible/Collapsible";
@@ -12,7 +13,7 @@ import {
 	OPEN_NAVIGATION_MENU_TEXT,
 } from "../../shared/constants";
 import { DARK_MODE_TEXT, DARK_THEME } from "../constants";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../providers/ThemeProvider";
 import NavbarNavigation from "./NavbarNavigation/NavbarNavigation";
 
 interface Props extends HTMLAttributes<HTMLElement> {
@@ -28,7 +29,7 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 	return (
 		<nav className={formattedClassName} {...props}>
 			<div className="flex items-center justify-between">
-				<a href={HOME_PATH}>
+				<Link to={HOME_PATH}>
 					<figure className="w-32">
 						<img
 							src={logo}
@@ -38,7 +39,7 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 							height={128}
 						/>
 					</figure>
-				</a>
+				</Link>
 
 				<div className="flex items-center gap-4">
 					<Button

@@ -11,19 +11,18 @@ import {
 import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_USER_BUTTON_TEXT,
+	ADD_USER_MODAL_TITLE,
 	CONFIRM_DELETE_USER_BUTTON_TEXT,
 	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
 	UPDATE_USER_BUTTON_TEXT,
-} from "../../constants/button";
-import { ADD_USER_MODAL_TITLE, USERS_API_ROUTE } from "../../constants/general";
-import {
 	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
 	UPSERT_USER_FORM_EMAIL_LABEL,
 	UPSERT_USER_FORM_PASSWORD_LABEL,
 	UPSERT_USER_FORM_ROLE_LABEL,
 	UPSERT_USER_FORM_USERNAME_LABEL,
-} from "../../constants/input";
+	USERS_API_ROUTE,
+} from "../../constants";
 import { goToUsersPage, openAddUserModal } from "../playwright/navigation";
 
 test("edit user", async ({ page }) => {

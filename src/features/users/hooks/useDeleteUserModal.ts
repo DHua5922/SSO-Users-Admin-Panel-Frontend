@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
 import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
 import { deleteUserApi } from "../api";
-import { USERS_QUERY_KEY } from "../constants/general";
+import { USERS_QUERY_KEY } from "../constants";
 import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useDeleteUserModal() {
@@ -28,12 +28,12 @@ export default function useDeleteUserModal() {
 
 	return {
 		isDeleting: isPending,
-		title: `Delete ${chosenUser.username}`,
-		heroText: chosenUser.username,
+		title: `Delete ${chosenUser?.username ?? ""}`,
+		heroText: chosenUser?.username ?? "",
 		open: showDeleteUserModal,
 		onOpenChange: (show: boolean) => setShowDeleteUserModal(show),
 		onClickDelete: () => {
-			deleteUser(chosenUser._id);
+			if (chosenUser) deleteUser(chosenUser._id);
 		},
 	};
 }

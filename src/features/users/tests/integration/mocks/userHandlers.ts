@@ -5,11 +5,11 @@ import {
 	SUCCESS_STATUS_CODE,
 } from "../../../../../shared/constants";
 import { server } from "../../../../../shared/tests/vitest.setup";
-import { USERS_API_ROUTE } from "../../../constants/general";
 import {
 	CANNOT_LOAD_USERS_ERROR_MESSAGE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
-} from "../../../constants/message";
+	USERS_API_ROUTE,
+} from "../../../constants";
 import type { User } from "../../../schemas";
 import { testUser } from "../../fixtures";
 
@@ -35,8 +35,11 @@ export function mockGetUsersFailureApi() {
 export function mockUpsertUserSuccessApi() {
 	return server.use(
 		http.put(endpoint, async ({ request }) => {
-			const body = await request.json();
-			return HttpResponse.json(body, { status: SUCCESS_STATUS_CODE });
+			const body = (await request.json()) as Partial<User>;
+			return HttpResponse.json(
+				{ ...body, _id: body._id ?? testUser._id },
+				{ status: SUCCESS_STATUS_CODE },
+			);
 		}),
 	);
 }

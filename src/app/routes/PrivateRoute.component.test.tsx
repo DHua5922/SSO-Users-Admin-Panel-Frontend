@@ -20,6 +20,7 @@ import {
 	THEME_ATTRIBUTE_NAME,
 	THEME_STORAGE_KEY,
 } from "../constants";
+import { ThemeProvider } from "../providers/ThemeProvider";
 import PrivateRoute from "./PrivateRoute";
 
 vi.mock("../../features/auth/hooks/useCurrentUser", () => ({
@@ -72,15 +73,20 @@ function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
 	const queryClient = new QueryClient();
 
 	render(
-		<QueryClientProvider client={queryClient}>
-			<MemoryRouter initialEntries={[HOME_PATH]}>
-				<Routes>
-					<Route element={<PrivateRoute />}>
-						<Route path={HOME_PATH} element={<div>{privateContentText}</div>} />
-					</Route>
-					<Route path={LOGIN_PATH} element={<div>{loginText}</div>} />
-				</Routes>
-			</MemoryRouter>
-		</QueryClientProvider>,
+		<ThemeProvider>
+			<QueryClientProvider client={queryClient}>
+				<MemoryRouter initialEntries={[HOME_PATH]}>
+					<Routes>
+						<Route element={<PrivateRoute />}>
+							<Route
+								path={HOME_PATH}
+								element={<div>{privateContentText}</div>}
+							/>
+						</Route>
+						<Route path={LOGIN_PATH} element={<div>{loginText}</div>} />
+					</Routes>
+				</MemoryRouter>
+			</QueryClientProvider>
+		</ThemeProvider>,
 	);
 }

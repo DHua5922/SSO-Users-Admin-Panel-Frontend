@@ -11,7 +11,7 @@ import {
 	UPSERT_USER_FORM_PASSWORD_LABEL,
 	UPSERT_USER_FORM_ROLE_LABEL,
 	UPSERT_USER_FORM_USERNAME_LABEL,
-} from "../constants/input";
+} from "../constants";
 import { type UpsertUserFormData, upsertUserFormSchema } from "../schemas";
 
 interface UpsertUserFormProps

@@ -5,8 +5,7 @@ import {
 	queryTableRow,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { ROLES_PATH } from "../../constants/general";
-import { CANNOT_LOAD_ROLES_ERROR_MESSAGE } from "../../constants/message";
+import { CANNOT_LOAD_ROLES_ERROR_MESSAGE, ROLES_PATH } from "../../constants";
 import {
 	mockGetRolesFailureApi,
 	mockGetRolesSuccessApi,

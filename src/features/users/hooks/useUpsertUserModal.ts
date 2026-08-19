@@ -12,7 +12,7 @@ export default function useUpsertUserModal() {
 		);
 
 	return {
-		title: chosenUser._id ? `Edit ${chosenUser.username}` : "Add User",
+		title: chosenUser ? `Edit ${chosenUser.username}` : "Add User",
 		open: showUpsertUserModal,
 		onOpenChange: (show: boolean) => setShowUpsertUserModal(show),
 	};

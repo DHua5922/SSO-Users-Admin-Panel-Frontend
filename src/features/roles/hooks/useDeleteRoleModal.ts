@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
 import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
 import { deleteRoleApi } from "../api";
-import { ROLES_QUERY_KEY } from "../constants/general";
+import { ROLES_QUERY_KEY } from "../constants";
 import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useDeleteRoleModal() {
@@ -28,12 +28,12 @@ export default function useDeleteRoleModal() {
 
 	return {
 		isDeleting: isPending,
-		title: `Delete ${chosenRole.name}`,
-		heroText: chosenRole.name,
+		title: `Delete ${chosenRole?.name ?? ""}`,
+		heroText: chosenRole?.name ?? "",
 		open: showDeleteRoleModal,
 		onOpenChange: (show: boolean) => setShowDeleteRoleModal(show),
 		onClickDelete: () => {
-			deleteRole(chosenRole._id);
+			if (chosenRole) deleteRole(chosenRole._id);
 		},
 	};
 }

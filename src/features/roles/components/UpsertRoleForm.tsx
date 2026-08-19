@@ -6,7 +6,7 @@ import Field from "../../../shared/components/Field";
 import {
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
-} from "../constants/input";
+} from "../constants";
 import { type UpsertRoleFormData, upsertRoleFormDataSchema } from "../schemas";
 
 interface UpsertRoleFormProps

@@ -10,16 +10,15 @@ import {
 import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_ROLE_BUTTON_TEXT,
+	ADD_ROLE_MODAL_TITLE,
 	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
 	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
+	ROLES_API_ROUTE,
 	UPDATE_ROLE_BUTTON_TEXT,
-} from "../../constants/button";
-import { ADD_ROLE_MODAL_TITLE, ROLES_API_ROUTE } from "../../constants/general";
-import {
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
-} from "../../constants/input";
+} from "../../constants";
 import { goToRolesPage, openAddRoleDialog } from "../playwright/navigation";
 
 const id = crypto.randomUUID();

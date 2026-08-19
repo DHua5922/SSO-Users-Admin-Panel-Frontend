@@ -4,8 +4,8 @@ import Icon from "../../../shared/components/Icon";
 import {
 	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
-} from "../constants/button";
-import { USERS_TABLE_ARIA_LABEL } from "../constants/general";
+	USERS_TABLE_ARIA_LABEL,
+} from "../constants";
 import type { User } from "../schemas";
 import UserTableHeaders from "./UserTableHeaders";
 
