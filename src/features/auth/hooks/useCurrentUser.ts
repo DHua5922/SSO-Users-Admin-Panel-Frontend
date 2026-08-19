@@ -9,5 +9,5 @@ export default function useCurrentUser() {
 		retry: false,
 	});
 
-	return { isLoading: isPending, isLoggedIn: currentUser?._id, currentUser };
+	return { isLoading: isPending, isLoggedIn: !!currentUser?._id, currentUser };
 }

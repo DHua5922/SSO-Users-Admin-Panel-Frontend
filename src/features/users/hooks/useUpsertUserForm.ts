@@ -11,11 +11,11 @@ import type { UpsertUserFormData } from "../schemas";
 import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useUpsertUserForm() {
-	const { setShowUpsertUserModal, chosenUser, resetChosenUser } =
+	const { setShowUpsertUserModal, selectedUser, resetChosenUser } =
 		useUserManagementStore(
 			useShallow((state) => ({
 				setShowUpsertUserModal: state.setShowUpsertUserModal,
-				chosenUser: state.chosenUser,
+				selectedUser: state.selectedUser,
 				resetChosenUser: state.resetChosenUser,
 			})),
 		);
@@ -33,19 +33,19 @@ export default function useUpsertUserForm() {
 	});
 
 	return {
-		isEditing: chosenUser !== null,
+		isEditing: selectedUser !== null,
 		isSubmitting: isPending,
-		username: chosenUser?.username ?? "",
-		email: chosenUser?.email ?? "",
-		initialRole: chosenUser?.role ?? "",
-		loadingButtonText: chosenUser ? "Updating User..." : "Adding User...",
-		submitButtonText: chosenUser
+		username: selectedUser?.username ?? "",
+		email: selectedUser?.email ?? "",
+		initialRole: selectedUser?.role ?? "",
+		loadingButtonText: selectedUser ? "Updating User..." : "Adding User...",
+		submitButtonText: selectedUser
 			? UPDATE_USER_BUTTON_TEXT
 			: ADD_USER_BUTTON_TEXT,
 		onSubmit: (formValues: UpsertUserFormData) => {
 			mutate({
 				...formValues,
-				...(chosenUser && { _id: chosenUser._id }),
+				...(selectedUser && { _id: selectedUser._id }),
 			});
 		},
 	};

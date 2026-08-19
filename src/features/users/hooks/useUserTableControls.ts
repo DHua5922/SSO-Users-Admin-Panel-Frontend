@@ -4,7 +4,7 @@ import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useUserTableControls() {
 	const [searchInput, setSearchInput] = useState("");
-	const [chosenRoleId, setChosenRoleId] = useState("");
+	const [selectedRoleId, setSelectedRoleId] = useState("");
 
 	const { resetChosenUser, setShowUpsertUserModal } = useUserManagementStore(
 		useShallow((state) => ({
@@ -20,9 +20,9 @@ export default function useUserTableControls() {
 				setSearchInput(e.target.value),
 		},
 		roleSelectControlProps: {
-			value: chosenRoleId,
+			value: selectedRoleId,
 			onChange: (e: ChangeEvent<HTMLSelectElement>) =>
-				setChosenRoleId(e.target.value),
+				setSelectedRoleId(e.target.value),
 		},
 		onClickAddUser: () => {
 			resetChosenUser();

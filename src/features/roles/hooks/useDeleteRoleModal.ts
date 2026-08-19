@@ -6,10 +6,10 @@ import { ROLES_QUERY_KEY } from "../constants";
 import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useDeleteRoleModal() {
-	const { chosenRole, showDeleteRoleModal, setShowDeleteRoleModal } =
+	const { selectedRole, showDeleteRoleModal, setShowDeleteRoleModal } =
 		useRoleManagementStore(
 			useShallow((state) => ({
-				chosenRole: state.chosenRole,
+				selectedRole: state.selectedRole,
 				showDeleteRoleModal: state.showDeleteRoleModal,
 				setShowDeleteRoleModal: state.setShowDeleteRoleModal,
 			})),
@@ -28,12 +28,12 @@ export default function useDeleteRoleModal() {
 
 	return {
 		isDeleting: isPending,
-		title: `Delete ${chosenRole?.name ?? ""}`,
-		heroText: chosenRole?.name ?? "",
+		title: `Delete ${selectedRole?.name ?? ""}`,
+		heroText: selectedRole?.name ?? "",
 		open: showDeleteRoleModal,
 		onOpenChange: (show: boolean) => setShowDeleteRoleModal(show),
 		onClickDelete: () => {
-			if (chosenRole) deleteRole(chosenRole._id);
+			if (selectedRole) deleteRole(selectedRole._id);
 		},
 	};
 }

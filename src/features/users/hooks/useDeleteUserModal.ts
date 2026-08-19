@@ -6,10 +6,10 @@ import { USERS_QUERY_KEY } from "../constants";
 import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useDeleteUserModal() {
-	const { chosenUser, showDeleteUserModal, setShowDeleteUserModal } =
+	const { selectedUser, showDeleteUserModal, setShowDeleteUserModal } =
 		useUserManagementStore(
 			useShallow((state) => ({
-				chosenUser: state.chosenUser,
+				selectedUser: state.selectedUser,
 				showDeleteUserModal: state.showDeleteUserModal,
 				setShowDeleteUserModal: state.setShowDeleteUserModal,
 			})),
@@ -28,12 +28,12 @@ export default function useDeleteUserModal() {
 
 	return {
 		isDeleting: isPending,
-		title: `Delete ${chosenUser?.username ?? ""}`,
-		heroText: chosenUser?.username ?? "",
+		title: `Delete ${selectedUser?.username ?? ""}`,
+		heroText: selectedUser?.username ?? "",
 		open: showDeleteUserModal,
 		onOpenChange: (show: boolean) => setShowDeleteUserModal(show),
 		onClickDelete: () => {
-			if (chosenUser) deleteUser(chosenUser._id);
+			if (selectedUser) deleteUser(selectedUser._id);
 		},
 	};
 }
