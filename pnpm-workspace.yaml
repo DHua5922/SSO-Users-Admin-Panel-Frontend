@@ -1,2 +1,3 @@
 allowBuilds:
+  iltorb: true
   msw: true
