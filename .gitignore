@@ -38,3 +38,7 @@ dist-ssr
 
 # Vitest
 coverage
+
+# Lighthouse CI
+.lighthouseci/
+lighthouse-results/
