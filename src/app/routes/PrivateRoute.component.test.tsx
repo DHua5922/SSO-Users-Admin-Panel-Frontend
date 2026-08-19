@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router";
 import type { Mock } from "vitest";
@@ -17,6 +17,7 @@ import {
 	DARK_MODE_TEXT,
 	DARK_THEME,
 	LIGHT_THEME,
+	SKIP_TO_MAIN_CONTENT_TEXT,
 	THEME_ATTRIBUTE_NAME,
 	THEME_STORAGE_KEY,
 } from "../constants";
@@ -33,6 +34,20 @@ const loginText = "Login";
 test("show private content", () => {
 	renderRoute(true, false);
 	expect(getText(privateContentText)).toBeTruthy();
+});
+
+test("skips navigation and focuses the main content", async () => {
+	const event = userEvent.setup();
+	renderRoute(true, false);
+
+	const skipLink = screen.getByRole("link", {
+		name: SKIP_TO_MAIN_CONTENT_TEXT,
+	});
+	await event.tab();
+	expect(document.activeElement).toBe(skipLink);
+
+	await event.click(skipLink);
+	expect(document.activeElement).toBe(screen.getByRole("main"));
 });
 
 test("toggles and stores the color theme", async () => {
