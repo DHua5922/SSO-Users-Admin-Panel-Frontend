@@ -3,7 +3,7 @@ import baseConfig from "./playwright.config";
 
 export default defineConfig({
 	...baseConfig,
-	testMatch: "**/tests/accessibility/**/*.test.ts",
+	testMatch: "**/*.accessibility.test.{ts,tsx}",
 	projects: [
 		{
 			name: "accessibility",

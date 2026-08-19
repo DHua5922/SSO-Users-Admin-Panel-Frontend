@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
-import type { Role } from "../../../shared/schemas";
-import { parseError } from "../../../shared/utilities";
+import { parseError } from "../../../shared/utilities/parseError";
 import { getAllRolesApi } from "../api";
-import { ROLES_QUERY_KEY } from "../constants/general";
-import useRoleStore from "../useRoleStore";
+import { ROLES_QUERY_KEY } from "../constants";
+import type { Role } from "../schemas";
+import useRoleManagementStore from "../store/useRoleManagementStore";
 import { filterRoles } from "../utilities/filterRoles";
 
 export default function useRoleListView(searchInput: string) {
 	const { setShowUpsertRoleModal, setShowDeleteRoleModal, setChosenRole } =
-		useRoleStore(
+		useRoleManagementStore(
 			useShallow((state) => ({
 				setShowUpsertRoleModal: state.setShowUpsertRoleModal,
 				setShowDeleteRoleModal: state.setShowDeleteRoleModal,

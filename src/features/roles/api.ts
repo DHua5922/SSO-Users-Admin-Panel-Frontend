@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { createAxiosInstance } from "../../shared/api/instance";
 import { METHOD_DELETE, METHOD_GET, METHOD_PUT } from "../../shared/constants";
-import { type Role, roleSchema } from "../../shared/schemas";
-import { ROLES_API_ROUTE } from "./constants/general";
+import { ROLES_API_ROUTE } from "./constants";
 import type { UpsertRoleFormData } from "./schemas";
+import { type Role, roleSchema } from "./schemas";
 
 const axios = createAxiosInstance(ROLES_API_ROUTE);
 
@@ -16,7 +16,7 @@ export async function getAllRolesApi() {
 }
 
 export async function upsertRoleApi(
-	data: UpsertRoleFormData & { _id: Role["_id"] },
+	data: UpsertRoleFormData & { _id?: Role["_id"] },
 ) {
 	const response = await axios<Role>({
 		method: METHOD_PUT,

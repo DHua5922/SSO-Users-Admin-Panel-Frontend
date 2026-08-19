@@ -53,11 +53,18 @@ body {
 		@apply h-6 w-full;
 	}
 
+	.list-view-container {
+		@apply max-h-[60vh] overflow-auto p-8;
+	}
 	.list-message-container {
 		@apply flex flex-col items-center justify-center gap-4;
 	}
 	.list-message-text {
 		@apply text-center text-4xl;
+	}
+
+	.table-header {
+		@apply sticky top-0 z-10 bg-[var(--surface-color)] text-center text-lg;
 	}
 }
 

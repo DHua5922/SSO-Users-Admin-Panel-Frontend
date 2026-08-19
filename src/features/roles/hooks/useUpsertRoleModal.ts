@@ -1,10 +1,10 @@
 import { useShallow } from "zustand/react/shallow";
-import { ADD_ROLE_MODAL_TITLE } from "../constants/general";
-import useRoleStore from "../useRoleStore";
+import { ADD_ROLE_MODAL_TITLE } from "../constants";
+import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useUpsertRoleModal() {
 	const { chosenRole, showUpsertRoleModal, setShowUpsertRoleModal } =
-		useRoleStore(
+		useRoleManagementStore(
 			useShallow((state) => ({
 				chosenRole: state.chosenRole,
 				showUpsertRoleModal: state.showUpsertRoleModal,
@@ -13,7 +13,7 @@ export default function useUpsertRoleModal() {
 		);
 
 	return {
-		title: chosenRole._id ? `Edit ${chosenRole.name}` : ADD_ROLE_MODAL_TITLE,
+		title: chosenRole ? `Edit ${chosenRole.name}` : ADD_ROLE_MODAL_TITLE,
 		open: showUpsertRoleModal,
 		onOpenChange: (show: boolean) => setShowUpsertRoleModal(show),
 	};

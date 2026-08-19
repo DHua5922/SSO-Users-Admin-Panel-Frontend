@@ -1,12 +1,14 @@
-import ListView from "../../../shared/components/ListView/index.tsx";
-import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal/index.tsx";
-import Modal from "../../../shared/components/Modal/Modal/index.tsx";
-import RoleTable from "../components/RoleTable/index.tsx";
-import RoleTableControls from "../components/RoleTableControls/index.tsx";
+import ListView from "../../../shared/components/ListView.tsx";
+import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal.tsx";
+import Modal from "../../../shared/components/Modal/Modal.tsx";
+import RoleTable from "../components/RoleTable.tsx";
+import RoleTableControls from "../components/RoleTableControls.tsx";
 import RoleTableSkeleton from "../components/RoleTableSkeleton.tsx";
-import UpsertRoleForm from "../components/UpsertRoleForm/index.tsx";
-import { CONFIRM_DELETE_ROLE_BUTTON_TEXT } from "../constants/button.ts";
-import { EMPTY_ROLES_MESSAGE } from "../constants/message.ts";
+import UpsertRoleForm from "../components/UpsertRoleForm.tsx";
+import {
+	CONFIRM_DELETE_ROLE_BUTTON_TEXT,
+	EMPTY_ROLES_MESSAGE,
+} from "../constants";
 import useDeleteRoleModal from "../hooks/useDeleteRoleModal.ts";
 import useRoleListView from "../hooks/useRoleListView.ts";
 import useRoleTableControls from "../hooks/useRoleTableControls.ts";
@@ -27,7 +29,7 @@ export default function RolesManagementPage() {
 			<div className="card">
 				<RoleTableControls {...tableControls} />
 
-				<div className="p-8 overflow-x-auto">
+				<div className="list-view-container">
 					<ListView
 						{...roles.listViewProps}
 						emptyListMessage={EMPTY_ROLES_MESSAGE}

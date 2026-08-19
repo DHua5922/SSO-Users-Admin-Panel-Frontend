@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 import { CLOSE_ALERT_BUTTON_TEXT } from "../constants";
-import Button from "./Button";
+import Button from "./Button/Button";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	variant: keyof typeof variants;

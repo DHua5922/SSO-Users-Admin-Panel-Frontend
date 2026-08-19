@@ -1,13 +1,15 @@
-import ListView from "../../../shared/components/ListView/index.tsx";
-import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal/index.tsx";
-import Modal from "../../../shared/components/Modal/Modal/index.tsx";
+import ListView from "../../../shared/components/ListView.tsx";
+import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal.tsx";
+import Modal from "../../../shared/components/Modal/Modal.tsx";
 import useRoles from "../../roles/hooks/useRoles.ts";
-import UpsertUserForm from "../components/UpsertUserForm/index.tsx";
-import UserTable from "../components/UserTable/index.tsx";
-import UserTableControls from "../components/UserTableControls/index.tsx";
+import UpsertUserForm from "../components/UpsertUserForm.tsx";
+import UserTable from "../components/UserTable.tsx";
+import UserTableControls from "../components/UserTableControls.tsx";
 import UserTableSkeleton from "../components/UserTableSkeleton.tsx";
-import { CONFIRM_DELETE_USER_BUTTON_TEXT } from "../constants/button";
-import { EMPTY_USERS_MESSAGE } from "../constants/message";
+import {
+	CONFIRM_DELETE_USER_BUTTON_TEXT,
+	EMPTY_USERS_MESSAGE,
+} from "../constants";
 import useDeleteUserModal from "../hooks/useDeleteUserModal.ts";
 import useUpsertUserForm from "../hooks/useUpsertUserForm.ts";
 import useUpsertUserModal from "../hooks/useUpsertUserModal.ts";
@@ -39,7 +41,7 @@ export default function UsersManagementPage() {
 					}}
 				/>
 
-				<div className="p-8 overflow-x-auto">
+				<div className="list-view-container">
 					<ListView
 						{...users.listViewProps}
 						emptyListMessage={EMPTY_USERS_MESSAGE}

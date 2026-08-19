@@ -1,8 +1,9 @@
 import { Menu, Moon, Sun } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
+import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
-import Button from "../../shared/components/Button";
-import Collapsible from "../../shared/components/Collapsible";
+import Button from "../../shared/components/Button/Button";
+import Collapsible from "../../shared/components/Collapsible/Collapsible";
 import {
 	APP_LOGO_ALT_TEXT,
 	CLOSE_NAVIGATION_MENU_TEXT,
@@ -12,8 +13,8 @@ import {
 	OPEN_NAVIGATION_MENU_TEXT,
 } from "../../shared/constants";
 import { DARK_MODE_TEXT, DARK_THEME } from "../constants";
-import { useTheme } from "../hooks/useTheme";
-import NavbarLinks from "./NavbarLinks";
+import { useTheme } from "../providers/ThemeProvider";
+import NavbarNavigation from "./NavbarNavigation/NavbarNavigation";
 
 interface Props extends HTMLAttributes<HTMLElement> {
 	username: string;
@@ -28,7 +29,7 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 	return (
 		<nav className={formattedClassName} {...props}>
 			<div className="flex items-center justify-between">
-				<a href={HOME_PATH}>
+				<Link to={HOME_PATH}>
 					<figure className="w-32">
 						<img
 							src={logo}
@@ -38,7 +39,7 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 							height={128}
 						/>
 					</figure>
-				</a>
+				</Link>
 
 				<div className="flex items-center gap-4">
 					<Button
@@ -68,7 +69,7 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 						<Menu aria-hidden="true" className="text-dark" />
 					</Button>
 
-					<NavbarLinks
+					<NavbarNavigation
 						username={username}
 						className="hidden md:flex items-center gap-8"
 					/>
@@ -82,7 +83,7 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 				id={MOBILE_NAVIGATION_ID}
 				aria-label={MOBILE_NAVIGATION_ARIA_LABEL}
 			>
-				<NavbarLinks
+				<NavbarNavigation
 					username={username}
 					className="py-2 flex flex-col items-center gap-6"
 				/>

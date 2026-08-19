@@ -12,9 +12,9 @@
 		"biome:fix": "pnpm biome:check --write",
 		"check:unused": "pnpm knip",
 		"typescript:check": "tsc -b",
-		"test:unit": "vitest run --coverage src/features/*/tests/unit src/shared/tests/unit",
-		"test:component": "vitest run --coverage src/shared/components src/features/*/components src/app/routes",
-		"test:integrations": "vitest run --coverage src/features/*/tests/integrations",
+		"test:unit": "vitest run --coverage .unit.test.",
+		"test:component": "vitest run --coverage .component.test.",
+		"test:integrations": "vitest run --coverage .integrations.test.",
 		"test:accessibility": "playwright test --config=playwright.accessibility.config.ts",
 		"test:e2e": "playwright test",
 		"test:e2e:ui": "pnpm test:e2e --ui"

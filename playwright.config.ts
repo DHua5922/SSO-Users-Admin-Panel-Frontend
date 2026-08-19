@@ -15,7 +15,7 @@ z.url().parse(process.env.VITE_FRONTEND_BASE_URL);
  */
 export default defineConfig({
 	testDir: "./src",
-	testMatch: "**/tests/e2e/**/*.test.ts",
+	testMatch: "**/*.e2e.test.{ts,tsx}",
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */

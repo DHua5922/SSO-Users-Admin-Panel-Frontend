@@ -8,8 +8,8 @@ import {
 	LOGIN_PASSWORD_INPUT_LABEL,
 	LOGIN_PATH,
 } from "../../constants";
-import { loadPage } from "../playwright";
-import { getLoginButton } from "./locator";
+import { loadPage } from "../playwright/environment";
+import { getLoginButton } from "./locators";
 
 export async function logInTest(page: Page) {
 	const loginResponse = waitForApiResponse({

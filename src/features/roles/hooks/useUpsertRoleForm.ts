@@ -4,20 +4,21 @@ import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
 import { upsertRoleApi } from "../api";
 import {
 	ADD_ROLE_BUTTON_TEXT,
+	ROLES_QUERY_KEY,
 	UPDATE_ROLE_BUTTON_TEXT,
-} from "../constants/button";
-import { ROLES_QUERY_KEY } from "../constants/general";
+} from "../constants";
 import type { UpsertRoleFormData } from "../schemas";
-import useRoleStore from "../useRoleStore";
+import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useUpsertRoleForm() {
-	const { setShowUpsertRoleModal, chosenRole, resetChosenRole } = useRoleStore(
-		useShallow((state) => ({
-			setShowUpsertRoleModal: state.setShowUpsertRoleModal,
-			chosenRole: state.chosenRole,
-			resetChosenRole: state.resetChosenRole,
-		})),
-	);
+	const { setShowUpsertRoleModal, chosenRole, resetChosenRole } =
+		useRoleManagementStore(
+			useShallow((state) => ({
+				setShowUpsertRoleModal: state.setShowUpsertRoleModal,
+				chosenRole: state.chosenRole,
+				resetChosenRole: state.resetChosenRole,
+			})),
+		);
 	const queryClient = useQueryClient();
 
 	const { mutate, isPending } = useMutation({
@@ -33,14 +34,17 @@ export default function useUpsertRoleForm() {
 
 	return {
 		isSubmitting: isPending,
-		name: chosenRole.name,
-		description: chosenRole.description,
-		loadingButtonText: chosenRole._id ? "Updating Role..." : "Adding Role...",
-		submitButtonText: chosenRole._id
+		name: chosenRole?.name ?? "",
+		description: chosenRole?.description ?? "",
+		loadingButtonText: chosenRole ? "Updating Role..." : "Adding Role...",
+		submitButtonText: chosenRole
 			? UPDATE_ROLE_BUTTON_TEXT
 			: ADD_ROLE_BUTTON_TEXT,
 		onSubmit: (formValues: UpsertRoleFormData) => {
-			mutate({ ...formValues, _id: chosenRole._id });
+			mutate({
+				...formValues,
+				...(chosenRole && { _id: chosenRole._id }),
+			});
 		},
 	};
 }

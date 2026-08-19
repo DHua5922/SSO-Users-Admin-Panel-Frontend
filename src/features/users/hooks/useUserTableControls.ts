@@ -1,12 +1,12 @@
 import { type ChangeEvent, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import useUserStore from "../useUserStore";
+import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useUserTableControls() {
 	const [searchInput, setSearchInput] = useState("");
 	const [chosenRoleId, setChosenRoleId] = useState("");
 
-	const { resetChosenUser, setShowUpsertUserModal } = useUserStore(
+	const { resetChosenUser, setShowUpsertUserModal } = useUserManagementStore(
 		useShallow((state) => ({
 			resetChosenUser: state.resetChosenUser,
 			setShowUpsertUserModal: state.setShowUpsertUserModal,

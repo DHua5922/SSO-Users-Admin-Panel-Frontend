@@ -5,19 +5,20 @@ import { upsertUserApi } from "../api";
 import {
 	ADD_USER_BUTTON_TEXT,
 	UPDATE_USER_BUTTON_TEXT,
-} from "../constants/button";
-import { USERS_QUERY_KEY } from "../constants/general";
+	USERS_QUERY_KEY,
+} from "../constants";
 import type { UpsertUserFormData } from "../schemas";
-import useUserStore from "../useUserStore";
+import useUserManagementStore from "../store/useUserManagementStore";
 
 export default function useUpsertUserForm() {
-	const { setShowUpsertUserModal, chosenUser, resetChosenUser } = useUserStore(
-		useShallow((state) => ({
-			setShowUpsertUserModal: state.setShowUpsertUserModal,
-			chosenUser: state.chosenUser,
-			resetChosenUser: state.resetChosenUser,
-		})),
-	);
+	const { setShowUpsertUserModal, chosenUser, resetChosenUser } =
+		useUserManagementStore(
+			useShallow((state) => ({
+				setShowUpsertUserModal: state.setShowUpsertUserModal,
+				chosenUser: state.chosenUser,
+				resetChosenUser: state.resetChosenUser,
+			})),
+		);
 	const queryClient = useQueryClient();
 
 	const { mutate, isPending } = useMutation({
@@ -32,17 +33,20 @@ export default function useUpsertUserForm() {
 	});
 
 	return {
-		isEditing: !!chosenUser._id,
+		isEditing: chosenUser !== null,
 		isSubmitting: isPending,
-		username: chosenUser.username,
-		email: chosenUser.email,
-		initialRole: chosenUser.role,
-		loadingButtonText: chosenUser._id ? "Updating User..." : "Adding User...",
-		submitButtonText: chosenUser._id
+		username: chosenUser?.username ?? "",
+		email: chosenUser?.email ?? "",
+		initialRole: chosenUser?.role ?? "",
+		loadingButtonText: chosenUser ? "Updating User..." : "Adding User...",
+		submitButtonText: chosenUser
 			? UPDATE_USER_BUTTON_TEXT
 			: ADD_USER_BUTTON_TEXT,
 		onSubmit: (formValues: UpsertUserFormData) => {
-			mutate({ ...formValues, _id: chosenUser._id });
+			mutate({
+				...formValues,
+				...(chosenUser && { _id: chosenUser._id }),
+			});
 		},
 	};
 }

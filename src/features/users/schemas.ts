@@ -4,7 +4,7 @@ import {
 	NO_MATCHING_PASSWORDS_ERROR_MESSAGE,
 	REQUIRED_ROLE_ERROR_MESSAGE,
 	REQUIRED_USERNAME_ERROR_MESSAGE,
-} from "./constants/message";
+} from "./constants";
 
 export const upsertUserFormSchema = z
 	.object({
@@ -20,13 +20,14 @@ export const upsertUserFormSchema = z
 	});
 
 export const userSchema = z.object({
-	_id: z.string(),
+	_id: z.string().min(1),
 	email: z.string(),
 	username: z.string(),
 	role: z.string(),
 });
 
-const upsertUserSchema = userSchema.extend({
+const upsertUserSchema = userSchema.omit({ _id: true }).extend({
+	_id: z.string().min(1).optional(),
 	password: z.string().optional(),
 	confirmPassword: z.string().optional(),
 });
