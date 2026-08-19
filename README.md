@@ -17,6 +17,7 @@ A React admin panel for managing users and roles. It connects to a separate back
 - [Project Structure](#project-structure)
 - [State and Data](#state-and-data)
 - [Design Decisions and Tradeoffs](#design-decisions-and-tradeoffs)
+- [License](#license)
 - [Deployment](#deployment)
 
 ## Live Site
@@ -180,6 +181,10 @@ Each feature keeps its API code, components, hooks, pages, schemas, tests, and u
 - Client-side routing provides fast navigation without full page reloads, but direct visits and refreshes require a Vercel rewrite.
 - Token refresh and cookie-based authentication support persistent, secure sessions, but require careful CORS and cookie configuration across environments.
 - Unit, component, integration, end-to-end, and accessibility tests provide coverage at several levels, but increase CI time and maintenance work.
+
+## License
+
+Copyright © 2026 DHua5922. All rights reserved. The source code is available for viewing and evaluation, but reuse, modification, and redistribution are not permitted without prior written permission. See [LICENSE](LICENSE) for details.
 
 ## Deployment
 
