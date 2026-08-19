@@ -11,11 +11,11 @@ import type { UpsertRoleFormData } from "../schemas";
 import useRoleManagementStore from "../store/useRoleManagementStore";
 
 export default function useUpsertRoleForm() {
-	const { setShowUpsertRoleModal, chosenRole, resetChosenRole } =
+	const { setShowUpsertRoleModal, selectedRole, resetChosenRole } =
 		useRoleManagementStore(
 			useShallow((state) => ({
 				setShowUpsertRoleModal: state.setShowUpsertRoleModal,
-				chosenRole: state.chosenRole,
+				selectedRole: state.selectedRole,
 				resetChosenRole: state.resetChosenRole,
 			})),
 		);
@@ -34,16 +34,16 @@ export default function useUpsertRoleForm() {
 
 	return {
 		isSubmitting: isPending,
-		name: chosenRole?.name ?? "",
-		description: chosenRole?.description ?? "",
-		loadingButtonText: chosenRole ? "Updating Role..." : "Adding Role...",
-		submitButtonText: chosenRole
+		name: selectedRole?.name ?? "",
+		description: selectedRole?.description ?? "",
+		loadingButtonText: selectedRole ? "Updating Role..." : "Adding Role...",
+		submitButtonText: selectedRole
 			? UPDATE_ROLE_BUTTON_TEXT
 			: ADD_ROLE_BUTTON_TEXT,
 		onSubmit: (formValues: UpsertRoleFormData) => {
 			mutate({
 				...formValues,
-				...(chosenRole && { _id: chosenRole._id }),
+				...(selectedRole && { _id: selectedRole._id }),
 			});
 		},
 	};

@@ -28,12 +28,12 @@ afterEach(() => {
 	useRoleManagementStore.setState({
 		showUpsertRoleModal: false,
 		showDeleteRoleModal: false,
-		chosenRole: null,
+		selectedRole: null,
 	});
 	useUserManagementStore.setState({
 		showUpsertUserModal: false,
 		showDeleteUserModal: false,
-		chosenUser: null,
+		selectedUser: null,
 	});
 });
 

@@ -12,7 +12,7 @@ const users: User[] = [
 	},
 ];
 
-test("filterUsers filters by search input and chosen role", () => {
+test("filterUsers filters by search input and selected role", () => {
 	expect(filterUsers(users, "alice", "")).toEqual([users[0]]);
 	expect(filterUsers(users, "", "admin")).toEqual([users[0], users[2]]);
 	expect(filterUsers(users, "bob", "user")).toEqual([users[1]]);

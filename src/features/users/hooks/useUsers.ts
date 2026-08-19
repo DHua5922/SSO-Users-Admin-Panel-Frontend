@@ -7,7 +7,7 @@ import type { User } from "../schemas";
 import useUserManagementStore from "../store/useUserManagementStore";
 import { filterUsers } from "../utilities/filterUsers";
 
-export default function useUsers(searchInput: string, chosenRoleId: string) {
+export default function useUsers(searchInput: string, selectedRoleId: string) {
 	const { setShowUpsertUserModal, setShowDeleteUserModal, setChosenUser } =
 		useUserManagementStore(
 			useShallow((state) => ({
@@ -28,7 +28,7 @@ export default function useUsers(searchInput: string, chosenRoleId: string) {
 		retry: false,
 	});
 
-	const filteredUsers = filterUsers(users || [], searchInput, chosenRoleId);
+	const filteredUsers = filterUsers(users || [], searchInput, selectedRoleId);
 
 	const onClickEditUser = (user: User) => {
 		setShowUpsertUserModal(true);

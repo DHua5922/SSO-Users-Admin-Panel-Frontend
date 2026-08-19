@@ -23,7 +23,7 @@ export default function StatView({
 	href,
 	linkLabel,
 }: StatViewProps) {
-	const helperProps = {
+	const statCardProps = {
 		label,
 		linkLabel,
 		href,
@@ -31,38 +31,38 @@ export default function StatView({
 
 	if (isLoading)
 		return (
-			<Helper {...helperProps}>
+			<StatCard {...statCardProps}>
 				<div
 					className="skeleton h-8"
 					role="status"
 					aria-label={`Loading ${label}`}
 				/>
-			</Helper>
+			</StatCard>
 		);
 
 	if (isError)
 		return (
-			<Helper {...helperProps}>
+			<StatCard {...statCardProps}>
 				<p role="alert" className={`${valueClassName} text-xl! text-red-500`}>
 					{errorMessage}
 				</p>
-			</Helper>
+			</StatCard>
 		);
 
 	return (
-		<Helper {...helperProps}>
+		<StatCard {...statCardProps}>
 			<p className={valueClassName}>{value}</p>
-		</Helper>
+		</StatCard>
 	);
 }
 
-interface HelperProps {
+interface StatCardProps {
 	label: string;
 	linkLabel: string;
 	href: string;
 	children: ReactNode;
 }
-function Helper({ label, linkLabel, href, children }: HelperProps) {
+function StatCard({ label, linkLabel, href, children }: StatCardProps) {
 	const headingId = useId();
 
 	return (
