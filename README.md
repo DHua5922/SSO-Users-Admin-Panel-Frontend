@@ -45,19 +45,19 @@ The backend API is maintained separately:
 
 ## Tech Stack
 
-- React and TypeScript
-- Vite
-- React Router
-- TanStack Query for server data
-- Zustand for small shared UI state
-- React Hook Form and Zod for forms and validation
-- Axios for API requests
-- Tailwind CSS and CSS modules
-- Vitest and React Testing Library
-- Mock Service Worker for integration tests
-- Playwright for end-to-end and accessibility tests
-- axe-core for automated accessibility checks
-- Biome, TypeScript, and Knip for code quality
+- React and TypeScript — user interface and type-safe code
+- Vite — development server and production builds
+- React Router — client-side routing and protected routes
+- TanStack Query — server-state fetching, caching, and synchronization
+- Zustand — shared UI state
+- React Hook Form and Zod — form state and validation
+- Axios — backend API requests
+- Tailwind CSS and CSS Modules — component styling
+- Vitest and React Testing Library — unit and component tests
+- Mock Service Worker — API mocking for integration tests
+- Playwright — end-to-end and accessibility tests
+- axe-core — automated accessibility checks
+- Biome, TypeScript, and Knip — formatting, linting, type checking, and unused-code detection
 
 ## Requirements
 
