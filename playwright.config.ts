@@ -8,9 +8,7 @@ import { z } from "zod";
 
 dotenv.config();
 
-const frontendBaseUrl = z
-	.url()
-	.parse(process.env.VITE_FRONTEND_BASE_URL ?? "http://localhost:5173");
+const frontendBaseUrl = z.url().parse(process.env.VITE_FRONTEND_BASE_URL);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
