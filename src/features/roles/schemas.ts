@@ -5,6 +5,7 @@ export const roleSchema = z.object({
 	_id: z.string().min(1),
 	name: z.string().min(1, REQUIRED_NAME_ERROR_MESSAGE),
 	description: z.string(),
+	systemManaged: z.boolean(),
 });
 
 export const upsertRoleFormDataSchema = z.object({

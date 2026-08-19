@@ -5,6 +5,7 @@ import {
 	DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX,
 	ROLES_TABLE_ARIA_LABEL,
+	SYSTEM_MANAGED_ROLE_DELETE_ARIA_LABEL_PREFIX,
 } from "../constants";
 import type { Role } from "../schemas";
 import RoleTableHeaders from "./RoleTableHeaders";
@@ -43,7 +44,12 @@ export default function RoleTable({
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickDeleteRole(role)}
-								aria-label={`${DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${role.name}`}
+								disabled={role.systemManaged}
+								aria-label={`${
+									role.systemManaged
+										? SYSTEM_MANAGED_ROLE_DELETE_ARIA_LABEL_PREFIX
+										: DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX
+								} ${role.name}`}
 							>
 								<Icon name="delete" />
 							</Button>,

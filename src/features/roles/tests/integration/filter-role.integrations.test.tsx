@@ -25,8 +25,18 @@ test("should show error message when failing to load roles", async () => {
 
 test("should filter roles by name and description from search bar (case insensitive)", async () => {
 	const roles = [
-		{ _id: "admin-role-id", name: "Admin", description: "Administrators" },
-		{ _id: "user-role-id", name: "User", description: "Standard users" },
+		{
+			_id: "admin-role-id",
+			name: "Admin",
+			description: "Administrators",
+			systemManaged: true,
+		},
+		{
+			_id: "user-role-id",
+			name: "User",
+			description: "Standard users",
+			systemManaged: false,
+		},
 	];
 
 	mockGetRolesSuccessApi(roles);

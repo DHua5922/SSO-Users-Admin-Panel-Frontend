@@ -84,7 +84,14 @@ async function renderForm({
 }) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
-	const roles = [{ description: "", name: roleName, _id: "1" }];
+	const roles = [
+		{
+			description: "",
+			name: roleName,
+			_id: "1",
+			systemManaged: false,
+		},
+	];
 	const password = "password123";
 	const loadingButtonText = "Submitting User...";
 

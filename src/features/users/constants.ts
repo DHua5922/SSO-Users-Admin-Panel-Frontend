@@ -10,6 +10,8 @@ export const CONFIRM_DELETE_USER_BUTTON_TEXT =
 	"I accept the consequences. Delete User.";
 export const EDIT_USER_BUTTON_ARIA_LABEL_PREFIX = "Edit user";
 export const DELETE_USER_BUTTON_ARIA_LABEL_PREFIX = "Delete user";
+export const SYSTEM_MANAGED_USER_DELETE_ARIA_LABEL_PREFIX =
+	"Cannot delete system-managed user";
 
 export const UPSERT_USER_FORM_EMAIL_LABEL = "Email";
 export const UPSERT_USER_FORM_USERNAME_LABEL = "Username";

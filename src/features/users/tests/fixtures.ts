@@ -5,4 +5,5 @@ export const testUser = {
 	email: "test@example.com",
 	username: "testadmin",
 	role: testRoles[0]._id,
+	systemManaged: false,
 };

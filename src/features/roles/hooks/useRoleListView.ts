@@ -36,6 +36,8 @@ export default function useRoleListView(searchInput: string) {
 	};
 
 	const onClickDeleteRole = (role: Role) => {
+		if (role.systemManaged) return;
+
 		setShowDeleteRoleModal(true);
 		setChosenRole(role);
 	};

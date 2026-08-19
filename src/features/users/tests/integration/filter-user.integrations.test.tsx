@@ -24,8 +24,18 @@ test("should show error message when failing to load users", async () => {
 
 test("should filter users by username and email from search bar (case insensitive)", async () => {
 	const roles = [
-		{ _id: "admin-role-id", name: "Admin", description: "Administrators" },
-		{ _id: "user-role-id", name: "User", description: "Standard users" },
+		{
+			_id: "admin-role-id",
+			name: "Admin",
+			description: "Administrators",
+			systemManaged: true,
+		},
+		{
+			_id: "user-role-id",
+			name: "User",
+			description: "Standard users",
+			systemManaged: false,
+		},
 	];
 	const users = [
 		{
@@ -33,12 +43,14 @@ test("should filter users by username and email from search bar (case insensitiv
 			username: "John Doe",
 			email: "johndoe@example.com",
 			role: roles[0]._id,
+			systemManaged: true,
 		},
 		{
 			_id: "jane-user-id",
 			username: "Jane Smith",
 			email: "janesmith@example.com",
 			role: roles[1]._id,
+			systemManaged: false,
 		},
 	];
 
