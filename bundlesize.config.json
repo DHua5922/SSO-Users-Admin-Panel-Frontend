@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "./dist/assets/index-*.js",
+      "maxSize": "105 kB"
+    },
+    {
+      "path": "./dist/assets/dist-*.js",
+      "maxSize": "50 kB"
+    },
+    {
+      "path": "./dist/assets/api-*.js",
+      "maxSize": "15 kB"
+    },
+    {
+      "path": "./dist/assets/*Page-*.js",
+      "maxSize": "10 kB"
+    },
+    {
+      "path": "./dist/assets/*.css",
+      "maxSize": "25 kB"
+    }
+  ]
+}
