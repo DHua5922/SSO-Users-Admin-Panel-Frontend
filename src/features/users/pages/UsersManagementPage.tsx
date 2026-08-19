@@ -41,7 +41,7 @@ export default function UsersManagementPage() {
 					}}
 				/>
 
-				<div className="p-8 overflow-x-auto">
+				<div className="list-view-container">
 					<ListView
 						{...users.listViewProps}
 						emptyListMessage={EMPTY_USERS_MESSAGE}

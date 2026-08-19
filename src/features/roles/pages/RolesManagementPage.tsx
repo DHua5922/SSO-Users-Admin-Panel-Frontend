@@ -29,7 +29,7 @@ export default function RolesManagementPage() {
 			<div className="card">
 				<RoleTableControls {...tableControls} />
 
-				<div className="p-8 overflow-x-auto">
+				<div className="list-view-container">
 					<ListView
 						{...roles.listViewProps}
 						emptyListMessage={EMPTY_ROLES_MESSAGE}
