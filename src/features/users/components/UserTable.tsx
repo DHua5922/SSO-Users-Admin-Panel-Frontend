@@ -4,6 +4,7 @@ import Icon from "../../../shared/components/Icon";
 import {
 	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,
+	SYSTEM_MANAGED_USER_DELETE_ARIA_LABEL_PREFIX,
 	USERS_TABLE_ARIA_LABEL,
 } from "../constants";
 import type { User } from "../schemas";
@@ -42,7 +43,12 @@ export default function UserTable({
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickDeleteUser(user)}
-								aria-label={`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${user.username}`}
+								disabled={user.systemManaged}
+								aria-label={`${
+									user.systemManaged
+										? SYSTEM_MANAGED_USER_DELETE_ARIA_LABEL_PREFIX
+										: DELETE_USER_BUTTON_ARIA_LABEL_PREFIX
+								} ${user.username}`}
 							>
 								<Icon name="delete" />
 							</Button>,

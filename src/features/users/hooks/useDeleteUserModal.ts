@@ -33,7 +33,8 @@ export default function useDeleteUserModal() {
 		open: showDeleteUserModal,
 		onOpenChange: (show: boolean) => setShowDeleteUserModal(show),
 		onClickDelete: () => {
-			if (selectedUser) deleteUser(selectedUser._id);
+			if (selectedUser && !selectedUser.systemManaged)
+				deleteUser(selectedUser._id);
 		},
 	};
 }

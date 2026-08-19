@@ -2,13 +2,26 @@ import type { User } from "../schemas";
 import { filterUsers } from "./filterUsers";
 
 const users: User[] = [
-	{ _id: "1", username: "Alice", email: "alice@example.com", role: "admin" },
-	{ _id: "2", username: "Bob", email: "bob@example.com", role: "user" },
+	{
+		_id: "1",
+		username: "Alice",
+		email: "alice@example.com",
+		role: "admin",
+		systemManaged: true,
+	},
+	{
+		_id: "2",
+		username: "Bob",
+		email: "bob@example.com",
+		role: "user",
+		systemManaged: false,
+	},
 	{
 		_id: "3",
 		username: "Charlie",
 		email: "charlie@example.com",
 		role: "admin",
+		systemManaged: false,
 	},
 ];
 

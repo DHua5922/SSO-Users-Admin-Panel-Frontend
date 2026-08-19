@@ -28,6 +28,7 @@ test("should update role", async () => {
 		_id: testRoles[0]._id,
 		name: "updatedrole",
 		description: "Updated role description",
+		systemManaged: false,
 	};
 
 	mockGetMeSuccessApi();

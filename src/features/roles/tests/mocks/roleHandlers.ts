@@ -37,7 +37,11 @@ export function mockUpsertRoleSuccessApi() {
 		http.put(endpoint, async ({ request }) => {
 			const body = (await request.json()) as Partial<Role>;
 			return HttpResponse.json(
-				{ ...body, _id: body._id ?? testRoles[0]._id },
+				{
+					...body,
+					_id: body._id ?? testRoles[0]._id,
+					systemManaged: body.systemManaged ?? false,
+				},
 				{ status: SUCCESS_STATUS_CODE },
 			);
 		}),

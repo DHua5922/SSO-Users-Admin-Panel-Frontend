@@ -11,8 +11,8 @@ import {
 import RoleSelect from "./RoleSelect";
 
 const roles = [
-	{ _id: "1", name: "Admin", description: "Admin role" },
-	{ _id: "2", name: "User", description: "User role" },
+	{ _id: "1", name: "Admin", description: "Admin role", systemManaged: true },
+	{ _id: "2", name: "User", description: "User role", systemManaged: false },
 ];
 
 test("renders loading state", () => {

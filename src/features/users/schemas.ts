@@ -24,13 +24,16 @@ export const userSchema = z.object({
 	email: z.string(),
 	username: z.string(),
 	role: z.string(),
+	systemManaged: z.boolean(),
 });
 
-const upsertUserSchema = userSchema.omit({ _id: true }).extend({
-	_id: z.string().min(1).optional(),
-	password: z.string().optional(),
-	confirmPassword: z.string().optional(),
-});
+const upsertUserSchema = userSchema
+	.omit({ _id: true, systemManaged: true })
+	.extend({
+		_id: z.string().min(1).optional(),
+		password: z.string().optional(),
+		confirmPassword: z.string().optional(),
+	});
 
 export type UpsertUserFormData = z.infer<typeof upsertUserFormSchema>;
 export type User = z.infer<typeof userSchema>;

@@ -38,9 +38,9 @@ interface ErrorFallbackProps {
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
 	return (
 		<main className="h-screen center flex-col gap-8">
-			<h1 className="text-4xl font-bold">Something went wrong</h1>
+			<h1 className="text-4xl font-bold text-dark">Something went wrong</h1>
 
-			<p className="text-2xl">{error.message}</p>
+			<p className="text-2xl text-dark">{error.message}</p>
 
 			<Button onClick={resetErrorBoundary}>Try again</Button>
 		</main>

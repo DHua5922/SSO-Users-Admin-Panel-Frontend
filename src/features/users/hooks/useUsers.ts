@@ -36,6 +36,7 @@ export default function useUsers(searchInput: string, selectedRoleId: string) {
 	};
 
 	const onClickDeleteUser = (user: User) => {
+		if (user.systemManaged) return;
 		setShowDeleteUserModal(true);
 		setChosenUser(user);
 	};

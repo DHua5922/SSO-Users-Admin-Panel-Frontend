@@ -33,7 +33,8 @@ export default function useDeleteRoleModal() {
 		open: showDeleteRoleModal,
 		onOpenChange: (show: boolean) => setShowDeleteRoleModal(show),
 		onClickDelete: () => {
-			if (selectedRole) deleteRole(selectedRole._id);
+			if (selectedRole && !selectedRole.systemManaged)
+				deleteRole(selectedRole._id);
 		},
 	};
 }

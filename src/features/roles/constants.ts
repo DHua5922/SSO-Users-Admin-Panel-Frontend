@@ -10,6 +10,8 @@ export const CONFIRM_DELETE_ROLE_BUTTON_TEXT =
 	"I accept the consequences. Delete Role.";
 export const EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX = "Edit role";
 export const DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX = "Delete role";
+export const SYSTEM_MANAGED_ROLE_DELETE_ARIA_LABEL_PREFIX =
+	"Cannot delete system-managed role";
 
 export const UPSERT_ROLE_FORM_NAME_LABEL = "Name";
 export const UPSERT_ROLE_FORM_DESCRIPTION_LABEL = "Description";
