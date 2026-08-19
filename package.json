@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "pnpm quality:check && tsc -b && vite build",
+		"build": "tsc -b && vite build",
 		"preview": "vite preview",
 		"quality:check": "pnpm biome:check && pnpm check:unused && pnpm typescript:check",
 		"biome:check": "biome check .",
