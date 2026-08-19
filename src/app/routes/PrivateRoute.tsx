@@ -5,7 +5,9 @@ import {
 } from "../../features/auth/constants";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import PageLoader from "../../shared/components/PageLoader";
+import { MAIN_CONTENT_ID } from "../constants";
 import Navbar from "../layouts/Navbar";
+import SkipLink from "../layouts/SkipLink";
 
 export default function PrivateRoute() {
 	const { isLoggedIn, isLoading, currentUser } = useCurrentUser();
@@ -15,9 +17,10 @@ export default function PrivateRoute() {
 
 	return (
 		<>
+			<SkipLink />
 			<Navbar username={currentUser?.username || ""} />
 
-			<main tabIndex={-1}>
+			<main id={MAIN_CONTENT_ID} tabIndex={-1}>
 				<Outlet />
 			</main>
 		</>
