@@ -8,7 +8,9 @@ import { z } from "zod";
 
 dotenv.config();
 
-z.url().parse(process.env.VITE_FRONTEND_BASE_URL);
+const frontendBaseUrl = z
+	.url()
+	.parse(process.env.VITE_FRONTEND_BASE_URL ?? "http://localhost:5173");
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -76,7 +78,7 @@ export default defineConfig({
 	/* Run your local dev server before starting the tests */
 	webServer: {
 		command: "pnpm run dev",
-		url: process.env.VITE_FRONTEND_BASE_URL,
+		url: frontendBaseUrl,
 		reuseExistingServer: !process.env.CI,
 	},
 });
