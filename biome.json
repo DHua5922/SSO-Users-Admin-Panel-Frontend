@@ -4,12 +4,15 @@
 	"files": {
 		"ignoreUnknown": false,
 		"includes": [
-			"**",
-			"!!coverage",
-			"!!dist",
-			"!!playwright-report",
-			"!!test-results",
-			"!!blob-report"
+			"src/**",
+			"public/**",
+			".github/**",
+			"*.json",
+			"*.ts",
+			"*.html",
+			"*.md",
+			"*.yaml",
+			"*.yml"
 		]
 	},
 	"formatter": { "enabled": true, "indentStyle": "tab" },
