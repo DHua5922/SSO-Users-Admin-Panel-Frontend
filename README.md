@@ -81,7 +81,6 @@ The backend API is maintained separately:
 
    ```env
    VITE_BACKEND_BASE_URL=http://localhost:8080
-   VITE_FRONTEND_BASE_URL=http://localhost:5173
    ```
 
 3. Start the development server:
@@ -102,8 +101,6 @@ Environment files are ignored by Git. Do not put secrets in variables that start
 | `VITE_FRONTEND_BASE_URL` | Frontend URL used by Playwright | For end-to-end tests |
 | `VITE_TEST_EMAIL` | Test account email | For account-login end-to-end tests |
 | `VITE_TEST_PASSWORD` | Test account password | For account-login end-to-end tests |
-
-For Vercel, add `VITE_BACKEND_BASE_URL` in the project environment settings. Select the correct environment, such as Production or Preview, and redeploy. Vite reads this value during the build.
 
 ## Scripts
 
@@ -133,7 +130,7 @@ The test types have different jobs:
 - Accessibility tests use axe-core to find common accessibility problems.
 - Bundle checks prevent unexpected growth in generated JavaScript and CSS assets.
 
-Automated accessibility tests do not replace manual keyboard and screen-reader testing.
+Primary user flows are also tested manually with keyboard navigation. Automated checks and keyboard testing do not replace testing with screen readers and other assistive technologies.
 
 Run the production build before checking its bundle sizes:
 
@@ -152,7 +149,7 @@ GitHub Actions runs the following automated checks:
 - Integration tests run on pushes and pull requests to `main`.
 - End-to-end and accessibility tests run daily against the configured frontend environment.
 
-The production bundle job builds the app before running `pnpm check:bundle`. The generated build itself only runs TypeScript and Vite; the remaining checks are separate CI jobs.
+The production bundle job builds the app before running `pnpm check:bundle`. The `pnpm build` command itself only runs TypeScript and Vite; the remaining checks are separate CI jobs.
 
 ## Architecture Overview
 
@@ -226,7 +223,4 @@ Before deploying:
 
 1. Add the production backend URL to Vercel as `VITE_BACKEND_BASE_URL`.
 2. Make sure the backend allows the Vercel frontend origin.
-3. Make sure production cookies use the correct CORS, `SameSite`, and `Secure` settings.
-4. Run `pnpm quality:check`, `pnpm build`, and `pnpm check:bundle`.
-
-GitHub Actions enforces the same quality and production bundle checks on repository pushes.
+3. Make sure the backend CORS policy and production cookie attributes, including `SameSite` and `Secure`, support the deployed frontend.
