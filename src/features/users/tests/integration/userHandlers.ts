@@ -3,14 +3,14 @@ import {
 	BAD_REQUEST_STATUS_CODE,
 	INTERNAL_SERVER_ERROR_STATUS_CODE,
 	SUCCESS_STATUS_CODE,
-} from "../../../../../shared/constants";
-import { server } from "../../../../../shared/tests/vitest.setup";
+} from "../../../../shared/constants";
+import { server } from "../../../../shared/tests/vitest.setup";
 import {
 	CANNOT_LOAD_USERS_ERROR_MESSAGE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
 	USERS_API_ROUTE,
-} from "../../../constants";
-import type { User } from "../../../schemas";
+} from "../../constants";
+import type { User } from "../../schemas";
 
 const endpoint = `*${USERS_API_ROUTE}`;
 const defaultUser = {

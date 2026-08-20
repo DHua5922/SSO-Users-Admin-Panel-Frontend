@@ -22,7 +22,7 @@ import {
 import {
 	mockGetUsersSuccessApi,
 	mockUpsertUserSuccessApi,
-} from "./mocks/userHandlers";
+} from "./userHandlers";
 
 test("should update user", async () => {
 	const existingUser = {

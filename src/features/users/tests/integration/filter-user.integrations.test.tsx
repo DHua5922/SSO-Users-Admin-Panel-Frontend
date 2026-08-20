@@ -12,10 +12,7 @@ import {
 	SEARCH_USERS_ARIA_LABEL,
 	USERS_PATH,
 } from "../../constants";
-import {
-	mockGetUsersFailureApi,
-	mockGetUsersSuccessApi,
-} from "./mocks/userHandlers";
+import { mockGetUsersFailureApi, mockGetUsersSuccessApi } from "./userHandlers";
 
 test("should show error message when failing to load users", async () => {
 	mockGetMeSuccessApi();

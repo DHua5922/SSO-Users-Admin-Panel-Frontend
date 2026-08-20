@@ -9,7 +9,7 @@ import { DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
 import {
 	mockGetDashboardStatsFailureApi,
 	mockGetDashboardStatsSuccessApi,
-} from "./mocks/dashboardHandlers";
+} from "./dashboardHandlers";
 
 test("should show dashboard stats", async () => {
 	mockGetMeSuccessApi();

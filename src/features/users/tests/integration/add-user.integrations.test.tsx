@@ -30,7 +30,7 @@ import {
 	mockGetUsersSuccessApi,
 	mockUpsertUserFailureApi,
 	mockUpsertUserSuccessApi,
-} from "./mocks/userHandlers";
+} from "./userHandlers";
 
 const password = "password123";
 

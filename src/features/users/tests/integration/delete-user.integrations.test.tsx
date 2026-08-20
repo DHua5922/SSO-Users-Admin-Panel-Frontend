@@ -13,7 +13,7 @@ import {
 import {
 	mockDeleteUserSuccessApi,
 	mockGetUsersSuccessApi,
-} from "./mocks/userHandlers";
+} from "./userHandlers";
 
 test("should delete user", async () => {
 	const userToDelete = {
