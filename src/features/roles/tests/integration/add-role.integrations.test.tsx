@@ -5,6 +5,7 @@ import {
 	findDialog,
 	findTable,
 	findText,
+	getLabel,
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
@@ -13,16 +14,14 @@ import {
 	CANNOT_UPSERT_ROLE_ERROR_MESSAGE,
 	EMPTY_ROLES_MESSAGE,
 	ROLES_PATH,
+	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
+	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants";
 import {
 	mockGetRolesSuccessApi,
 	mockUpsertRoleFailureApi,
 	mockUpsertRoleSuccessApi,
 } from "../mocks/roleHandlers";
-import {
-	getDescriptionLabel,
-	getNameLabel,
-} from "../react-testing-library/inputs";
 import {
 	findShowDeleteRoleModalButton,
 	findShowEditRoleModalButton,
@@ -86,8 +85,14 @@ async function openAndFillAddRoleForm(
 	const dialog = await findDialog(ADD_ROLE_MODAL_TITLE);
 	expect(dialog).toBeTruthy();
 
-	await event.type(getNameLabel(dialog), roleFields.name);
-	await event.type(getDescriptionLabel(dialog), roleFields.description);
+	await event.type(
+		getLabel(UPSERT_ROLE_FORM_NAME_LABEL, dialog),
+		roleFields.name,
+	);
+	await event.type(
+		getLabel(UPSERT_ROLE_FORM_DESCRIPTION_LABEL, dialog),
+		roleFields.description,
+	);
 
 	return dialog;
 }

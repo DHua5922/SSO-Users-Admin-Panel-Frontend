@@ -1,9 +1,17 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
-import { getButton } from "../../../shared/tests/react-testing-library/locator";
-import { GUEST_LOGIN_TEXT, LOGIN_LOADING_TEXT, LOGIN_TEXT } from "../constants";
-import { getEmailLabel, getPasswordLabel } from "../tests/integration/locators";
+import {
+	getButton,
+	getLabel,
+} from "../../../shared/tests/react-testing-library/locator";
+import {
+	GUEST_LOGIN_TEXT,
+	LOGIN_EMAIL_INPUT_LABEL,
+	LOGIN_LOADING_TEXT,
+	LOGIN_PASSWORD_INPUT_LABEL,
+	LOGIN_TEXT,
+} from "../constants";
 import LoginForm from "./LoginForm";
 
 test("shows loading state", async () => {
@@ -19,7 +27,7 @@ test("has no automatically detectable accessibility violations", async () => {
 test("submit by pressing enter on keyboard", async () => {
 	const { event, onSubmit, button } = await renderLoginForm(false, LOGIN_TEXT);
 
-	await event.type(getPasswordLabel(), "password123{enter}");
+	await event.type(getLabel(LOGIN_PASSWORD_INPUT_LABEL), "password123{enter}");
 
 	expect(onSubmit).toHaveBeenCalled();
 	expect(button).toBeTruthy();
@@ -61,7 +69,7 @@ async function renderLoginForm(isLoading: boolean, buttonText: string) {
 			onChangePassword={onChangePassword}
 		/>,
 	);
-	await event.type(getEmailLabel(), "test@example.com");
+	await event.type(getLabel(LOGIN_EMAIL_INPUT_LABEL), "test@example.com");
 
 	return {
 		event,

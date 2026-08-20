@@ -1,13 +1,17 @@
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
+	findSearchBox,
 	findTableRow,
 	findText,
 	queryTableRow,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
-import { CANNOT_LOAD_USERS_ERROR_MESSAGE, USERS_PATH } from "../../constants";
-import { findSearchBar } from "../react-testing-library/inputs";
+import {
+	CANNOT_LOAD_USERS_ERROR_MESSAGE,
+	SEARCH_USERS_ARIA_LABEL,
+	USERS_PATH,
+} from "../../constants";
 import {
 	mockGetUsersFailureApi,
 	mockGetUsersSuccessApi,
@@ -60,7 +64,7 @@ test("should filter users by username and email from search bar (case insensitiv
 
 	const { event } = renderApp(USERS_PATH);
 
-	await event.type(await findSearchBar(), "smi");
+	await event.type(await findSearchBox(SEARCH_USERS_ARIA_LABEL), "smi");
 
 	const matchingRow = await findTableRow(users[1].username);
 	expect(await findText(users[1].username, matchingRow)).toBeTruthy();

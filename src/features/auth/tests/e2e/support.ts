@@ -1,15 +1,18 @@
 import { expect, type Page } from "@playwright/test";
 import { METHOD_POST } from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
-import { getLabel } from "../../../../shared/tests/playwright/locator";
+import {
+	getButton,
+	getLabel,
+} from "../../../../shared/tests/playwright/locator";
 import {
 	AUTH_BASE_API_ROUTE,
 	LOGIN_EMAIL_INPUT_LABEL,
 	LOGIN_PASSWORD_INPUT_LABEL,
 	LOGIN_PATH,
+	LOGIN_TEXT,
 } from "../../constants";
 import { loadPage } from "../playwright/environment";
-import { getLoginButton } from "./locators";
 
 export async function logInTest(page: Page) {
 	const loginResponsePromise = waitForApiResponse({
@@ -26,7 +29,7 @@ export async function logInTest(page: Page) {
 	);
 	const [response] = await Promise.all([
 		loginResponsePromise,
-		getLoginButton(page).click(),
+		getButton(page, LOGIN_TEXT).click(),
 	]);
 	const authenticatedUser = await response.json();
 

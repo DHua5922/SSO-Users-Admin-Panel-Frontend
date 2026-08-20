@@ -3,10 +3,12 @@ import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getHeading,
 	getLink,
+	getSection,
 	getText,
 } from "../../../../shared/tests/playwright/locator";
 import { logInTest } from "../../../auth/tests/e2e/support";
 import {
+	DASHBOARD_HEADER,
 	DASHBOARD_ROLE_STATS_HEADER,
 	DASHBOARD_STATS_API_PATH,
 	DASHBOARD_USER_STATS_HEADER,
@@ -14,11 +16,6 @@ import {
 	DASHBOARD_VIEW_USERS_LINK_TEXT,
 } from "../../constants";
 import { dashboardStatsSchema } from "../../schemas";
-import {
-	getDashboardHeader,
-	getDashboardRoleStatsSection,
-	getDashboardUserStatsSection,
-} from "./locators";
 
 test("should show dashboard stats", async ({ page }) => {
 	const dashboardStatsResponsePromise = waitForApiResponse({
@@ -31,9 +28,9 @@ test("should show dashboard stats", async ({ page }) => {
 	const dashboardStatsResponse = await dashboardStatsResponsePromise;
 	const stats = dashboardStatsSchema.parse(await dashboardStatsResponse.json());
 
-	await expect(getDashboardHeader(page)).toBeVisible();
+	await expect(getHeading(page, DASHBOARD_HEADER, { level: 1 })).toBeVisible();
 
-	const userStatsSection = getDashboardUserStatsSection(page);
+	const userStatsSection = getSection(page, DASHBOARD_USER_STATS_HEADER);
 	await expect(
 		getHeading(userStatsSection, DASHBOARD_USER_STATS_HEADER),
 	).toBeVisible();
@@ -42,7 +39,7 @@ test("should show dashboard stats", async ({ page }) => {
 		getLink(userStatsSection, DASHBOARD_VIEW_USERS_LINK_TEXT),
 	).toBeVisible();
 
-	const roleStatsSection = getDashboardRoleStatsSection(page);
+	const roleStatsSection = getSection(page, DASHBOARD_ROLE_STATS_HEADER);
 	await expect(
 		getHeading(roleStatsSection, DASHBOARD_ROLE_STATS_HEADER),
 	).toBeVisible();

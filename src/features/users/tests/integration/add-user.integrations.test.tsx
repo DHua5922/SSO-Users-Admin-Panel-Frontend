@@ -5,6 +5,7 @@ import {
 	findDialog,
 	findTable,
 	findText,
+	getLabel,
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
@@ -13,15 +14,13 @@ import {
 	ADD_USER_MODAL_TITLE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
 	EMPTY_USERS_MESSAGE,
+	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_EMAIL_LABEL,
+	UPSERT_USER_FORM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_ROLE_LABEL,
+	UPSERT_USER_FORM_USERNAME_LABEL,
 	USERS_PATH,
 } from "../../constants";
-import {
-	getConfirmPasswordLabel,
-	getEmailLabel,
-	getPasswordInput,
-	getRoleLabel,
-	getUsernameLabel,
-} from "../react-testing-library/inputs";
 import {
 	findShowDeleteUserModalButton,
 	findShowEditUserModalButton,
@@ -96,11 +95,23 @@ async function openAndFillAddUserForm(
 	const dialog = await findDialog(ADD_USER_MODAL_TITLE);
 	expect(dialog).toBeTruthy();
 
-	await event.type(getUsernameLabel(dialog), userFields.username);
-	await event.selectOptions(getRoleLabel(dialog), userFields.role);
-	await event.type(getEmailLabel(dialog), userFields.email);
-	await event.type(getPasswordInput(), password);
-	await event.type(getConfirmPasswordLabel(dialog), password);
+	await event.type(
+		getLabel(UPSERT_USER_FORM_USERNAME_LABEL, dialog),
+		userFields.username,
+	);
+	await event.selectOptions(
+		getLabel(UPSERT_USER_FORM_ROLE_LABEL, dialog),
+		userFields.role,
+	);
+	await event.type(
+		getLabel(UPSERT_USER_FORM_EMAIL_LABEL, dialog),
+		userFields.email,
+	);
+	await event.type(getLabel(UPSERT_USER_FORM_PASSWORD_LABEL, dialog), password);
+	await event.type(
+		getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL, dialog),
+		password,
+	);
 
 	return dialog;
 }

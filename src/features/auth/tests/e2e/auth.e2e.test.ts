@@ -5,6 +5,7 @@ import {
 	GUEST_LOGIN_PATH,
 	GUEST_LOGIN_TEXT,
 	LOGIN_PATH,
+	LOGIN_TEXT,
 	LOGOUT_BUTTON_TEXT,
 } from "../../../../features/auth/constants";
 import {
@@ -14,7 +15,6 @@ import {
 } from "../../../../shared/constants";
 import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import { getButton } from "../../../../shared/tests/playwright/locator";
-import { getLoginButton } from "./locators";
 import { logInTest } from "./support";
 
 test("logs in as a guest", async ({ page }) => {
@@ -68,7 +68,7 @@ test("redirects to login page when logging out", async ({ page }) => {
 		getButton(page, LOGOUT_BUTTON_TEXT).click(),
 	]);
 
-	await expect(getLoginButton(page)).toBeVisible();
+	await expect(getButton(page, LOGIN_TEXT)).toBeVisible();
 });
 
 function getLogo(page: Page) {
