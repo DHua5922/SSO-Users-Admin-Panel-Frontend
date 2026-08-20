@@ -15,7 +15,6 @@ import {
 	EMPTY_USERS_MESSAGE,
 	USERS_PATH,
 } from "../../constants";
-import { testUser } from "../fixtures";
 import {
 	getConfirmPasswordLabel,
 	getEmailLabel,
@@ -43,37 +42,52 @@ beforeEach(() => {
 });
 
 test("should add user", async () => {
+	const user = {
+		_id: "new-user-id",
+		email: "new-user@example.com",
+		username: "new-user",
+		role: "admin-role-id",
+		systemManaged: false,
+	};
 	mockUpsertUserSuccessApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const dialog = await openAndFillAddUserForm(event);
-	mockGetUsersSuccessApi([testUser]);
+	const dialog = await openAndFillAddUserForm(event, user);
+	mockGetUsersSuccessApi([user]);
 	await event.click(getAddUserButton(dialog));
 
 	const usersTable = await findTable("");
-	expect(await findText(testUser.username, usersTable)).toBeTruthy();
-	expect(await findText(testUser.email, usersTable)).toBeTruthy();
-	expect(await findText(testUser.role, usersTable)).toBeTruthy();
+	expect(await findText(user.username, usersTable)).toBeTruthy();
+	expect(await findText(user.email, usersTable)).toBeTruthy();
+	expect(await findText(user.role, usersTable)).toBeTruthy();
 	expect(
-		await findShowEditUserModalButton(testUser.username, usersTable),
+		await findShowEditUserModalButton(user.username, usersTable),
 	).toBeTruthy();
 	expect(
-		await findShowDeleteUserModalButton(testUser.username, usersTable),
+		await findShowDeleteUserModalButton(user.username, usersTable),
 	).toBeTruthy();
 });
 
 test("should show error when failing to add user", async () => {
+	const user = {
+		username: "rejected-user",
+		role: "admin-role-id",
+		email: "rejected-user@example.com",
+	};
 	mockUpsertUserFailureApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const dialog = await openAndFillAddUserForm(event);
+	const dialog = await openAndFillAddUserForm(event, user);
 	await event.click(getAddUserButton(dialog));
 
 	const alert = await findAlert("", dialog);
 	expect(getText(CANNOT_UPSERT_USER_ERROR_MESSAGE, alert)).toBeTruthy();
 });
 
-async function openAndFillAddUserForm(event: UserEvent) {
+async function openAndFillAddUserForm(
+	event: UserEvent,
+	user: { username: string; role: string; email: string },
+) {
 	expect(await findText(EMPTY_USERS_MESSAGE)).toBeTruthy();
 
 	const showAddUserModalButton = getAddUserButton();
@@ -83,9 +97,9 @@ async function openAndFillAddUserForm(event: UserEvent) {
 	const dialog = await findDialog(ADD_USER_MODAL_TITLE);
 	expect(dialog).toBeTruthy();
 
-	await event.type(getUsernameLabel(dialog), testUser.username);
-	await event.selectOptions(getRoleLabel(dialog), testUser.role);
-	await event.type(getEmailLabel(dialog), testUser.email);
+	await event.type(getUsernameLabel(dialog), user.username);
+	await event.selectOptions(getRoleLabel(dialog), user.role);
+	await event.type(getEmailLabel(dialog), user.email);
 	await event.type(getPasswordInput(), password);
 	await event.type(getConfirmPasswordLabel(dialog), password);
 

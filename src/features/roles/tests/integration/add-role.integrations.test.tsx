@@ -14,7 +14,6 @@ import {
 	EMPTY_ROLES_MESSAGE,
 	ROLES_PATH,
 } from "../../constants";
-import { testRoles } from "../fixtures";
 import {
 	mockGetRolesSuccessApi,
 	mockUpsertRoleFailureApi,
@@ -36,36 +35,47 @@ beforeEach(() => {
 });
 
 test("should add role", async () => {
+	const role = {
+		_id: "new-role-id",
+		name: "new-role",
+		description: "New role description",
+		systemManaged: false,
+	};
 	mockUpsertRoleSuccessApi();
 	const { event } = renderApp(ROLES_PATH);
 
-	const dialog = await commonProcess(event);
-	mockGetRolesSuccessApi(testRoles);
+	const dialog = await openAndFillAddRoleForm(event, role);
+	mockGetRolesSuccessApi([role]);
 	await event.click(getAddRoleButton(dialog));
 
 	const rolesTable = await findTable("");
-	expect(await findText(testRoles[0].name, rolesTable)).toBeTruthy();
-	expect(await findText(testRoles[0].description, rolesTable)).toBeTruthy();
+	expect(await findText(role.name, rolesTable)).toBeTruthy();
+	expect(await findText(role.description, rolesTable)).toBeTruthy();
+	expect(await findShowEditRoleModalButton(role.name, rolesTable)).toBeTruthy();
 	expect(
-		await findShowEditRoleModalButton(testRoles[0].name, rolesTable),
-	).toBeTruthy();
-	expect(
-		await findShowDeleteRoleModalButton(testRoles[0].name, rolesTable),
+		await findShowDeleteRoleModalButton(role.name, rolesTable),
 	).toBeTruthy();
 });
 
 test("should show error when failing to add role", async () => {
+	const role = {
+		name: "rejected-role",
+		description: "Role rejected by the API",
+	};
 	mockUpsertRoleFailureApi();
 	const { event } = renderApp(ROLES_PATH);
 
-	const dialog = await commonProcess(event);
+	const dialog = await openAndFillAddRoleForm(event, role);
 	await event.click(getAddRoleButton(dialog));
 
 	const alert = await findAlert("", dialog);
 	expect(getText(CANNOT_UPSERT_ROLE_ERROR_MESSAGE, alert)).toBeTruthy();
 });
 
-async function commonProcess(event: UserEvent) {
+async function openAndFillAddRoleForm(
+	event: UserEvent,
+	role: { name: string; description: string },
+) {
 	expect(await findText(EMPTY_ROLES_MESSAGE)).toBeTruthy();
 
 	const showAddRoleModalButton = getAddRoleButton();
@@ -75,8 +85,8 @@ async function commonProcess(event: UserEvent) {
 	const dialog = await findDialog(ADD_ROLE_MODAL_TITLE);
 	expect(dialog).toBeTruthy();
 
-	await event.type(getNameLabel(dialog), testRoles[0].name);
-	await event.type(getDescriptionLabel(dialog), testRoles[0].description);
+	await event.type(getNameLabel(dialog), role.name);
+	await event.type(getDescriptionLabel(dialog), role.description);
 
 	return dialog;
 }

@@ -6,7 +6,6 @@ import {
 	findButton,
 	findText,
 } from "../../../../shared/tests/react-testing-library/locator";
-import { testUser } from "../../../users/tests/fixtures";
 import { LOGIN_PATH, LOGOUT_BUTTON_TEXT } from "../../constants";
 import {
 	findCurrentUserMenuToggleButton,
@@ -73,7 +72,7 @@ test("log out user", async () => {
 });
 
 async function submitForm(event: UserEvent) {
-	await event.type(await findEmailLabel(), testUser.email);
+	await event.type(await findEmailLabel(), "test@example.com");
 	await event.type(await findPasswordLabel(), "password123");
 	await event.click(await findLoginButton());
 }

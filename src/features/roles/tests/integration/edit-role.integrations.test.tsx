@@ -13,7 +13,6 @@ import {
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants";
-import { testRoles } from "../fixtures";
 import {
 	mockGetRolesSuccessApi,
 	mockUpsertRoleSuccessApi,
@@ -24,25 +23,29 @@ import {
 } from "./locators";
 
 test("should update role", async () => {
+	const role = {
+		_id: "role-to-update-id",
+		name: "role-to-update",
+		description: "Role to update",
+		systemManaged: false,
+	};
 	const updatedRole = {
-		_id: testRoles[0]._id,
+		...role,
 		name: "updatedrole",
 		description: "Updated role description",
 		systemManaged: false,
 	};
 
 	mockGetMeSuccessApi();
-	mockGetRolesSuccessApi(testRoles);
+	mockGetRolesSuccessApi([role]);
 	mockUpsertRoleSuccessApi();
 
 	const { event } = renderApp(ROLES_PATH);
 
-	const showEditRoleModalButton = await findShowEditRoleModalButton(
-		testRoles[0].name,
-	);
+	const showEditRoleModalButton = await findShowEditRoleModalButton(role.name);
 	await event.click(showEditRoleModalButton);
 
-	const editRoleDialog = await findDialog(`Edit ${testRoles[0].name}`);
+	const editRoleDialog = await findDialog(`Edit ${role.name}`);
 	const nameInput = getLabel(
 		UPSERT_ROLE_FORM_NAME_LABEL,
 		editRoleDialog,
@@ -52,8 +55,8 @@ test("should update role", async () => {
 		editRoleDialog,
 	) as HTMLInputElement;
 
-	expect(nameInput.value).toBe(testRoles[0].name);
-	expect(descriptionInput.value).toBe(testRoles[0].description);
+	expect(nameInput.value).toBe(role.name);
+	expect(descriptionInput.value).toBe(role.description);
 
 	await event.clear(nameInput);
 	await event.clear(descriptionInput);

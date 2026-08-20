@@ -1,9 +1,15 @@
 import { render } from "@testing-library/react";
 import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
-import { testRoles } from "../../roles/tests/fixtures";
 import UserTableControls from "./UserTableControls";
 
 test("user table controls have no automatically detectable accessibility violations", async () => {
+	const role = {
+		_id: "role-id",
+		name: "admin",
+		description: "Administrator role",
+		systemManaged: false,
+	};
+
 	render(
 		<UserTableControls
 			searchBarProps={{ onChange: vi.fn() }}
@@ -11,7 +17,7 @@ test("user table controls have no automatically detectable accessibility violati
 				isLoading: false,
 				isError: false,
 				errorMessage: "",
-				list: testRoles,
+				list: [role],
 			}}
 			onClickAddUser={vi.fn()}
 		/>,

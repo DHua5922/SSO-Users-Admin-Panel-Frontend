@@ -11,11 +11,16 @@ import {
 	ROLES_API_ROUTE,
 } from "../../constants";
 import type { Role } from "../../schemas";
-import { testRoles } from "../fixtures";
 
 const endpoint = `*${ROLES_API_ROUTE}`;
+const defaultRole = {
+	_id: "admin-role-id",
+	name: "admin",
+	description: "Administrator role",
+	systemManaged: false,
+};
 
-export function mockGetRolesSuccessApi(list = testRoles) {
+export function mockGetRolesSuccessApi(list: Role[] = [defaultRole]) {
 	server.use(
 		http.get(endpoint, () => {
 			return HttpResponse.json(list, { status: SUCCESS_STATUS_CODE });
@@ -39,7 +44,7 @@ export function mockUpsertRoleSuccessApi() {
 			return HttpResponse.json(
 				{
 					...body,
-					_id: body._id ?? testRoles[0]._id,
+					_id: body._id ?? "created-role-id",
 					systemManaged: body.systemManaged ?? false,
 				},
 				{ status: SUCCESS_STATUS_CODE },
@@ -62,7 +67,7 @@ export function mockDeleteRoleSuccessApi() {
 	return server.use(
 		http.delete(`${endpoint}/:id`, ({ params }) => {
 			return HttpResponse.json(
-				{ ...testRoles[0], _id: params.id },
+				{ ...defaultRole, _id: params.id },
 				{ status: SUCCESS_STATUS_CODE },
 			);
 		}),

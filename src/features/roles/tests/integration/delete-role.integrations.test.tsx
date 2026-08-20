@@ -5,7 +5,6 @@ import {
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { EMPTY_ROLES_MESSAGE, ROLES_PATH } from "../../constants";
-import { testRoles } from "../fixtures";
 import {
 	mockDeleteRoleSuccessApi,
 	mockGetRolesSuccessApi,
@@ -16,16 +15,23 @@ import {
 } from "./locators";
 
 test("should delete role", async () => {
+	const role = {
+		_id: "role-to-delete-id",
+		name: "role-to-delete",
+		description: "Role to delete",
+		systemManaged: false,
+	};
+
 	mockGetMeSuccessApi();
-	mockGetRolesSuccessApi(testRoles);
+	mockGetRolesSuccessApi([role]);
 	mockDeleteRoleSuccessApi();
 
 	const { event } = renderApp(ROLES_PATH);
 
-	const deleteButton = await findShowDeleteRoleModalButton(testRoles[0].name);
+	const deleteButton = await findShowDeleteRoleModalButton(role.name);
 	await event.click(deleteButton);
 
-	const dialog = await findDialog(`Delete ${testRoles[0].name}`);
+	const dialog = await findDialog(`Delete ${role.name}`);
 	mockGetRolesSuccessApi([]);
 	await event.click(getConfirmDeleteRoleButton(dialog));
 	expect(await findText(EMPTY_ROLES_MESSAGE)).toBeTruthy();

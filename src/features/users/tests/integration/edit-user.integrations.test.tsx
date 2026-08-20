@@ -15,7 +15,6 @@ import {
 	UPSERT_USER_FORM_USERNAME_LABEL,
 	USERS_PATH,
 } from "../../constants";
-import { testUser } from "../fixtures";
 import {
 	findShowDeleteUserModalButton,
 	findShowEditUserModalButton,
@@ -26,25 +25,32 @@ import {
 } from "./mocks/userHandlers";
 
 test("should update user", async () => {
+	const user = {
+		_id: "user-to-update-id",
+		email: "user-to-update@example.com",
+		username: "user-to-update",
+		role: "admin-role-id",
+		systemManaged: false,
+	};
 	const updatedUser = {
-		...testUser,
+		...user,
 		username: "updateduser",
 		email: "updateduser@example.com",
 	};
 
 	mockGetMeSuccessApi();
 	mockGetRolesSuccessApi();
-	mockGetUsersSuccessApi([testUser]);
+	mockGetUsersSuccessApi([user]);
 	mockUpsertUserSuccessApi();
 
 	const { event } = renderApp(USERS_PATH);
 
 	const showEditUserModalButton = await findShowEditUserModalButton(
-		testUser.username,
+		user.username,
 	);
 	await event.click(showEditUserModalButton);
 
-	const editUserDialog = await findDialog(`Edit ${testUser.username}`);
+	const editUserDialog = await findDialog(`Edit ${user.username}`);
 	const usernameInput = getLabel(
 		UPSERT_USER_FORM_USERNAME_LABEL,
 		editUserDialog,
@@ -58,9 +64,9 @@ test("should update user", async () => {
 		editUserDialog,
 	) as HTMLSelectElement;
 
-	expect(usernameInput.value).toBe(testUser.username);
-	expect(emailInput.value).toBe(testUser.email);
-	expect(roleSelect.value).toBe(testUser.role);
+	expect(usernameInput.value).toBe(user.username);
+	expect(emailInput.value).toBe(user.email);
+	expect(roleSelect.value).toBe(user.role);
 
 	await event.clear(usernameInput);
 	await event.clear(emailInput);

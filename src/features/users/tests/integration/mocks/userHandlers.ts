@@ -11,9 +11,15 @@ import {
 	USERS_API_ROUTE,
 } from "../../../constants";
 import type { User } from "../../../schemas";
-import { testUser } from "../../fixtures";
 
 const endpoint = `*${USERS_API_ROUTE}`;
+const defaultUser = {
+	_id: "user-id",
+	email: "test@example.com",
+	username: "testadmin",
+	role: "admin-role-id",
+	systemManaged: false,
+};
 
 export function mockGetUsersSuccessApi(list: User[]) {
 	server.use(
@@ -39,7 +45,7 @@ export function mockUpsertUserSuccessApi() {
 			return HttpResponse.json(
 				{
 					...body,
-					_id: body._id ?? testUser._id,
+					_id: body._id ?? "created-user-id",
 					systemManaged: body.systemManaged ?? false,
 				},
 				{ status: SUCCESS_STATUS_CODE },
@@ -60,7 +66,7 @@ export function mockUpsertUserFailureApi() {
 export function mockDeleteUserSuccessApi() {
 	return server.use(
 		http.delete(`${endpoint}/:id`, () => {
-			return HttpResponse.json(testUser, { status: SUCCESS_STATUS_CODE });
+			return HttpResponse.json(defaultUser, { status: SUCCESS_STATUS_CODE });
 		}),
 	);
 }

@@ -1,15 +1,21 @@
 import { HttpResponse, http } from "msw";
 import { SUCCESS_STATUS_CODE } from "../../../../../shared/constants";
 import { server } from "../../../../../shared/tests/vitest.setup";
-import { testUser } from "../../../../users/tests/fixtures";
 import { ME_API_ROUTE } from "../../../constants";
 
 const meEndpoint = `*${ME_API_ROUTE}`;
+const currentUser = {
+	_id: "current-user-id",
+	email: "test@example.com",
+	username: "testadmin",
+	role: "admin-role-id",
+	systemManaged: false,
+};
 
 export function mockGetMeSuccessApi() {
 	return server.use(
 		http.get(meEndpoint, () => {
-			return HttpResponse.json(testUser, { status: SUCCESS_STATUS_CODE });
+			return HttpResponse.json(currentUser, { status: SUCCESS_STATUS_CODE });
 		}),
 	);
 }

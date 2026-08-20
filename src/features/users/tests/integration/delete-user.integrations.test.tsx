@@ -6,7 +6,6 @@ import {
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
 import { EMPTY_USERS_MESSAGE, USERS_PATH } from "../../constants";
-import { testUser } from "../fixtures";
 import {
 	findShowDeleteUserModalButton,
 	getConfirmDeleteUserButton,
@@ -17,17 +16,24 @@ import {
 } from "./mocks/userHandlers";
 
 test("should delete user", async () => {
+	const user = {
+		_id: "user-to-delete-id",
+		email: "delete@example.com",
+		username: "user-to-delete",
+		role: "admin-role-id",
+		systemManaged: false,
+	};
 	mockGetMeSuccessApi();
 	mockGetRolesSuccessApi();
-	mockGetUsersSuccessApi([testUser]);
+	mockGetUsersSuccessApi([user]);
 	mockDeleteUserSuccessApi();
 
 	const { event } = renderApp(USERS_PATH);
 
-	const deleteButton = await findShowDeleteUserModalButton(testUser.username);
+	const deleteButton = await findShowDeleteUserModalButton(user.username);
 	await event.click(deleteButton);
 
-	const dialog = await findDialog(`Delete ${testUser.username}`);
+	const dialog = await findDialog(`Delete ${user.username}`);
 	mockGetUsersSuccessApi([]);
 	await event.click(getConfirmDeleteUserButton(dialog));
 	expect(await findText(EMPTY_USERS_MESSAGE)).toBeTruthy();
