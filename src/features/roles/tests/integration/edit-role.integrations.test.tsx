@@ -23,29 +23,30 @@ import {
 } from "./locators";
 
 test("should update role", async () => {
-	const role = {
+	const existingRole = {
 		_id: "role-to-update-id",
 		name: "role-to-update",
 		description: "Role to update",
 		systemManaged: false,
 	};
 	const updatedRole = {
-		...role,
+		...existingRole,
 		name: "updatedrole",
 		description: "Updated role description",
-		systemManaged: false,
 	};
 
 	mockGetMeSuccessApi();
-	mockGetRolesSuccessApi([role]);
+	mockGetRolesSuccessApi([existingRole]);
 	mockUpsertRoleSuccessApi();
 
 	const { event } = renderApp(ROLES_PATH);
 
-	const showEditRoleModalButton = await findShowEditRoleModalButton(role.name);
+	const showEditRoleModalButton = await findShowEditRoleModalButton(
+		existingRole.name,
+	);
 	await event.click(showEditRoleModalButton);
 
-	const editRoleDialog = await findDialog(`Edit ${role.name}`);
+	const editRoleDialog = await findDialog(`Edit ${existingRole.name}`);
 	const nameInput = getLabel(
 		UPSERT_ROLE_FORM_NAME_LABEL,
 		editRoleDialog,
@@ -55,8 +56,8 @@ test("should update role", async () => {
 		editRoleDialog,
 	) as HTMLInputElement;
 
-	expect(nameInput.value).toBe(role.name);
-	expect(descriptionInput.value).toBe(role.description);
+	expect(nameInput.value).toBe(existingRole.name);
+	expect(descriptionInput.value).toBe(existingRole.description);
 
 	await event.clear(nameInput);
 	await event.clear(descriptionInput);
@@ -66,15 +67,13 @@ test("should update role", async () => {
 	mockGetRolesSuccessApi([updatedRole]);
 	await event.click(getButton(UPDATE_ROLE_BUTTON_TEXT, editRoleDialog));
 
-	const updatedRolesTable = await findTableRow(updatedRole.name);
-	expect(await findText(updatedRole.name, updatedRolesTable)).toBeTruthy();
+	const updatedRoleRow = await findTableRow(updatedRole.name);
+	expect(await findText(updatedRole.name, updatedRoleRow)).toBeTruthy();
+	expect(await findText(updatedRole.description, updatedRoleRow)).toBeTruthy();
 	expect(
-		await findText(updatedRole.description, updatedRolesTable),
+		await findShowEditRoleModalButton(updatedRole.name, updatedRoleRow),
 	).toBeTruthy();
 	expect(
-		await findShowEditRoleModalButton(updatedRole.name, updatedRolesTable),
-	).toBeTruthy();
-	expect(
-		await findShowDeleteRoleModalButton(updatedRole.name, updatedRolesTable),
+		await findShowDeleteRoleModalButton(updatedRole.name, updatedRoleRow),
 	).toBeTruthy();
 });

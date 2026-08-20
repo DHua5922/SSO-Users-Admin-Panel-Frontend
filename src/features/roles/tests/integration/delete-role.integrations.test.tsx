@@ -15,7 +15,7 @@ import {
 } from "./locators";
 
 test("should delete role", async () => {
-	const role = {
+	const roleToDelete = {
 		_id: "role-to-delete-id",
 		name: "role-to-delete",
 		description: "Role to delete",
@@ -23,16 +23,16 @@ test("should delete role", async () => {
 	};
 
 	mockGetMeSuccessApi();
-	mockGetRolesSuccessApi([role]);
+	mockGetRolesSuccessApi([roleToDelete]);
 	mockDeleteRoleSuccessApi();
 
 	const { event } = renderApp(ROLES_PATH);
 
-	const deleteButton = await findShowDeleteRoleModalButton(role.name);
+	const deleteButton = await findShowDeleteRoleModalButton(roleToDelete.name);
 	await event.click(deleteButton);
 
-	const dialog = await findDialog(`Delete ${role.name}`);
+	const deleteRoleDialog = await findDialog(`Delete ${roleToDelete.name}`);
 	mockGetRolesSuccessApi([]);
-	await event.click(getConfirmDeleteRoleButton(dialog));
+	await event.click(getConfirmDeleteRoleButton(deleteRoleDialog));
 	expect(await findText(EMPTY_ROLES_MESSAGE)).toBeTruthy();
 });
