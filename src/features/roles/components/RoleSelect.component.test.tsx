@@ -24,13 +24,13 @@ test("renders loading state", () => {
 });
 
 test("renders list of roles", () => {
-	const roleNames = roles.map((role) => role.name);
-
 	render(<RoleSelect isLoading={false} list={roles} />);
 
-	[DEFAULT_ROLE_SELECT_OPTION, ...roleNames].forEach((text) => {
-		expect(getText(text)).toBeTruthy();
-	});
+	[DEFAULT_ROLE_SELECT_OPTION, ...roles.map((role) => role.name)].forEach(
+		(text) => {
+			expect(getText(text)).toBeTruthy();
+		},
+	);
 });
 
 test.each([true, false])(
