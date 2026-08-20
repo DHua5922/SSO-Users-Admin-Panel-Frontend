@@ -13,10 +13,12 @@ A React admin panel for managing users and roles. It connects to a separate back
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
 - [Testing](#testing)
+- [Continuous Integration](#continuous-integration)
 - [Architecture Overview](#architecture-overview)
 - [Project Structure](#project-structure)
 - [State and Data](#state-and-data)
 - [Design Decisions and Tradeoffs](#design-decisions-and-tradeoffs)
+- [What I Would Improve](#what-i-would-improve)
 - [License](#license)
 - [Deployment](#deployment)
 
@@ -58,6 +60,7 @@ The backend API is maintained separately:
 - Mock Service Worker — API mocking for integration tests
 - Playwright — end-to-end and accessibility tests
 - axe-core — automated accessibility checks
+- bundlesize — gzip-compressed JavaScript and CSS size budgets
 - Biome, TypeScript, and Knip — formatting, linting, type checking, and unused-code detection
 
 ## Requirements
@@ -78,7 +81,6 @@ The backend API is maintained separately:
 
    ```env
    VITE_BACKEND_BASE_URL=http://localhost:8080
-   VITE_FRONTEND_BASE_URL=http://localhost:5173
    ```
 
 3. Start the development server:
@@ -100,8 +102,6 @@ Environment files are ignored by Git. Do not put secrets in variables that start
 | `VITE_TEST_EMAIL` | Test account email | For account-login end-to-end tests |
 | `VITE_TEST_PASSWORD` | Test account password | For account-login end-to-end tests |
 
-For Vercel, add `VITE_BACKEND_BASE_URL` in the project environment settings. Select the correct environment, such as Production or Preview, and redeploy. Vite reads this value during the build.
-
 ## Scripts
 
 | Command | What it does |
@@ -111,6 +111,7 @@ For Vercel, add `VITE_BACKEND_BASE_URL` in the project environment settings. Sel
 | `pnpm preview` | Serves the production build locally |
 | `pnpm quality:check` | Runs Biome, Knip, and TypeScript checks |
 | `pnpm biome:fix` | Applies Biome formatting and lint fixes |
+| `pnpm check:bundle` | Checks production assets in `dist` against their gzip size budgets |
 | `pnpm test:unit` | Runs unit tests with coverage |
 | `pnpm test:component` | Runs component tests with coverage |
 | `pnpm test:integrations` | Runs integration tests with coverage |
@@ -127,8 +128,28 @@ The test types have different jobs:
 - Integration tests check a page flow with mocked API requests.
 - End-to-end tests check important flows against a deployed app.
 - Accessibility tests use axe-core to find common accessibility problems.
+- Bundle checks prevent unexpected growth in generated JavaScript and CSS assets.
 
-Automated accessibility tests do not replace manual keyboard and screen-reader testing.
+Primary user flows are also tested manually with keyboard navigation. Automated checks and keyboard testing do not replace testing with screen readers and other assistive technologies.
+
+Run the production build before checking its bundle sizes:
+
+```bash
+pnpm build
+pnpm check:bundle
+```
+
+The bundle budgets are defined in `bundlesize.config.json`. If a budget fails, investigate new dependencies, broad imports, lost tree-shaking, and opportunities for lazy loading before increasing the limit.
+
+## Continuous Integration
+
+GitHub Actions runs the following automated checks:
+
+- Quality, bundle-size, unit, and component checks run on every push.
+- Integration tests run on pushes and pull requests to `main`.
+- End-to-end and accessibility tests run daily against the configured frontend environment.
+
+The production bundle job builds the app before running `pnpm check:bundle`. The `pnpm build` command itself only runs TypeScript and Vite; the remaining checks are separate CI jobs.
 
 ## Architecture Overview
 
@@ -182,6 +203,14 @@ Each feature keeps its API code, components, hooks, pages, schemas, tests, and u
 - Token refresh and cookie-based authentication support persistent, secure sessions, but require careful CORS and cookie configuration across environments.
 - Unit, component, integration, end-to-end, and accessibility tests provide coverage at several levels, but increase CI time and maintenance work.
 
+## What I Would Improve
+
+Given more time, I would prioritize these improvements:
+
+- Consolidate repeated GitHub Actions setup into reusable workflow steps and share production build artifacts between jobs to reduce CI time.
+- Add server-side pagination, filtering, and searching. Then, virtualize long user and role lists so both data transfer and rendered DOM size remain manageable as the datasets grow.
+- Profile rendering with React DevTools and selectively apply `useMemo` and `useCallback` where expensive calculations or unstable references cause measurable unnecessary re-renders.
+
 ## License
 
 Copyright © 2026 DHua5922. All rights reserved. The source code is available for viewing and evaluation, but reuse, modification, and redistribution are not permitted without prior written permission. See [LICENSE](LICENSE) for details.
@@ -194,7 +223,4 @@ Before deploying:
 
 1. Add the production backend URL to Vercel as `VITE_BACKEND_BASE_URL`.
 2. Make sure the backend allows the Vercel frontend origin.
-3. Make sure production cookies use the correct CORS, `SameSite`, and `Secure` settings.
-4. Run `pnpm quality:check` and `pnpm build`.
-
-GitHub Actions runs quality, unit, component, integration, end-to-end, and accessibility checks. The production build only runs TypeScript and Vite because quality checks are handled in CI.
+3. Make sure the backend CORS policy and production cookie attributes, including `SameSite` and `Secure`, support the deployed frontend.
