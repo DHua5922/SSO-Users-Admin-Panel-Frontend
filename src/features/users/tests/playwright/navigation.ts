@@ -21,11 +21,11 @@ export async function goToUsersPage(page: Page) {
 	const usersLink = getLink(page, "users");
 	await expect(usersLink).toBeVisible();
 
-	const getUsersResponse = waitForApiResponse({
+	const usersResponsePromise = waitForApiResponse({
 		page,
 		apiEndpoint: USERS_API_ROUTE,
 	});
-	await Promise.all([getUsersResponse, usersLink.click()]);
+	await Promise.all([usersResponsePromise, usersLink.click()]);
 }
 
 export async function openAddUserModal(page: Page) {

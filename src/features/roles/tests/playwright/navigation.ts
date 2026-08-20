@@ -21,11 +21,11 @@ export async function goToRolesPage(page: Page) {
 	const rolesLink = getLink(page, "roles");
 	await expect(rolesLink).toBeVisible();
 
-	const getRolesResponse = waitForApiResponse({
+	const rolesResponsePromise = waitForApiResponse({
 		page,
 		apiEndpoint: ROLES_API_ROUTE,
 	});
-	await Promise.all([getRolesResponse, rolesLink.click()]);
+	await Promise.all([rolesResponsePromise, rolesLink.click()]);
 }
 
 export async function openAddRoleDialog(page: Page) {

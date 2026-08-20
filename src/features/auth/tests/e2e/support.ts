@@ -12,7 +12,7 @@ import { loadPage } from "../playwright/environment";
 import { getLoginButton } from "./locators";
 
 export async function logInTest(page: Page) {
-	const loginResponse = waitForApiResponse({
+	const loginResponsePromise = waitForApiResponse({
 		page,
 		apiEndpoint: `${AUTH_BASE_API_ROUTE}${LOGIN_PATH}`,
 		method: METHOD_POST,
@@ -25,12 +25,12 @@ export async function logInTest(page: Page) {
 		testEnv.VITE_TEST_PASSWORD,
 	);
 	const [response] = await Promise.all([
-		loginResponse,
+		loginResponsePromise,
 		getLoginButton(page).click(),
 	]);
-	const responseBody = await response.json();
+	const authenticatedUser = await response.json();
 
-	expect(responseBody).toMatchObject({
+	expect(authenticatedUser).toMatchObject({
 		_id: expect.any(String),
 		email: testEnv.VITE_TEST_EMAIL,
 		username: expect.any(String),

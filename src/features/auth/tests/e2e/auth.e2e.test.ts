@@ -18,7 +18,7 @@ import { getLoginButton } from "./locators";
 import { logInTest } from "./support";
 
 test("logs in as a guest", async ({ page }) => {
-	const loginResponse = waitForApiResponse({
+	const loginResponsePromise = waitForApiResponse({
 		page,
 		apiEndpoint: `${AUTH_BASE_API_ROUTE}${GUEST_LOGIN_PATH}`,
 		method: METHOD_POST,
@@ -26,7 +26,10 @@ test("logs in as a guest", async ({ page }) => {
 
 	await page.goto(`${process.env.VITE_FRONTEND_BASE_URL}${LOGIN_PATH}`);
 
-	await Promise.all([loginResponse, getButton(page, GUEST_LOGIN_TEXT).click()]);
+	await Promise.all([
+		loginResponsePromise,
+		getButton(page, GUEST_LOGIN_TEXT).click(),
+	]);
 
 	await expect(getLogo(page)).toBeVisible();
 });
@@ -43,7 +46,7 @@ test("persistent login after refresh", async ({ page }) => {
 });
 
 test("redirects to login page when logging out", async ({ page }) => {
-	const logoutResponse = waitForApiResponse({
+	const logoutResponsePromise = waitForApiResponse({
 		page,
 		apiEndpoint: `${AUTH_BASE_API_ROUTE}/logout`,
 		method: METHOD_POST,
@@ -61,7 +64,7 @@ test("redirects to login page when logging out", async ({ page }) => {
 	await userMenuButton.click();
 
 	await Promise.all([
-		logoutResponse,
+		logoutResponsePromise,
 		getButton(page, LOGOUT_BUTTON_TEXT).click(),
 	]);
 
