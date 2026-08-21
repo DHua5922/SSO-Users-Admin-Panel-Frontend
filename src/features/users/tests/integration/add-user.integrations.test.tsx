@@ -5,24 +5,22 @@ import {
 	findDialog,
 	findTable,
 	findText,
+	getLabel,
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
+import { mockGetRolesSuccessApi } from "../../../roles/tests/integration/roleHandlers";
 import {
 	ADD_USER_MODAL_TITLE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
 	EMPTY_USERS_MESSAGE,
+	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_EMAIL_LABEL,
+	UPSERT_USER_FORM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_ROLE_LABEL,
+	UPSERT_USER_FORM_USERNAME_LABEL,
 	USERS_PATH,
 } from "../../constants";
-import { testUser } from "../fixtures";
-import {
-	getConfirmPasswordLabel,
-	getEmailLabel,
-	getPasswordInput,
-	getRoleLabel,
-	getUsernameLabel,
-} from "../react-testing-library/inputs";
 import {
 	findShowDeleteUserModalButton,
 	findShowEditUserModalButton,
@@ -32,7 +30,7 @@ import {
 	mockGetUsersSuccessApi,
 	mockUpsertUserFailureApi,
 	mockUpsertUserSuccessApi,
-} from "./mocks/userHandlers";
+} from "./userHandlers";
 
 const password = "password123";
 
@@ -43,51 +41,80 @@ beforeEach(() => {
 });
 
 test("should add user", async () => {
+	const newUser = {
+		_id: "new-user-id",
+		email: "new-user@example.com",
+		username: "new-user",
+		role: { _id: "admin-role-id", name: "admin" },
+		systemManaged: false,
+	};
 	mockUpsertUserSuccessApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const dialog = await openAndFillAddUserForm(event);
-	mockGetUsersSuccessApi([testUser]);
-	await event.click(getAddUserButton(dialog));
+	const addUserDialog = await openAndFillAddUserForm(event, {
+		...newUser,
+		role: newUser.role._id,
+	});
+	mockGetUsersSuccessApi([newUser]);
+	await event.click(getAddUserButton(addUserDialog));
 
 	const usersTable = await findTable("");
-	expect(await findText(testUser.username, usersTable)).toBeTruthy();
-	expect(await findText(testUser.email, usersTable)).toBeTruthy();
-	expect(await findText(testUser.role, usersTable)).toBeTruthy();
+	expect(await findText(newUser.username, usersTable)).toBeTruthy();
+	expect(await findText(newUser.email, usersTable)).toBeTruthy();
+	expect(await findText(newUser.role.name, usersTable)).toBeTruthy();
 	expect(
-		await findShowEditUserModalButton(testUser.username, usersTable),
+		await findShowEditUserModalButton(newUser.username, usersTable),
 	).toBeTruthy();
 	expect(
-		await findShowDeleteUserModalButton(testUser.username, usersTable),
+		await findShowDeleteUserModalButton(newUser.username, usersTable),
 	).toBeTruthy();
 });
 
 test("should show error when failing to add user", async () => {
+	const rejectedUser = {
+		username: "rejected-user",
+		role: "admin-role-id",
+		email: "rejected-user@example.com",
+	};
 	mockUpsertUserFailureApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const dialog = await openAndFillAddUserForm(event);
-	await event.click(getAddUserButton(dialog));
+	const addUserDialog = await openAndFillAddUserForm(event, rejectedUser);
+	await event.click(getAddUserButton(addUserDialog));
 
-	const alert = await findAlert("", dialog);
+	const alert = await findAlert("", addUserDialog);
 	expect(getText(CANNOT_UPSERT_USER_ERROR_MESSAGE, alert)).toBeTruthy();
 });
 
-async function openAndFillAddUserForm(event: UserEvent) {
+async function openAndFillAddUserForm(
+	event: UserEvent,
+	userFields: { username: string; role: string; email: string },
+) {
 	expect(await findText(EMPTY_USERS_MESSAGE)).toBeTruthy();
 
-	const showAddUserModalButton = getAddUserButton();
-	expect(showAddUserModalButton).toBeTruthy();
-	await event.click(showAddUserModalButton);
+	const openAddUserDialogButton = getAddUserButton();
+	await event.click(openAddUserDialogButton);
 
 	const dialog = await findDialog(ADD_USER_MODAL_TITLE);
 	expect(dialog).toBeTruthy();
 
-	await event.type(getUsernameLabel(dialog), testUser.username);
-	await event.selectOptions(getRoleLabel(dialog), testUser.role);
-	await event.type(getEmailLabel(dialog), testUser.email);
-	await event.type(getPasswordInput(), password);
-	await event.type(getConfirmPasswordLabel(dialog), password);
+	await event.type(
+		getLabel(UPSERT_USER_FORM_USERNAME_LABEL, dialog),
+		userFields.username,
+	);
+	await event.selectOptions(
+		getLabel(UPSERT_USER_FORM_ROLE_LABEL, dialog),
+		userFields.role,
+	);
+	await event.type(
+		getLabel(UPSERT_USER_FORM_EMAIL_LABEL, dialog),
+		userFields.email,
+	);
+	await event.type(getLabel(UPSERT_USER_FORM_PASSWORD_LABEL, dialog), password);
+	await event.type(
+		getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL, dialog),
+		password,
+	);
 
 	return dialog;
 }

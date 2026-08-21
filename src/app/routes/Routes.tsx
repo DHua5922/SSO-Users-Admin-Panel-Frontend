@@ -35,13 +35,12 @@ export default function Routes() {
 					<Route path={HOME_PATH} element={<DashboardPage />} />
 					<Route path={USERS_PATH} element={<UsersManagementPage />} />
 					<Route path={ROLES_PATH} element={<RolesManagementPage />} />
+					<Route path="*" element={<NotFoundPage />} />
 				</Route>
 
 				<Route element={<PublicRoute />}>
 					<Route path={LOGIN_PATH} element={<LoginPage />} />
 				</Route>
-
-				<Route path="*" element={<NotFoundPage />} />
 			</DefaultRoutes>
 		</Suspense>
 	);

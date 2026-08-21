@@ -21,23 +21,26 @@ import {
 } from "../../constants";
 import { goToRolesPage, openAddRoleDialog } from "../playwright/navigation";
 
-const id = crypto.randomUUID();
-
-const newRole = {
-	name: `new role ${id}`,
-	description: `Description for new role ${id}`,
-};
-
-const updatedRole = {
-	name: `updated role ${id}`,
-	description: `Description for updated role ${id}`,
+type RoleFields = {
+	name: string;
+	description: string;
 };
 
 test("manages a role", async ({ page }) => {
+	const uniqueId = crypto.randomUUID();
+	const newRole = {
+		name: `new role ${uniqueId}`,
+		description: `Description for new role ${uniqueId}`,
+	};
+	const updatedRole = {
+		name: `updated role ${uniqueId}`,
+		description: `Description for updated role ${uniqueId}`,
+	};
+
 	await setup(page);
-	await addRole(page);
-	await editRole(page);
-	await deleteRole(page);
+	await addRole(page, newRole);
+	await editRole(page, newRole, updatedRole);
+	await deleteRole(page, updatedRole);
 });
 
 async function setup(page: Page) {
@@ -45,7 +48,7 @@ async function setup(page: Page) {
 	await goToRolesPage(page);
 }
 
-async function addRole(page: Page) {
+async function addRole(page: Page, newRole: RoleFields) {
 	await openAddRoleDialog(page);
 
 	const addRoleDialog = getDialog(page, ADD_ROLE_MODAL_TITLE);
@@ -75,15 +78,19 @@ async function addRole(page: Page) {
 	await expect(getText(page, newRole.description)).toBeVisible();
 }
 
-async function editRole(page: Page) {
+async function editRole(
+	page: Page,
+	existingRole: RoleFields,
+	updatedRole: RoleFields,
+) {
 	const editRoleButton = getButton(
 		page,
-		`${EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${newRole.name}`,
+		`${EDIT_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${existingRole.name}`,
 	);
 	await expect(editRoleButton).toBeVisible();
 	await editRoleButton.click();
 
-	const updateRoleDialog = getDialog(page, `edit ${newRole.name}`);
+	const updateRoleDialog = getDialog(page, `edit ${existingRole.name}`);
 	await expect(updateRoleDialog).toBeVisible();
 	await updateRoleDialog
 		.getByLabel(UPSERT_ROLE_FORM_NAME_LABEL)
@@ -105,24 +112,24 @@ async function editRole(page: Page) {
 		getButton(updateRoleDialog, UPDATE_ROLE_BUTTON_TEXT).click(),
 	]);
 
-	const row = getTableRow(
+	const updatedRoleRow = getTableRow(
 		page,
 		`${updatedRole.name} ${updatedRole.description}`,
 	);
-	await expect(row).toBeVisible();
-	await expect(getText(row, updatedRole.name)).toBeVisible();
-	await expect(getText(row, updatedRole.description)).toBeVisible();
+	await expect(updatedRoleRow).toBeVisible();
+	await expect(getText(updatedRoleRow, updatedRole.name)).toBeVisible();
+	await expect(getText(updatedRoleRow, updatedRole.description)).toBeVisible();
 }
 
-async function deleteRole(page: Page) {
+async function deleteRole(page: Page, roleToDelete: RoleFields) {
 	const deleteRoleButton = getButton(
 		page,
-		`${DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${updatedRole.name}`,
+		`${DELETE_ROLE_BUTTON_ARIA_LABEL_PREFIX} ${roleToDelete.name}`,
 	);
 	await expect(deleteRoleButton).toBeVisible();
 	await deleteRoleButton.click();
 
-	const deleteRoleDialog = getDialog(page, `delete ${updatedRole.name}`);
+	const deleteRoleDialog = getDialog(page, `delete ${roleToDelete.name}`);
 	await expect(deleteRoleDialog).toBeVisible();
 	await Promise.all([
 		waitForApiResponse({
@@ -137,9 +144,9 @@ async function deleteRole(page: Page) {
 		getButton(deleteRoleDialog, CONFIRM_DELETE_ROLE_BUTTON_TEXT).click(),
 	]);
 
-	const updatedRow = getTableRow(
+	const deletedRoleRow = getTableRow(
 		page,
-		`${updatedRole.name} ${updatedRole.description}`,
+		`${roleToDelete.name} ${roleToDelete.description}`,
 	);
-	await expect(updatedRow).toHaveCount(0);
+	await expect(deletedRoleRow).toHaveCount(0);
 }

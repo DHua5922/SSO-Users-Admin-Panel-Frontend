@@ -5,6 +5,7 @@ import {
 	findDialog,
 	findTable,
 	findText,
+	getLabel,
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
@@ -13,22 +14,19 @@ import {
 	CANNOT_UPSERT_ROLE_ERROR_MESSAGE,
 	EMPTY_ROLES_MESSAGE,
 	ROLES_PATH,
+	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
+	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants";
-import { testRoles } from "../fixtures";
-import {
-	mockGetRolesSuccessApi,
-	mockUpsertRoleFailureApi,
-	mockUpsertRoleSuccessApi,
-} from "../mocks/roleHandlers";
-import {
-	getDescriptionLabel,
-	getNameLabel,
-} from "../react-testing-library/inputs";
 import {
 	findShowDeleteRoleModalButton,
 	findShowEditRoleModalButton,
 	getAddRoleButton,
 } from "./locators";
+import {
+	mockGetRolesSuccessApi,
+	mockUpsertRoleFailureApi,
+	mockUpsertRoleSuccessApi,
+} from "./roleHandlers";
 
 beforeEach(() => {
 	mockGetMeSuccessApi();
@@ -36,47 +34,65 @@ beforeEach(() => {
 });
 
 test("should add role", async () => {
+	const newRole = {
+		_id: "new-role-id",
+		name: "new-role",
+		description: "New role description",
+		systemManaged: false,
+	};
 	mockUpsertRoleSuccessApi();
 	const { event } = renderApp(ROLES_PATH);
 
-	const dialog = await commonProcess(event);
-	mockGetRolesSuccessApi(testRoles);
-	await event.click(getAddRoleButton(dialog));
+	const addRoleDialog = await openAndFillAddRoleForm(event, newRole);
+	mockGetRolesSuccessApi([newRole]);
+	await event.click(getAddRoleButton(addRoleDialog));
 
 	const rolesTable = await findTable("");
-	expect(await findText(testRoles[0].name, rolesTable)).toBeTruthy();
-	expect(await findText(testRoles[0].description, rolesTable)).toBeTruthy();
+	expect(await findText(newRole.name, rolesTable)).toBeTruthy();
+	expect(await findText(newRole.description, rolesTable)).toBeTruthy();
 	expect(
-		await findShowEditRoleModalButton(testRoles[0].name, rolesTable),
+		await findShowEditRoleModalButton(newRole.name, rolesTable),
 	).toBeTruthy();
 	expect(
-		await findShowDeleteRoleModalButton(testRoles[0].name, rolesTable),
+		await findShowDeleteRoleModalButton(newRole.name, rolesTable),
 	).toBeTruthy();
 });
 
 test("should show error when failing to add role", async () => {
+	const rejectedRole = {
+		name: "rejected-role",
+		description: "Role rejected by the API",
+	};
 	mockUpsertRoleFailureApi();
 	const { event } = renderApp(ROLES_PATH);
 
-	const dialog = await commonProcess(event);
-	await event.click(getAddRoleButton(dialog));
+	const addRoleDialog = await openAndFillAddRoleForm(event, rejectedRole);
+	await event.click(getAddRoleButton(addRoleDialog));
 
-	const alert = await findAlert("", dialog);
+	const alert = await findAlert("", addRoleDialog);
 	expect(getText(CANNOT_UPSERT_ROLE_ERROR_MESSAGE, alert)).toBeTruthy();
 });
 
-async function commonProcess(event: UserEvent) {
+async function openAndFillAddRoleForm(
+	event: UserEvent,
+	roleFields: { name: string; description: string },
+) {
 	expect(await findText(EMPTY_ROLES_MESSAGE)).toBeTruthy();
 
-	const showAddRoleModalButton = getAddRoleButton();
-	expect(showAddRoleModalButton).toBeTruthy();
-	await event.click(showAddRoleModalButton);
+	const openAddRoleDialogButton = getAddRoleButton();
+	await event.click(openAddRoleDialogButton);
 
 	const dialog = await findDialog(ADD_ROLE_MODAL_TITLE);
 	expect(dialog).toBeTruthy();
 
-	await event.type(getNameLabel(dialog), testRoles[0].name);
-	await event.type(getDescriptionLabel(dialog), testRoles[0].description);
+	await event.type(
+		getLabel(UPSERT_ROLE_FORM_NAME_LABEL, dialog),
+		roleFields.name,
+	);
+	await event.type(
+		getLabel(UPSERT_ROLE_FORM_DESCRIPTION_LABEL, dialog),
+		roleFields.description,
+	);
 
 	return dialog;
 }

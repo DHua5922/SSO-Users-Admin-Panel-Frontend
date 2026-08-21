@@ -1,17 +1,19 @@
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
+	findLabel,
+	findSearchBox,
 	findTableRow,
 	findText,
 	queryTableRow,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
-import { CANNOT_LOAD_USERS_ERROR_MESSAGE, USERS_PATH } from "../../constants";
-import { findSearchBar } from "../react-testing-library/inputs";
+import { mockGetRolesSuccessApi } from "../../../roles/tests/integration/roleHandlers";
 import {
-	mockGetUsersFailureApi,
-	mockGetUsersSuccessApi,
-} from "./mocks/userHandlers";
+	CANNOT_LOAD_USERS_ERROR_MESSAGE,
+	SEARCH_USERS_ARIA_LABEL,
+	USERS_PATH,
+} from "../../constants";
+import { mockGetUsersFailureApi, mockGetUsersSuccessApi } from "./userHandlers";
 
 test("should show error message when failing to load users", async () => {
 	mockGetMeSuccessApi();
@@ -22,7 +24,7 @@ test("should show error message when failing to load users", async () => {
 	expect(await findText(CANNOT_LOAD_USERS_ERROR_MESSAGE)).toBeTruthy();
 });
 
-test("should filter users by username and email from search bar (case insensitive)", async () => {
+test("should filter users by search input and role", async () => {
 	const roles = [
 		{
 			_id: "admin-role-id",
@@ -42,14 +44,14 @@ test("should filter users by username and email from search bar (case insensitiv
 			_id: "john-user-id",
 			username: "John Doe",
 			email: "johndoe@example.com",
-			role: roles[0]._id,
+			role: { _id: roles[0]._id, name: roles[0].name },
 			systemManaged: true,
 		},
 		{
 			_id: "jane-user-id",
 			username: "Jane Smith",
 			email: "janesmith@example.com",
-			role: roles[1]._id,
+			role: { _id: roles[1]._id, name: roles[1].name },
 			systemManaged: false,
 		},
 	];
@@ -60,12 +62,22 @@ test("should filter users by username and email from search bar (case insensitiv
 
 	const { event } = renderApp(USERS_PATH);
 
-	await event.type(await findSearchBar(), "smi");
+	const searchInput = await findSearchBox(SEARCH_USERS_ARIA_LABEL);
+	await event.type(searchInput, "smi");
 
 	const matchingRow = await findTableRow(users[1].username);
 	expect(await findText(users[1].username, matchingRow)).toBeTruthy();
 	expect(await findText(users[1].email, matchingRow)).toBeTruthy();
-	expect(await findText(users[1].role, matchingRow)).toBeTruthy();
+	expect(await findText(users[1].role.name, matchingRow)).toBeTruthy();
 
 	expect(queryTableRow(users[0].username)).toBeNull();
+
+	await event.clear(searchInput);
+	await event.selectOptions(
+		await findLabel("Filter users by role"),
+		roles[0]._id,
+	);
+
+	expect(await findTableRow(users[0].username)).toBeTruthy();
+	expect(queryTableRow(users[1].username)).toBeNull();
 });

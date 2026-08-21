@@ -1,7 +1,8 @@
 import axios from "axios";
 import { LOGIN_PATH } from "../../features/auth/constants";
-import { NEW_TOKENS_API_ROUTE } from "../constants";
 import { refreshTokensApi } from "./token";
+
+let refreshTokensPromise: ReturnType<typeof refreshTokensApi> | null = null;
 
 export function createAxiosInstance(path: string) {
 	const instance = axios.create({
@@ -13,17 +14,21 @@ export function createAxiosInstance(path: string) {
 		(response) => response,
 		async (error) => {
 			const config = error.config;
-			if (error.response?.status === 401 && !config.retry) {
-				await refreshTokensApi();
+			if (error.response?.status === 401 && config && !config.retry) {
 				config.retry = true;
+
+				try {
+					await refreshTokensOnce();
+				} catch (refreshError) {
+					redirectToLogin();
+					return Promise.reject(refreshError);
+				}
+
 				return instance(config);
 			}
 
-			if (
-				config.retry ||
-				error.response?.config?.url?.includes(NEW_TOKENS_API_ROUTE)
-			) {
-				window.location.assign(LOGIN_PATH);
+			if (config?.retry) {
+				redirectToLogin();
 			}
 
 			return Promise.reject(error);
@@ -31,4 +36,25 @@ export function createAxiosInstance(path: string) {
 	);
 
 	return instance;
+}
+
+async function refreshTokensOnce() {
+	if (refreshTokensPromise) {
+		await refreshTokensPromise;
+		return;
+	}
+
+	refreshTokensPromise = refreshTokensApi();
+
+	try {
+		await refreshTokensPromise;
+	} finally {
+		refreshTokensPromise = null;
+	}
+}
+
+function redirectToLogin() {
+	if (window.location.pathname !== LOGIN_PATH) {
+		window.location.assign(LOGIN_PATH);
+	}
 }

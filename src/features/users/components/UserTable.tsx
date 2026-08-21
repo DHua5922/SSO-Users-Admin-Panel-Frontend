@@ -32,7 +32,7 @@ export default function UserTable({
 						{[
 							user.username,
 							user.email,
-							user.role,
+							user.role.name,
 							<Button
 								className="bg-transparent!"
 								onClick={() => onClickEditUser(user)}

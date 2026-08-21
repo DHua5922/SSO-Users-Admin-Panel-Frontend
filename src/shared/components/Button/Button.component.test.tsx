@@ -17,10 +17,10 @@ test("renders button with children", () => {
 });
 
 test("renders button with loading state", async () => {
-	const { event, onClick, loadingText } = renderButton({
+	const { event, onClick } = renderButton({
 		isLoading: true,
 	});
-	const button = getButton(loadingText);
+	const button = getButton(LOADING_TEXT);
 
 	expect(button).toBeTruthy();
 	expect(queryButton(buttonText)).not.toBeTruthy();
@@ -51,18 +51,16 @@ function renderButton({
 }: Partial<ComponentProps<typeof Button>>) {
 	const event = userEvent.setup();
 	const onClick = vi.fn();
-	const loadingText = LOADING_TEXT;
-
 	render(
 		<Button
 			{...props}
 			isLoading={isLoading}
-			loadingText={loadingText}
+			loadingText={LOADING_TEXT}
 			onClick={onClick}
 		>
 			{buttonText}
 		</Button>,
 	);
 
-	return { event, onClick, loadingText };
+	return { event, onClick };
 }

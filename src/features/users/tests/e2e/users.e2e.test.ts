@@ -25,51 +25,50 @@ import {
 } from "../../constants";
 import { goToUsersPage, openAddUserModal } from "../playwright/navigation";
 
-test("edit user", async ({ page }) => {
-	const password = "password123";
+type UserFields = {
+	username: string;
+	email: string;
+	role: string;
+};
 
+test("manages a user", async ({ page }) => {
+	const password = "password123";
+	const uniqueId = crypto.randomUUID();
 	const newUser = {
-		username: `new user ${Date.now()}`,
-		email: `newuser${Date.now()}@example.com`,
+		username: `new user ${uniqueId}`,
+		email: `newuser-${uniqueId}@example.com`,
 		role: "admin",
 	};
 	const updatedUser = {
 		...newUser,
-		username: `updated user ${Date.now()}`,
-		email: `updateduser${Date.now()}@example.com`,
+		username: `updated user ${uniqueId}`,
+		email: `updateduser-${uniqueId}@example.com`,
 	};
 
 	await logInTest(page);
 	await goToUsersPage(page);
 	await addUser(page, newUser, password);
-	await updateUser(
-		page,
-		newUser.username,
-		updatedUser.username,
-		updatedUser.email,
-	);
-	await deleteUser(page, updatedUser.username, updatedUser.email);
+	await updateUser(page, newUser, updatedUser);
+	await deleteUser(page, updatedUser);
 });
 
-async function addUser(
-	page: Page,
-	newUser: { username: string; email: string; role: string },
-	password: string,
-) {
+async function addUser(page: Page, newUser: UserFields, password: string) {
 	await openAddUserModal(page);
 
-	const dialog = getDialog(page, ADD_USER_MODAL_TITLE);
-	await expect(dialog).toBeVisible();
+	const addUserDialog = getDialog(page, ADD_USER_MODAL_TITLE);
+	await expect(addUserDialog).toBeVisible();
 
-	await getLabel(UPSERT_USER_FORM_USERNAME_LABEL, dialog).fill(
+	await getLabel(UPSERT_USER_FORM_USERNAME_LABEL, addUserDialog).fill(
 		newUser.username,
 	);
-	await getLabel(UPSERT_USER_FORM_EMAIL_LABEL, dialog).fill(newUser.email);
-	await getLabel(UPSERT_USER_FORM_ROLE_LABEL, dialog).selectOption(
+	await getLabel(UPSERT_USER_FORM_EMAIL_LABEL, addUserDialog).fill(
+		newUser.email,
+	);
+	await getLabel(UPSERT_USER_FORM_ROLE_LABEL, addUserDialog).selectOption(
 		newUser.role,
 	);
-	await getLabel(UPSERT_USER_FORM_PASSWORD_LABEL, dialog).fill(password);
-	await getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL, dialog).fill(
+	await getLabel(UPSERT_USER_FORM_PASSWORD_LABEL, addUserDialog).fill(password);
+	await getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL, addUserDialog).fill(
 		password,
 	);
 
@@ -83,7 +82,7 @@ async function addUser(
 			page,
 			apiEndpoint: USERS_API_ROUTE,
 		}),
-		getButton(dialog, ADD_USER_BUTTON_TEXT).click(),
+		getButton(addUserDialog, ADD_USER_BUTTON_TEXT).click(),
 	]);
 
 	await expect(getText(page, newUser.username)).toBeVisible();
@@ -92,24 +91,23 @@ async function addUser(
 
 async function updateUser(
 	page: Page,
-	newUsername: string,
-	updatedUsername: string,
-	updatedEmail: string,
+	existingUser: UserFields,
+	updatedUser: UserFields,
 ) {
 	const editUserButton = getButton(
 		page,
-		`${EDIT_USER_BUTTON_ARIA_LABEL_PREFIX} ${newUsername}`,
+		`${EDIT_USER_BUTTON_ARIA_LABEL_PREFIX} ${existingUser.username}`,
 	);
 	await expect(editUserButton).toBeVisible();
 	await editUserButton.click();
 
-	const updateUserDialog = getDialog(page, `edit ${newUsername}`);
+	const updateUserDialog = getDialog(page, `edit ${existingUser.username}`);
 	await expect(updateUserDialog).toBeVisible();
 	await getLabel(UPSERT_USER_FORM_USERNAME_LABEL, updateUserDialog).fill(
-		updatedUsername,
+		updatedUser.username,
 	);
 	await getLabel(UPSERT_USER_FORM_EMAIL_LABEL, updateUserDialog).fill(
-		updatedEmail,
+		updatedUser.email,
 	);
 
 	await Promise.all([
@@ -121,25 +119,24 @@ async function updateUser(
 		getButton(updateUserDialog, UPDATE_USER_BUTTON_TEXT).click(),
 	]);
 
-	const row = getTableRow(page, `${updatedUsername} ${updatedEmail}`);
-	await expect(row).toBeVisible();
-	await expect(getText(row, updatedUsername)).toBeVisible();
-	await expect(getText(row, updatedEmail)).toBeVisible();
+	const updatedUserRow = getTableRow(
+		page,
+		`${updatedUser.username} ${updatedUser.email}`,
+	);
+	await expect(updatedUserRow).toBeVisible();
+	await expect(getText(updatedUserRow, updatedUser.username)).toBeVisible();
+	await expect(getText(updatedUserRow, updatedUser.email)).toBeVisible();
 }
 
-async function deleteUser(
-	page: Page,
-	updatedUsername: string,
-	updatedEmail: string,
-) {
+async function deleteUser(page: Page, userToDelete: UserFields) {
 	const deleteUserButton = getButton(
 		page,
-		`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${updatedUsername}`,
+		`${DELETE_USER_BUTTON_ARIA_LABEL_PREFIX} ${userToDelete.username}`,
 	);
 	await expect(deleteUserButton).toBeVisible();
 	await deleteUserButton.click();
 
-	const deleteUserDialog = getDialog(page, `delete ${updatedUsername}`);
+	const deleteUserDialog = getDialog(page, `delete ${userToDelete.username}`);
 	await expect(deleteUserDialog).toBeVisible();
 	await Promise.all([
 		waitForApiResponse({
@@ -154,6 +151,9 @@ async function deleteUser(
 		getButton(deleteUserDialog, CONFIRM_DELETE_USER_BUTTON_TEXT).click(),
 	]);
 
-	const updatedRow = getTableRow(page, `${updatedUsername} ${updatedEmail}`);
-	await expect(updatedRow).toHaveCount(0);
+	const deletedUserRow = getTableRow(
+		page,
+		`${userToDelete.username} ${userToDelete.email}`,
+	);
+	await expect(deletedUserRow).toHaveCount(0);
 }

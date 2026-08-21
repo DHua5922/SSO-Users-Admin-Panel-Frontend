@@ -1,9 +1,13 @@
+import { screen, within } from "@testing-library/react";
 import { regexMatch } from "../fixtures";
-import { element } from "./fixtures";
 
 const buttonRole = "button";
 const alertRole = "alert";
 const rowRole = "row";
+
+function element(boundary?: HTMLElement) {
+	return boundary ? within(boundary) : screen;
+}
 
 export function getText(text: string, boundary?: HTMLElement) {
 	const regex = regexMatch(text, undefined, true);

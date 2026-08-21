@@ -1,16 +1,17 @@
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
+	findSearchBox,
 	findTableRow,
 	findText,
 	queryTableRow,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { CANNOT_LOAD_ROLES_ERROR_MESSAGE, ROLES_PATH } from "../../constants";
 import {
-	mockGetRolesFailureApi,
-	mockGetRolesSuccessApi,
-} from "../mocks/roleHandlers";
-import { findSearchBar } from "../react-testing-library/inputs";
+	CANNOT_LOAD_ROLES_ERROR_MESSAGE,
+	ROLES_PATH,
+	SEARCH_ROLES_ARIA_LABEL,
+} from "../../constants";
+import { mockGetRolesFailureApi, mockGetRolesSuccessApi } from "./roleHandlers";
 
 beforeEach(() => {
 	mockGetMeSuccessApi();
@@ -42,7 +43,7 @@ test("should filter roles by name and description from search bar (case insensit
 	mockGetRolesSuccessApi(roles);
 
 	const { event } = renderApp(ROLES_PATH);
-	await event.type(await findSearchBar(), "adm");
+	await event.type(await findSearchBox(SEARCH_ROLES_ARIA_LABEL), "adm");
 
 	const matchingRow = await findTableRow(roles[0].name);
 	expect(await findText(roles[0].name, matchingRow)).toBeTruthy();

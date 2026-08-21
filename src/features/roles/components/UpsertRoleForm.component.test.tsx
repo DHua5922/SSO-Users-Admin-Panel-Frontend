@@ -1,12 +1,16 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
-import { getButton } from "../../../shared/tests/react-testing-library/locator";
 import {
-	getDescriptionLabel,
-	getNameLabel,
-} from "../tests/react-testing-library/inputs";
-import { findNameErrorMessage } from "../tests/react-testing-library/messages";
+	findText,
+	getButton,
+	getLabel,
+} from "../../../shared/tests/react-testing-library/locator";
+import {
+	REQUIRED_NAME_ERROR_MESSAGE,
+	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
+	UPSERT_ROLE_FORM_NAME_LABEL,
+} from "../constants";
 import UpsertRoleForm from "./UpsertRoleForm";
 
 const submitButtonText = "submit";
@@ -28,11 +32,10 @@ test("shows validation errors", async () => {
 
 	await event.click(submitButton);
 
-	expect(await findNameErrorMessage()).toBeTruthy();
-	expect(getNameLabel().getAttribute("aria-invalid")).toBe("true");
-	expect(getNameLabel().getAttribute("aria-describedby")).toBe(
-		"name-input-error",
-	);
+	expect(await findText(REQUIRED_NAME_ERROR_MESSAGE)).toBeTruthy();
+	const nameInput = getLabel(UPSERT_ROLE_FORM_NAME_LABEL);
+	expect(nameInput.getAttribute("aria-invalid")).toBe("true");
+	expect(nameInput.getAttribute("aria-describedby")).toBe("name-input-error");
 	await expectNoAccessibilityViolations();
 });
 
@@ -47,7 +50,7 @@ test("submit by pressing enter on keyboard", async () => {
 		fillInForm: true,
 	});
 
-	await event.type(getNameLabel(), `${roleName}{enter}`);
+	await event.type(getLabel(UPSERT_ROLE_FORM_NAME_LABEL), `${roleName}{enter}`);
 
 	expect(onSubmit).toHaveBeenCalled();
 });
@@ -89,8 +92,11 @@ async function renderForm({
 			description: "test",
 		};
 
-		await event.type(getNameLabel(), formValues.name);
-		await event.type(getDescriptionLabel(), formValues.description);
+		await event.type(getLabel(UPSERT_ROLE_FORM_NAME_LABEL), formValues.name);
+		await event.type(
+			getLabel(UPSERT_ROLE_FORM_DESCRIPTION_LABEL),
+			formValues.description,
+		);
 	}
 
 	return {

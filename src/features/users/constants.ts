@@ -22,6 +22,7 @@ export const SEARCH_USERS_ARIA_LABEL = "Search users";
 
 export const REQUIRED_USERNAME_ERROR_MESSAGE = "Username is required.";
 export const REQUIRED_ROLE_ERROR_MESSAGE = "Role is required.";
+export const REQUIRED_PASSWORD_ERROR_MESSAGE = "Password is required.";
 export const INVALID_EMAIL_ERROR_MESSAGE = "Invalid email address.";
 export const NO_MATCHING_PASSWORDS_ERROR_MESSAGE = "Passwords do not match.";
 export const EMPTY_USERS_MESSAGE = "No users.";

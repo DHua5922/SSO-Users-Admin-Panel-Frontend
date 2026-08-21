@@ -1,4 +1,4 @@
-import { type HTMLAttributes, useId } from "react";
+import { type HTMLAttributes, type SelectHTMLAttributes, useId } from "react";
 import Button from "../../../shared/components/Button/Button";
 import Field from "../../../shared/components/Field";
 import RoleSelect from "../../roles/components/RoleSelect";
@@ -7,7 +7,7 @@ import { SEARCH_USERS_ARIA_LABEL } from "../constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	searchBarProps: HTMLAttributes<HTMLInputElement>;
-	roleSelect: {
+	roleSelect: SelectHTMLAttributes<HTMLSelectElement> & {
 		isLoading: boolean;
 		isError: boolean;
 		errorMessage: string;
@@ -26,6 +26,8 @@ export default function UserTableControls({
 	const formattedClassName = `border-b border-gray-300 p-8 ${className}`.trim();
 	const searchBarId = useId();
 	const roleSelectId = useId();
+	const { isLoading, isError, errorMessage, list, ...roleSelectProps } =
+		roleSelect;
 
 	return (
 		<div className={formattedClassName} {...props}>
@@ -43,12 +45,14 @@ export default function UserTableControls({
 				<Field
 					className="flex-1"
 					htmlFor={roleSelectId}
-					errorMessage={roleSelect.isError ? roleSelect.errorMessage : ""}
+					errorMessage={isError ? errorMessage : ""}
 				>
 					<RoleSelect
+						{...roleSelectProps}
 						aria-label="Filter users by role"
-						isLoading={roleSelect.isLoading}
-						list={roleSelect.list}
+						isLoading={isLoading}
+						list={list}
+						disabled={isError || roleSelectProps.disabled}
 						id={roleSelectId}
 					/>
 				</Field>

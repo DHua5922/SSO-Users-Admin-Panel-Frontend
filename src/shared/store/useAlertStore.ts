@@ -9,6 +9,7 @@ interface Store {
 	removePageAlert: (id: string) => void;
 	addModalAlert: (alert: Alert) => void;
 	removeModalAlert: (id: string) => void;
+	clearModalAlerts: () => void;
 }
 
 const useAlertStore = create<Store>()(
@@ -27,6 +28,7 @@ const useAlertStore = create<Store>()(
 			set((state) => ({
 				modalAlerts: state.modalAlerts.filter((alert) => alert.id !== id),
 			})),
+		clearModalAlerts: () => set({ modalAlerts: [] }),
 	})),
 );
 

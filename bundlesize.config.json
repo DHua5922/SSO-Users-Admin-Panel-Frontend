@@ -5,7 +5,7 @@
 			"maxSize": "105 kB"
 		},
 		{
-			"path": "./dist/assets/dist-*.js",
+			"path": "./dist/assets/parseError-*.js",
 			"maxSize": "50 kB"
 		},
 		{

@@ -2,11 +2,15 @@ import { render } from "@testing-library/react";
 import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
 import { getButton } from "../../../shared/tests/react-testing-library/locator";
 import { SYSTEM_MANAGED_ROLE_DELETE_ARIA_LABEL_PREFIX } from "../constants";
-import { testRoles } from "../tests/fixtures";
 import RoleTable from "./RoleTable";
 
 test("disables deletion for a system-managed role", () => {
-	const systemManagedRole = { ...testRoles[0], systemManaged: true };
+	const systemManagedRole = {
+		_id: "system-role-id",
+		name: "system-role",
+		description: "System-managed role",
+		systemManaged: true,
+	};
 
 	render(
 		<RoleTable
@@ -23,9 +27,16 @@ test("disables deletion for a system-managed role", () => {
 });
 
 test("role table has no automatically detectable accessibility violations", async () => {
+	const role = {
+		_id: "role-id",
+		name: "admin",
+		description: "Administrator role",
+		systemManaged: false,
+	};
+
 	render(
 		<RoleTable
-			list={testRoles}
+			list={[role]}
 			onClickEditRole={vi.fn()}
 			onClickDeleteRole={vi.fn()}
 		/>,

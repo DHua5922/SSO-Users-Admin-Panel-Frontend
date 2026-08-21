@@ -1,20 +1,24 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
-import { getButton } from "../../../shared/tests/react-testing-library/locator";
 import {
-	getConfirmPasswordLabel,
-	getEmailLabel,
-	getPasswordInput,
-	getRoleLabel,
-	getUsernameLabel,
-} from "../tests/react-testing-library/inputs";
+	findText,
+	getButton,
+	getLabel,
+	queryText,
+} from "../../../shared/tests/react-testing-library/locator";
 import {
-	findEmailErrorMessage,
-	findRoleErrorMessage,
-	findUsernameErrorMessage,
-	queryNoMatchingPasswordsErrorMessage,
-} from "../tests/react-testing-library/messages";
+	INVALID_EMAIL_ERROR_MESSAGE,
+	NO_MATCHING_PASSWORDS_ERROR_MESSAGE,
+	REQUIRED_PASSWORD_ERROR_MESSAGE,
+	REQUIRED_ROLE_ERROR_MESSAGE,
+	REQUIRED_USERNAME_ERROR_MESSAGE,
+	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_EMAIL_LABEL,
+	UPSERT_USER_FORM_PASSWORD_LABEL,
+	UPSERT_USER_FORM_ROLE_LABEL,
+	UPSERT_USER_FORM_USERNAME_LABEL,
+} from "../constants";
 import UpsertUserForm from "./UpsertUserForm";
 
 const submitButtonText = "submit";
@@ -37,12 +41,14 @@ test("shows validation errors", async () => {
 
 	await event.click(submitButton);
 
-	expect(await findUsernameErrorMessage()).toBeTruthy();
-	expect(await findRoleErrorMessage()).toBeTruthy();
-	expect(await findEmailErrorMessage()).toBeTruthy();
-	expect(queryNoMatchingPasswordsErrorMessage()).not.toBeTruthy();
-	expect(getUsernameLabel().getAttribute("aria-invalid")).toBe("true");
-	expect(getUsernameLabel().getAttribute("aria-describedby")).toBe(
+	expect(await findText(REQUIRED_USERNAME_ERROR_MESSAGE)).toBeTruthy();
+	expect(await findText(REQUIRED_ROLE_ERROR_MESSAGE)).toBeTruthy();
+	expect(await findText(INVALID_EMAIL_ERROR_MESSAGE)).toBeTruthy();
+	expect(await findText(REQUIRED_PASSWORD_ERROR_MESSAGE)).toBeTruthy();
+	expect(queryText(NO_MATCHING_PASSWORDS_ERROR_MESSAGE)).not.toBeTruthy();
+	const usernameInput = getLabel(UPSERT_USER_FORM_USERNAME_LABEL);
+	expect(usernameInput.getAttribute("aria-invalid")).toBe("true");
+	expect(usernameInput.getAttribute("aria-describedby")).toBe(
 		"username-input-error",
 	);
 	await expectNoAccessibilityViolations();
@@ -59,7 +65,7 @@ test("submit by pressing enter on keyboard", async () => {
 		fillInForm: true,
 	});
 
-	await event.type(getPasswordInput(), "{enter}");
+	await event.type(getLabel(UPSERT_USER_FORM_PASSWORD_LABEL), "{enter}");
 
 	expect(onSubmit).toHaveBeenCalled();
 });
@@ -75,12 +81,26 @@ test("submit by clicking on button with mouse", async () => {
 	expect(onSubmit).toHaveBeenCalled();
 });
 
+test("allows an existing user to be updated without changing the password", async () => {
+	const { event, onSubmit, submitButton } = await renderForm({
+		isEditing: true,
+		isLoading: false,
+		fillInForm: true,
+	});
+
+	await event.click(submitButton);
+
+	expect(onSubmit).toHaveBeenCalled();
+});
+
 async function renderForm({
 	isLoading,
 	fillInForm,
+	isEditing = false,
 }: {
 	isLoading: boolean;
 	fillInForm: boolean;
+	isEditing?: boolean;
 }) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
@@ -97,7 +117,7 @@ async function renderForm({
 
 	render(
 		<UpsertUserForm
-			isEditing={false}
+			isEditing={isEditing}
 			isSubmitting={isLoading}
 			onSubmit={onSubmit}
 			username=""
@@ -115,11 +135,22 @@ async function renderForm({
 	);
 
 	if (fillInForm) {
-		await event.type(getUsernameLabel(), "testuser");
-		await event.selectOptions(getRoleLabel(), roles[0].name);
-		await event.type(getEmailLabel(), "test@example.com");
-		await event.type(getPasswordInput(), password);
-		await event.type(getConfirmPasswordLabel(), password);
+		await event.type(getLabel(UPSERT_USER_FORM_USERNAME_LABEL), "testuser");
+		await event.selectOptions(
+			getLabel(UPSERT_USER_FORM_ROLE_LABEL),
+			roles[0].name,
+		);
+		await event.type(
+			getLabel(UPSERT_USER_FORM_EMAIL_LABEL),
+			"test@example.com",
+		);
+		if (!isEditing) {
+			await event.type(getLabel(UPSERT_USER_FORM_PASSWORD_LABEL), password);
+			await event.type(
+				getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL),
+				password,
+			);
+		}
 	}
 
 	return {

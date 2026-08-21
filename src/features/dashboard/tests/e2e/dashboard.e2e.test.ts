@@ -3,10 +3,12 @@ import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getHeading,
 	getLink,
+	getSection,
 	getText,
 } from "../../../../shared/tests/playwright/locator";
 import { logInTest } from "../../../auth/tests/e2e/support";
 import {
+	DASHBOARD_HEADER,
 	DASHBOARD_ROLE_STATS_HEADER,
 	DASHBOARD_STATS_API_PATH,
 	DASHBOARD_USER_STATS_HEADER,
@@ -14,40 +16,35 @@ import {
 	DASHBOARD_VIEW_USERS_LINK_TEXT,
 } from "../../constants";
 import { dashboardStatsSchema } from "../../schemas";
-import {
-	getDashboardHeader,
-	getDashboardRoleStatsSection,
-	getDashboardUserStatsSection,
-} from "./locators";
 
 test("should show dashboard stats", async ({ page }) => {
-	const responsePromise = waitForApiResponse({
+	const dashboardStatsResponsePromise = waitForApiResponse({
 		page,
 		apiEndpoint: DASHBOARD_STATS_API_PATH,
 	});
 
 	await logInTest(page);
 
-	const response = await responsePromise;
-	const stats = dashboardStatsSchema.parse(await response.json());
+	const dashboardStatsResponse = await dashboardStatsResponsePromise;
+	const stats = dashboardStatsSchema.parse(await dashboardStatsResponse.json());
 
-	await expect(getDashboardHeader(page)).toBeVisible();
+	await expect(getHeading(page, DASHBOARD_HEADER, { level: 1 })).toBeVisible();
 
-	const usersStat = getDashboardUserStatsSection(page);
+	const userStatsSection = getSection(page, DASHBOARD_USER_STATS_HEADER);
 	await expect(
-		getHeading(usersStat, DASHBOARD_USER_STATS_HEADER),
+		getHeading(userStatsSection, DASHBOARD_USER_STATS_HEADER),
 	).toBeVisible();
-	await expect(getText(usersStat, `${stats.totalUsers}`)).toBeVisible();
+	await expect(getText(userStatsSection, `${stats.totalUsers}`)).toBeVisible();
 	await expect(
-		getLink(usersStat, DASHBOARD_VIEW_USERS_LINK_TEXT),
+		getLink(userStatsSection, DASHBOARD_VIEW_USERS_LINK_TEXT),
 	).toBeVisible();
 
-	const rolesStat = getDashboardRoleStatsSection(page);
+	const roleStatsSection = getSection(page, DASHBOARD_ROLE_STATS_HEADER);
 	await expect(
-		getHeading(rolesStat, DASHBOARD_ROLE_STATS_HEADER),
+		getHeading(roleStatsSection, DASHBOARD_ROLE_STATS_HEADER),
 	).toBeVisible();
-	await expect(getText(rolesStat, `${stats.totalRoles}`)).toBeVisible();
+	await expect(getText(roleStatsSection, `${stats.totalRoles}`)).toBeVisible();
 	await expect(
-		getLink(rolesStat, DASHBOARD_VIEW_ROLES_LINK_TEXT),
+		getLink(roleStatsSection, DASHBOARD_VIEW_ROLES_LINK_TEXT),
 	).toBeVisible();
 });

@@ -23,11 +23,9 @@ const roles: Role[] = [
 ];
 
 test("filterRoles returns empty array when no roles match", () => {
-	const value = filterRoles(roles, "nonexistent");
-	expect(value).toEqual([]);
+	expect(filterRoles(roles, "nonexistent")).toEqual([]);
 });
 
 test("filterRoles returns array when filtering by name or description", () => {
-	const value = filterRoles(roles, "admin");
-	expect(value).toEqual([roles[0], roles[2]]);
+	expect(filterRoles(roles, "admin")).toEqual([roles[0], roles[2]]);
 });
