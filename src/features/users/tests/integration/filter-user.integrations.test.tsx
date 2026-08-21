@@ -44,14 +44,14 @@ test("should filter users by search input and role", async () => {
 			_id: "john-user-id",
 			username: "John Doe",
 			email: "johndoe@example.com",
-			role: roles[0]._id,
+			role: { _id: roles[0]._id, name: roles[0].name },
 			systemManaged: true,
 		},
 		{
 			_id: "jane-user-id",
 			username: "Jane Smith",
 			email: "janesmith@example.com",
-			role: roles[1]._id,
+			role: { _id: roles[1]._id, name: roles[1].name },
 			systemManaged: false,
 		},
 	];
@@ -68,7 +68,7 @@ test("should filter users by search input and role", async () => {
 	const matchingRow = await findTableRow(users[1].username);
 	expect(await findText(users[1].username, matchingRow)).toBeTruthy();
 	expect(await findText(users[1].email, matchingRow)).toBeTruthy();
-	expect(await findText(users[1].role, matchingRow)).toBeTruthy();
+	expect(await findText(users[1].role.name, matchingRow)).toBeTruthy();
 
 	expect(queryTableRow(users[0].username)).toBeNull();
 

@@ -9,7 +9,7 @@ test("disables deletion for a system-managed user", () => {
 		_id: "system-user-id",
 		email: "system@example.com",
 		username: "system-user",
-		role: "admin-role-id",
+		role: { _id: "admin-role-id", name: "admin" },
 		systemManaged: true,
 	};
 
@@ -32,7 +32,7 @@ test("user table has no automatically detectable accessibility violations", asyn
 		_id: "user-id",
 		email: "user@example.com",
 		username: "test-user",
-		role: "admin-role-id",
+		role: { _id: "admin-role-id", name: "admin" },
 		systemManaged: false,
 	};
 

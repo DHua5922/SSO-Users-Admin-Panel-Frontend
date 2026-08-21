@@ -45,20 +45,23 @@ test("should add user", async () => {
 		_id: "new-user-id",
 		email: "new-user@example.com",
 		username: "new-user",
-		role: "admin-role-id",
+		role: { _id: "admin-role-id", name: "admin" },
 		systemManaged: false,
 	};
 	mockUpsertUserSuccessApi();
 	const { event } = renderApp(USERS_PATH);
 
-	const addUserDialog = await openAndFillAddUserForm(event, newUser);
+	const addUserDialog = await openAndFillAddUserForm(event, {
+		...newUser,
+		role: newUser.role._id,
+	});
 	mockGetUsersSuccessApi([newUser]);
 	await event.click(getAddUserButton(addUserDialog));
 
 	const usersTable = await findTable("");
 	expect(await findText(newUser.username, usersTable)).toBeTruthy();
 	expect(await findText(newUser.email, usersTable)).toBeTruthy();
-	expect(await findText(newUser.role, usersTable)).toBeTruthy();
+	expect(await findText(newUser.role.name, usersTable)).toBeTruthy();
 	expect(
 		await findShowEditUserModalButton(newUser.username, usersTable),
 	).toBeTruthy();

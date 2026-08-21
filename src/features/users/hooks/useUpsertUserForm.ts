@@ -37,7 +37,7 @@ export default function useUpsertUserForm() {
 		isSubmitting: isPending,
 		username: selectedUser?.username ?? "",
 		email: selectedUser?.email ?? "",
-		initialRole: selectedUser?.role ?? "",
+		initialRole: selectedUser?.role._id ?? "",
 		loadingButtonText: selectedUser ? "Updating User..." : "Adding User...",
 		submitButtonText: selectedUser
 			? UPDATE_USER_BUTTON_TEXT

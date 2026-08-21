@@ -39,7 +39,10 @@ export const userSchema = z.object({
 	_id: z.string().min(1),
 	email: z.email(),
 	username: z.string().min(1),
-	role: z.string().min(1),
+	role: z.object({
+		_id: z.string().min(1),
+		name: z.string().min(1),
+	}),
 	systemManaged: z.boolean(),
 });
 
@@ -47,6 +50,7 @@ const upsertUserSchema = userSchema
 	.omit({ _id: true, systemManaged: true })
 	.extend({
 		_id: z.string().min(1).optional(),
+		role: z.string().min(1),
 		password: z.string().optional(),
 		confirmPassword: z.string().optional(),
 	});

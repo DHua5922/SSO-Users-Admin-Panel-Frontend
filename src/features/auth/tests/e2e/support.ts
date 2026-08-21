@@ -37,6 +37,9 @@ export async function logInTest(page: Page) {
 		_id: expect.any(String),
 		email: testEnv.VITE_TEST_EMAIL,
 		username: expect.any(String),
-		role: expect.any(String),
+		role: {
+			_id: expect.any(String),
+			name: expect.any(String),
+		},
 	});
 }

@@ -20,7 +20,7 @@ test("should delete user", async () => {
 		_id: "user-to-delete-id",
 		email: "delete@example.com",
 		username: "user-to-delete",
-		role: "admin-role-id",
+		role: { _id: "admin-role-id", name: "admin" },
 		systemManaged: false,
 	};
 	mockGetMeSuccessApi();

@@ -10,7 +10,7 @@ export function filterUsers(
 		const formattedEmail = user.email.toLowerCase().trim();
 		const formattedSearchInput = searchInput.toLowerCase().trim();
 
-		const hasRole = !selectedRoleId || user.role === selectedRoleId;
+		const hasRole = !selectedRoleId || user.role._id === selectedRoleId;
 		const hasUsername = formattedUsername.includes(formattedSearchInput);
 		const hasEmail = formattedEmail.includes(formattedSearchInput);
 

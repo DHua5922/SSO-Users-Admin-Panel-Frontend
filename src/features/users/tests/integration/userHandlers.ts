@@ -10,14 +10,14 @@ import {
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,
 	USERS_API_ROUTE,
 } from "../../constants";
-import type { User } from "../../schemas";
+import type { UpsertUser, User } from "../../schemas";
 
 const endpoint = `*${USERS_API_ROUTE}`;
 const defaultUser = {
 	_id: "user-id",
 	email: "test@example.com",
 	username: "testadmin",
-	role: "admin-role-id",
+	role: { _id: "admin-role-id", name: "admin" },
 	systemManaged: false,
 };
 
@@ -41,12 +41,13 @@ export function mockGetUsersFailureApi() {
 export function mockUpsertUserSuccessApi() {
 	return server.use(
 		http.put(endpoint, async ({ request }) => {
-			const body = (await request.json()) as Partial<User>;
+			const body = (await request.json()) as UpsertUser;
 			return HttpResponse.json(
 				{
 					...body,
 					_id: body._id ?? "created-user-id",
-					systemManaged: body.systemManaged ?? false,
+					role: { _id: body.role, name: "admin" },
+					systemManaged: false,
 				},
 				{ status: SUCCESS_STATUS_CODE },
 			);

@@ -8,7 +8,7 @@ const currentUser = {
 	_id: "current-user-id",
 	email: "test@example.com",
 	username: "testadmin",
-	role: "admin-role-id",
+	role: { _id: "admin-role-id", name: "admin" },
 	systemManaged: false,
 };
 

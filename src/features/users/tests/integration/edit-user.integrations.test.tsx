@@ -29,7 +29,7 @@ test("should update user", async () => {
 		_id: "user-to-update-id",
 		email: "user-to-update@example.com",
 		username: "user-to-update",
-		role: "admin-role-id",
+		role: { _id: "admin-role-id", name: "admin" },
 		systemManaged: false,
 	};
 	const updatedUser = {
@@ -66,14 +66,14 @@ test("should update user", async () => {
 
 	expect(usernameInput.value).toBe(existingUser.username);
 	expect(emailInput.value).toBe(existingUser.email);
-	expect(roleSelect.value).toBe(existingUser.role);
+	expect(roleSelect.value).toBe(existingUser.role._id);
 
 	await event.clear(usernameInput);
 	await event.clear(emailInput);
 
 	await event.type(usernameInput, updatedUser.username);
 	await event.type(emailInput, updatedUser.email);
-	await event.selectOptions(roleSelect, updatedUser.role);
+	await event.selectOptions(roleSelect, updatedUser.role._id);
 
 	mockGetUsersSuccessApi([updatedUser]);
 	await event.click(getButton(UPDATE_USER_BUTTON_TEXT, editUserDialog));
@@ -81,7 +81,7 @@ test("should update user", async () => {
 	const updatedUserRow = await findTableRow(updatedUser.username);
 	expect(await findText(updatedUser.username, updatedUserRow)).toBeTruthy();
 	expect(await findText(updatedUser.email, updatedUserRow)).toBeTruthy();
-	expect(await findText(updatedUser.role, updatedUserRow)).toBeTruthy();
+	expect(await findText(updatedUser.role.name, updatedUserRow)).toBeTruthy();
 	expect(
 		await findShowEditUserModalButton(updatedUser.username, updatedUserRow),
 	).toBeTruthy();
