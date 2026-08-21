@@ -126,7 +126,7 @@ The test types have different jobs:
 - Unit tests check small utility functions.
 - Component tests check one component and its user behavior.
 - Integration tests check a page flow with mocked API requests.
-- End-to-end tests check important flows against a deployed app.
+- End-to-end tests check important browser flows against the configured frontend and backend environment.
 - Accessibility tests use axe-core to find common accessibility problems.
 - Bundle checks prevent unexpected growth in generated JavaScript and CSS assets.
 
