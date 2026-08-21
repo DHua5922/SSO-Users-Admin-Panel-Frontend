@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ApiError, DefaultError } from "js-ts-kit";
+import { parseError } from "../../../shared/utilities/parseError";
 import { getDashboardStatsApi } from "../api";
 
 export function useDashboardStats() {
@@ -9,14 +9,10 @@ export function useDashboardStats() {
 		retry: false,
 	});
 
-	const errorMessage = ApiError.isApiError(error)
-		? ApiError.default(error)
-		: DefaultError.message(error);
-
 	return {
 		stats: data,
 		isStatsError: isError,
-		statsErrorMessage: errorMessage || "",
+		statsErrorMessage: error ? parseError(error) : "",
 		isLoadingStats: isLoading,
 	};
 }

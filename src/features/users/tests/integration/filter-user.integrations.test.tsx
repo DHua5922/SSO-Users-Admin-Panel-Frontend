@@ -1,5 +1,6 @@
 import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
+	findLabel,
 	findSearchBox,
 	findTableRow,
 	findText,
@@ -23,7 +24,7 @@ test("should show error message when failing to load users", async () => {
 	expect(await findText(CANNOT_LOAD_USERS_ERROR_MESSAGE)).toBeTruthy();
 });
 
-test("should filter users by username and email from search bar (case insensitive)", async () => {
+test("should filter users by search input and role", async () => {
 	const roles = [
 		{
 			_id: "admin-role-id",
@@ -61,7 +62,8 @@ test("should filter users by username and email from search bar (case insensitiv
 
 	const { event } = renderApp(USERS_PATH);
 
-	await event.type(await findSearchBox(SEARCH_USERS_ARIA_LABEL), "smi");
+	const searchInput = await findSearchBox(SEARCH_USERS_ARIA_LABEL);
+	await event.type(searchInput, "smi");
 
 	const matchingRow = await findTableRow(users[1].username);
 	expect(await findText(users[1].username, matchingRow)).toBeTruthy();
@@ -69,4 +71,13 @@ test("should filter users by username and email from search bar (case insensitiv
 	expect(await findText(users[1].role, matchingRow)).toBeTruthy();
 
 	expect(queryTableRow(users[0].username)).toBeNull();
+
+	await event.clear(searchInput);
+	await event.selectOptions(
+		await findLabel("Filter users by role"),
+		roles[0]._id,
+	);
+
+	expect(await findTableRow(users[0].username)).toBeTruthy();
+	expect(queryTableRow(users[1].username)).toBeNull();
 });

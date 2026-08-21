@@ -37,9 +37,9 @@ export function createUpsertUserFormSchema(isEditing: boolean) {
 
 export const userSchema = z.object({
 	_id: z.string().min(1),
-	email: z.string(),
-	username: z.string(),
-	role: z.string(),
+	email: z.email(),
+	username: z.string().min(1),
+	role: z.string().min(1),
 	systemManaged: z.boolean(),
 });
 
