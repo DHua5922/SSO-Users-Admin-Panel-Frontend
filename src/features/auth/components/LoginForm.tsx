@@ -45,6 +45,7 @@ export default function LoginForm({
 				<input
 					id={emailInputId}
 					type="email"
+					required
 					aria-required="true"
 					value={email}
 					onChange={(e) => onChangeEmail(e.target.value)}
@@ -59,6 +60,7 @@ export default function LoginForm({
 				<input
 					id={passwordInputId}
 					type="password"
+					required
 					value={password}
 					onChange={(e) => onChangePassword(e.target.value)}
 				/>

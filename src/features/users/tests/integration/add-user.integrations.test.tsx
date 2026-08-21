@@ -9,7 +9,7 @@ import {
 	getText,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
+import { mockGetRolesSuccessApi } from "../../../roles/tests/integration/roleHandlers";
 import {
 	ADD_USER_MODAL_TITLE,
 	CANNOT_UPSERT_USER_ERROR_MESSAGE,

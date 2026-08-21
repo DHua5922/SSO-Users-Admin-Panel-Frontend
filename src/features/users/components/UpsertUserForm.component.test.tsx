@@ -10,6 +10,7 @@ import {
 import {
 	INVALID_EMAIL_ERROR_MESSAGE,
 	NO_MATCHING_PASSWORDS_ERROR_MESSAGE,
+	REQUIRED_PASSWORD_ERROR_MESSAGE,
 	REQUIRED_ROLE_ERROR_MESSAGE,
 	REQUIRED_USERNAME_ERROR_MESSAGE,
 	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
@@ -43,6 +44,7 @@ test("shows validation errors", async () => {
 	expect(await findText(REQUIRED_USERNAME_ERROR_MESSAGE)).toBeTruthy();
 	expect(await findText(REQUIRED_ROLE_ERROR_MESSAGE)).toBeTruthy();
 	expect(await findText(INVALID_EMAIL_ERROR_MESSAGE)).toBeTruthy();
+	expect(await findText(REQUIRED_PASSWORD_ERROR_MESSAGE)).toBeTruthy();
 	expect(queryText(NO_MATCHING_PASSWORDS_ERROR_MESSAGE)).not.toBeTruthy();
 	const usernameInput = getLabel(UPSERT_USER_FORM_USERNAME_LABEL);
 	expect(usernameInput.getAttribute("aria-invalid")).toBe("true");
@@ -79,12 +81,26 @@ test("submit by clicking on button with mouse", async () => {
 	expect(onSubmit).toHaveBeenCalled();
 });
 
+test("allows an existing user to be updated without changing the password", async () => {
+	const { event, onSubmit, submitButton } = await renderForm({
+		isEditing: true,
+		isLoading: false,
+		fillInForm: true,
+	});
+
+	await event.click(submitButton);
+
+	expect(onSubmit).toHaveBeenCalled();
+});
+
 async function renderForm({
 	isLoading,
 	fillInForm,
+	isEditing = false,
 }: {
 	isLoading: boolean;
 	fillInForm: boolean;
+	isEditing?: boolean;
 }) {
 	const event = userEvent.setup();
 	const onSubmit = vi.fn();
@@ -101,7 +117,7 @@ async function renderForm({
 
 	render(
 		<UpsertUserForm
-			isEditing={false}
+			isEditing={isEditing}
 			isSubmitting={isLoading}
 			onSubmit={onSubmit}
 			username=""
@@ -128,11 +144,13 @@ async function renderForm({
 			getLabel(UPSERT_USER_FORM_EMAIL_LABEL),
 			"test@example.com",
 		);
-		await event.type(getLabel(UPSERT_USER_FORM_PASSWORD_LABEL), password);
-		await event.type(
-			getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL),
-			password,
-		);
+		if (!isEditing) {
+			await event.type(getLabel(UPSERT_USER_FORM_PASSWORD_LABEL), password);
+			await event.type(
+				getLabel(UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL),
+				password,
+			);
+		}
 	}
 
 	return {

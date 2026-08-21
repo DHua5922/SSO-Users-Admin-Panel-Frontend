@@ -11,10 +11,7 @@ import {
 	ROLES_PATH,
 	SEARCH_ROLES_ARIA_LABEL,
 } from "../../constants";
-import {
-	mockGetRolesFailureApi,
-	mockGetRolesSuccessApi,
-} from "../mocks/roleHandlers";
+import { mockGetRolesFailureApi, mockGetRolesSuccessApi } from "./roleHandlers";
 
 beforeEach(() => {
 	mockGetMeSuccessApi();

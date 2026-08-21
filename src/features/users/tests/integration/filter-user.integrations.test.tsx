@@ -6,7 +6,7 @@ import {
 	queryTableRow,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
+import { mockGetRolesSuccessApi } from "../../../roles/tests/integration/roleHandlers";
 import {
 	CANNOT_LOAD_USERS_ERROR_MESSAGE,
 	SEARCH_USERS_ARIA_LABEL,

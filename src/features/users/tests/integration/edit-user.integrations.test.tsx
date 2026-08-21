@@ -7,7 +7,7 @@ import {
 	getLabel,
 } from "../../../../shared/tests/react-testing-library/locator";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { mockGetRolesSuccessApi } from "../../../roles/tests/mocks/roleHandlers";
+import { mockGetRolesSuccessApi } from "../../../roles/tests/integration/roleHandlers";
 import {
 	UPDATE_USER_BUTTON_TEXT,
 	UPSERT_USER_FORM_EMAIL_LABEL,

@@ -7,7 +7,11 @@ import {
 	GUEST_LOGIN_PATH,
 	LOGIN_PATH,
 } from "../constants";
-import { loginSchema } from "../schemas";
+
+const loginSchema = z.object({
+	email: z.email(),
+	password: z.string().min(1),
+});
 
 const authAxios = createAxiosInstance(AUTH_BASE_API_ROUTE);
 

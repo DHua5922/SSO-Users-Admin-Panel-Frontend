@@ -31,15 +31,15 @@ export default function useRoleListView(searchInput: string) {
 	const filteredRoles = filterRoles(roles || [], searchInput);
 
 	const onClickEditRole = (role: Role) => {
-		setShowUpsertRoleModal(true);
 		setChosenRole(role);
+		setShowUpsertRoleModal(true);
 	};
 
 	const onClickDeleteRole = (role: Role) => {
 		if (role.systemManaged) return;
 
-		setShowDeleteRoleModal(true);
 		setChosenRole(role);
+		setShowDeleteRoleModal(true);
 	};
 
 	return {

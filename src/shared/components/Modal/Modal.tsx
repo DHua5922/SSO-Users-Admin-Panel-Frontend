@@ -14,10 +14,11 @@ export default function Modal({
 	className = "",
 	...props
 }: Props) {
-	const { modalAlerts, removeModalAlert } = useAlertStore(
+	const { modalAlerts, removeModalAlert, clearModalAlerts } = useAlertStore(
 		useShallow((state) => ({
 			modalAlerts: state.modalAlerts,
 			removeModalAlert: state.removeModalAlert,
+			clearModalAlerts: state.clearModalAlerts,
 		})),
 	);
 
@@ -30,6 +31,10 @@ export default function Modal({
 			{...props}
 			className={formattedClassName}
 			aria-labelledby={titleId}
+			onOpenChange={(open) => {
+				if (!open) clearModalAlerts();
+				props.onOpenChange?.(open);
+			}}
 		>
 			<DefaultModal.Header>
 				<DefaultModal.Title id={titleId}>{title}</DefaultModal.Title>

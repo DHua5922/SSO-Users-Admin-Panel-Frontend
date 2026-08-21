@@ -18,15 +18,15 @@ import {
 	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants";
 import {
-	mockGetRolesSuccessApi,
-	mockUpsertRoleFailureApi,
-	mockUpsertRoleSuccessApi,
-} from "../mocks/roleHandlers";
-import {
 	findShowDeleteRoleModalButton,
 	findShowEditRoleModalButton,
 	getAddRoleButton,
 } from "./locators";
+import {
+	mockGetRolesSuccessApi,
+	mockUpsertRoleFailureApi,
+	mockUpsertRoleSuccessApi,
+} from "./roleHandlers";
 
 beforeEach(() => {
 	mockGetMeSuccessApi();

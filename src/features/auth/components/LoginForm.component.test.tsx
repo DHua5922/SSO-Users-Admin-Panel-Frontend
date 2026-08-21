@@ -24,10 +24,17 @@ test("has no automatically detectable accessibility violations", async () => {
 	await expectNoAccessibilityViolations();
 });
 
+test("requires email and password", async () => {
+	await renderLoginForm(false, LOGIN_TEXT);
+
+	expect(getLabel(LOGIN_EMAIL_INPUT_LABEL)).toHaveProperty("required", true);
+	expect(getLabel(LOGIN_PASSWORD_INPUT_LABEL)).toHaveProperty("required", true);
+});
+
 test("submit by pressing enter on keyboard", async () => {
 	const { event, onSubmit, button } = await renderLoginForm(false, LOGIN_TEXT);
 
-	await event.type(getLabel(LOGIN_PASSWORD_INPUT_LABEL), "password123{enter}");
+	await event.type(getLabel(LOGIN_PASSWORD_INPUT_LABEL), "{enter}");
 
 	expect(onSubmit).toHaveBeenCalled();
 	expect(button).toBeTruthy();
@@ -63,14 +70,12 @@ async function renderLoginForm(isLoading: boolean, buttonText: string) {
 			isGuestLoginLoading={false}
 			onGuestLogin={onGuestLogin}
 			onSubmit={onSubmit}
-			email=""
+			email="test@example.com"
 			onChangeEmail={onChangeEmail}
-			password=""
+			password="password123"
 			onChangePassword={onChangePassword}
 		/>,
 	);
-	await event.type(getLabel(LOGIN_EMAIL_INPUT_LABEL), "test@example.com");
-
 	return {
 		event,
 		onSubmit,

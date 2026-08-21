@@ -31,14 +31,14 @@ export default function useUsers(searchInput: string, selectedRoleId: string) {
 	const filteredUsers = filterUsers(users || [], searchInput, selectedRoleId);
 
 	const onClickEditUser = (user: User) => {
-		setShowUpsertUserModal(true);
 		setChosenUser(user);
+		setShowUpsertUserModal(true);
 	};
 
 	const onClickDeleteUser = (user: User) => {
 		if (user.systemManaged) return;
-		setShowDeleteUserModal(true);
 		setChosenUser(user);
+		setShowDeleteUserModal(true);
 	};
 
 	return {

@@ -14,13 +14,13 @@ import {
 	UPSERT_ROLE_FORM_NAME_LABEL,
 } from "../../constants";
 import {
-	mockGetRolesSuccessApi,
-	mockUpsertRoleSuccessApi,
-} from "../mocks/roleHandlers";
-import {
 	findShowDeleteRoleModalButton,
 	findShowEditRoleModalButton,
 } from "./locators";
+import {
+	mockGetRolesSuccessApi,
+	mockUpsertRoleSuccessApi,
+} from "./roleHandlers";
 
 test("should update role", async () => {
 	const existingRole = {

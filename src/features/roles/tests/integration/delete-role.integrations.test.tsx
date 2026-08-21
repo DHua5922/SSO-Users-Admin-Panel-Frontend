@@ -6,13 +6,13 @@ import {
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { EMPTY_ROLES_MESSAGE, ROLES_PATH } from "../../constants";
 import {
-	mockDeleteRoleSuccessApi,
-	mockGetRolesSuccessApi,
-} from "../mocks/roleHandlers";
-import {
 	findShowDeleteRoleModalButton,
 	getConfirmDeleteRoleButton,
 } from "./locators";
+import {
+	mockDeleteRoleSuccessApi,
+	mockGetRolesSuccessApi,
+} from "./roleHandlers";
 
 test("should delete role", async () => {
 	const roleToDelete = {

@@ -12,7 +12,10 @@ import {
 	UPSERT_USER_FORM_ROLE_LABEL,
 	UPSERT_USER_FORM_USERNAME_LABEL,
 } from "../constants";
-import { type UpsertUserFormData, upsertUserFormSchema } from "../schemas";
+import {
+	createUpsertUserFormSchema,
+	type UpsertUserFormData,
+} from "../schemas";
 
 interface UpsertUserFormProps
 	extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit"> {
@@ -36,12 +39,14 @@ interface UseFormValidationProps {
 	username: string;
 	email: string;
 	initialRole: string;
+	isEditing: boolean;
 }
 
 function useFormValidation({
 	username,
 	email,
 	initialRole,
+	isEditing,
 }: UseFormValidationProps) {
 	const {
 		register,
@@ -49,7 +54,7 @@ function useFormValidation({
 		reset,
 		formState: { errors },
 	} = useForm<UpsertUserFormData>({
-		resolver: zodResolver(upsertUserFormSchema),
+		resolver: zodResolver(createUpsertUserFormSchema(isEditing)),
 		defaultValues: {
 			username,
 			email,
@@ -96,6 +101,7 @@ export default function UpsertUserForm({
 		username,
 		email,
 		initialRole,
+		isEditing,
 	});
 
 	const usernameInputId = "username-input";
