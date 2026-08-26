@@ -6,7 +6,10 @@ import {
 	renderApp,
 } from "../../../../shared/tests/react-testing-library";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
-import { DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
+import {
+	DASHBOARD_CHART_TITLE,
+	DASHBOARD_STATS_ERROR_MESSAGE,
+} from "../../constants";
 import {
 	mockGetDashboardStatsFailureApi,
 	mockGetDashboardStatsSuccessApi,
@@ -19,6 +22,7 @@ test("should show dashboard stats", async () => {
 
 	expect(await findText("10")).toBeTruthy();
 	expect(await findText("5")).toBeTruthy();
+	expect(await findText(DASHBOARD_CHART_TITLE)).toBeTruthy();
 });
 
 test("should show error when failing to get dashboard stats", async () => {

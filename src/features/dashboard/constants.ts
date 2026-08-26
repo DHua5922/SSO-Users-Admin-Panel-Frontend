@@ -5,5 +5,6 @@ export const DASHBOARD_USER_STATS_HEADER = "Total Users";
 export const DASHBOARD_ROLE_STATS_HEADER = "Total Roles";
 export const DASHBOARD_VIEW_USERS_LINK_TEXT = "View Users";
 export const DASHBOARD_VIEW_ROLES_LINK_TEXT = "View Roles";
+export const DASHBOARD_CHART_TITLE = "Users and roles overview";
 
 export const DASHBOARD_STATS_ERROR_MESSAGE = "Failed to load dashboard stats.";

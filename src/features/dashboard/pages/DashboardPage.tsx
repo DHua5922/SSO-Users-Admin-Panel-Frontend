@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { ROLES_PATH } from "../../roles";
 import { USERS_PATH } from "../../users";
 import StatView from "../components/StatView";
@@ -7,6 +8,10 @@ import {
 	DASHBOARD_VIEW_USERS_LINK_TEXT,
 } from "../constants";
 import { useDashboardStats } from "../hooks/useDashboardStats";
+
+const DashboardStatsChart = lazy(
+	() => import("../components/DashboardStatsChart"),
+);
 
 export default function DashboardPage() {
 	const { stats, isStatsError, statsErrorMessage, isLoadingStats } =
@@ -20,7 +25,7 @@ export default function DashboardPage() {
 				view important information.
 			</h2>
 
-			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4 mb-8">
 				<StatView
 					label="Total Users"
 					value={stats?.totalUsers || 0}
@@ -41,6 +46,21 @@ export default function DashboardPage() {
 					linkLabel={DASHBOARD_VIEW_ROLES_LINK_TEXT}
 				/>
 			</div>
+
+			{stats && !isStatsError && (
+				<Suspense
+					fallback={
+						<div className="card h-80 center" role="status">
+							Loading chart...
+						</div>
+					}
+				>
+					<DashboardStatsChart
+						totalUsers={stats.totalUsers}
+						totalRoles={stats.totalRoles}
+					/>
+				</Suspense>
+			)}
 		</div>
 	);
 }
