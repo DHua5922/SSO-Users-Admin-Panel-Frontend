@@ -9,11 +9,11 @@ import {
 	LOGOUT_BUTTON_TEXT,
 	logOutApi,
 	ME_QUERY_KEY,
-} from "../../../features/auth";
-import { ROLES_PATH } from "../../../features/roles";
-import { USERS_PATH } from "../../../features/users";
-import { HOME_PATH } from "../../../shared/constants";
-import { usePageErrorHandler } from "../../../shared/hooks";
+} from "../../features/auth";
+import { ROLES_PATH } from "../../features/roles";
+import { USERS_PATH } from "../../features/users";
+import { HOME_PATH } from "../../shared/constants";
+import { usePageErrorHandler } from "../../shared/hooks";
 import styles from "./NavbarNavigation.module.css";
 
 interface Props extends HTMLAttributes<HTMLUListElement> {

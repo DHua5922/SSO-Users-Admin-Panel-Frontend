@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import Button from "../Button/Button";
+import Button from "../button/Button";
 import Modal from "./Modal";
 
 interface Props extends ComponentProps<typeof Modal> {

@@ -11,7 +11,7 @@ import {
 } from "../../shared/constants";
 import { DARK_MODE_TEXT, DARK_THEME } from "../constants";
 import { useTheme } from "../providers/ThemeProvider";
-import NavbarNavigation from "./NavbarNavigation/NavbarNavigation";
+import NavbarNavigation from "./NavbarNavigation";
 
 const CLOSE_NAVIGATION_MENU_TEXT = "Close navigation menu";
 const MOBILE_NAVIGATION_ARIA_LABEL = "Mobile navigation menu";
