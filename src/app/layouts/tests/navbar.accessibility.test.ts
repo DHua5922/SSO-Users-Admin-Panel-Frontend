@@ -1,12 +1,9 @@
-import { logInTest } from "../../../../features/auth/tests/e2e/support";
+import { logInTest } from "../../../features/auth/tests/e2e/support";
 import {
 	MOBILE_NAVIGATION_ID,
 	OPEN_NAVIGATION_MENU_TEXT,
-} from "../../../../shared/constants";
-import {
-	expect,
-	test,
-} from "../../../../shared/tests/playwright/accessibility";
+} from "../../../shared/constants";
+import { expect, test } from "../../../shared/tests/playwright/accessibility";
 
 test("mobile navigation exposes links to the keyboard only when expanded", async ({
 	page,

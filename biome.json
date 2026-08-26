@@ -341,6 +341,74 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["**/*.unit.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/*.component.test.*",
+											"**/*.integrations.test.*",
+											"**/tests/integration/**"
+										],
+										"message": "Unit tests cannot import component or integration test code."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.component.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/*.unit.test.*",
+											"**/*.integrations.test.*",
+											"**/tests/integration/**"
+										],
+										"message": "Component tests cannot import unit or integration test code."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.integrations.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": ["**/*.unit.test.*", "**/*.component.test.*"],
+										"message": "Integration tests cannot import unit or component test code."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
 		}
 	],
 	"assist": {

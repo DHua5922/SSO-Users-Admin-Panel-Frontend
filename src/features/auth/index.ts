@@ -1,6 +1,5 @@
 export { logOutApi } from "./api/auth";
 export {
-	AUTH_BASE_API_ROUTE,
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
 	LOADING_CURRENT_USER_TEXT,
 	LOGIN_PATH,
