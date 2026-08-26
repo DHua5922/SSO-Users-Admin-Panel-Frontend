@@ -68,8 +68,8 @@ The backend API is maintained separately:
 
 ## Requirements
 
-- Node.js 24
-- pnpm 11
+- Node.js 24 (the version used in CI)
+- pnpm 11 (the version used in CI)
 - A running backend API that works with this frontend
 
 ## Run Locally
@@ -227,7 +227,7 @@ src/
 │   └── users/           # User management; exported through index.ts
 ├── shared/
 │   ├── api/             # Shared HTTP client public API
-│   ├── components/      # Reusable components in lowercase folders
+│   ├── components/      # Reusable components and component folders
 │   ├── hooks/           # Shared hook public API
 │   ├── store/           # Shared UI-state public API
 │   ├── tests/           # Shared test APIs and test-runner configuration
