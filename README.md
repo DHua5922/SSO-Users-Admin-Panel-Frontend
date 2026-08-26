@@ -1,3 +1,5 @@
+[![Continuous Integration](https://github.com/DHua5922/SSO-Users-Admin-Panel-Frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/DHua5922/SSO-Users-Admin-Panel-Frontend/actions/workflows/ci.yml)
+
 # SSO Users Admin Panel Frontend
 
 A React admin panel for managing users and roles. It connects to a separate backend API and supports normal login and guest login.
@@ -12,7 +14,8 @@ A React admin panel for managing users and roles. It connects to a separate back
 - [Run Locally](#run-locally)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
-- [Testing](#testing)
+- [Automated Testing](#automated-testing)
+- [Accessibility](#accessibility)
 - [Continuous Integration](#continuous-integration)
 - [Architecture Overview](#architecture-overview)
 - [Project Structure](#project-structure)
@@ -110,7 +113,10 @@ Environment files are ignored by Git. Do not put secrets in variables that start
 | `pnpm build` | Type-checks and creates a production build |
 | `pnpm preview` | Serves the production build locally |
 | `pnpm quality:check` | Runs Biome, Knip, and TypeScript checks |
-| `pnpm biome:fix` | Applies Biome formatting and lint fixes |
+| `pnpm lint` | Checks formatting and lint rules with Biome |
+| `pnpm format` | Applies Biome formatting and safe lint fixes |
+| `pnpm check:unused` | Finds unused files, dependencies, and exports with Knip |
+| `pnpm typescript:check` | Type-checks the project without emitting files |
 | `pnpm check:bundle` | Checks production assets in `dist` against their gzip size budgets |
 | `pnpm test:unit` | Runs unit tests with coverage |
 | `pnpm test:component` | Runs component tests with coverage |
@@ -119,18 +125,39 @@ Environment files are ignored by Git. Do not put secrets in variables that start
 | `pnpm test:e2e:ui` | Opens the Playwright test UI |
 | `pnpm test:accessibility` | Runs Playwright accessibility tests in Chromium |
 
-## Testing
+## Automated Testing
 
-The test types have different jobs:
+The project uses several automated test layers, each with a distinct scope:
 
 - Unit tests check small utility functions.
-- Component tests check one component and its user behavior.
-- Integration tests check a page flow with mocked API requests.
-- End-to-end tests check important browser flows against the configured frontend and backend environment.
-- Accessibility tests use axe-core to find common accessibility problems.
+- Component tests render one component with React Testing Library and verify its behavior.
+- Integration tests exercise page flows with React Testing Library and APIs mocked by Mock Service Worker.
+- End-to-end tests use Playwright across desktop and mobile browser projects against the configured frontend and backend.
+- Accessibility tests use Playwright and axe-core in Chromium to detect common WCAG A and AA violations.
 - Bundle checks prevent unexpected growth in generated JavaScript and CSS assets.
 
-Primary user flows are also tested manually with keyboard navigation. Automated checks and keyboard testing do not replace testing with screen readers and other assistive technologies.
+Run the automated suites independently:
+
+```bash
+pnpm test:unit
+pnpm test:component
+pnpm test:integrations
+pnpm test:e2e
+pnpm test:accessibility
+```
+
+Unit, component, and integration suites generate coverage reports. End-to-end and accessibility suites require the Playwright browsers, `VITE_FRONTEND_BASE_URL`, and a reachable backend environment. Account login E2E coverage also requires `VITE_TEST_EMAIL` and `VITE_TEST_PASSWORD`.
+
+Vitest configuration and setup live in `src/shared/tests/vitest`. Playwright end-to-end and accessibility configuration live in `src/shared/tests/playwright`. The package scripts pass these configuration paths explicitly, so run tests through the documented scripts from the repository root.
+
+Shared test helpers expose focused public APIs:
+
+- `shared/tests` for framework-neutral helpers
+- `shared/tests/react-testing-library` for component and integration helpers
+- `shared/tests/vitest` for Vitest and MSW support
+- `shared/tests/playwright` for browser-test helpers
+
+Biome prevents unit, component, and integration tests from importing across test categories. It also prevents consumers from bypassing the shared test public APIs.
 
 Run the production build before checking its bundle sizes:
 
@@ -140,6 +167,23 @@ pnpm check:bundle
 ```
 
 The bundle budgets are defined in `bundlesize.config.json`. If a budget fails, investigate new dependencies, broad imports, lost tree-shaking, and opportunities for lazy loading before increasing the limit.
+
+## Accessibility
+
+Accessibility is treated as both an implementation requirement and a testing concern. The interface includes semantic landmarks and headings, associated form labels and validation messages, keyboard-operable controls, visible loading and error states, a skip link, and accessible names for icon-only actions.
+
+Automated coverage runs at two levels:
+
+- Component tests call `axe-core` through React Testing Library to catch violations close to the component that introduced them.
+- Playwright accessibility tests scan important authenticated and unauthenticated page states in a real Chromium browser, including open dialogs and responsive navigation behavior.
+
+Run the browser accessibility suite with:
+
+```bash
+pnpm test:accessibility
+```
+
+Primary flows are also checked manually with keyboard navigation. Automated scanners can detect only a subset of accessibility issues, so passing tests does not replace screen-reader testing, keyboard review, zoom and reflow checks, or evaluation by people who use assistive technology.
 
 ## Continuous Integration
 
@@ -177,15 +221,23 @@ src/
 ├── app/                 # App routes, layouts, providers, and error boundaries
 ├── assets/              # Images and other static assets imported by the app
 ├── features/
-│   ├── auth/            # Login and current-user code
-│   ├── dashboard/       # Dashboard stats
-│   ├── roles/           # Role management
-│   └── users/           # User management
-├── shared/              # Reusable API, components, hooks, state, and utilities
+│   ├── auth/            # Login and current-user code; exported through index.ts
+│   ├── dashboard/       # Dashboard stats; exported through index.ts
+│   ├── roles/           # Role management; exported through index.ts
+│   └── users/           # User management; exported through index.ts
+├── shared/
+│   ├── api/             # Shared HTTP client public API
+│   ├── components/      # Reusable components in lowercase folders
+│   ├── hooks/           # Shared hook public API
+│   ├── store/           # Shared UI-state public API
+│   ├── tests/           # Shared test APIs and test-runner configuration
+│   └── utilities/       # Shared utility public API
 └── styles/              # Global styles
 ```
 
-Each feature keeps its API code, components, hooks, pages, schemas, tests, and utilities close together. Code goes in `shared` only when more than one feature can use it.
+Each feature keeps its API code, components, hooks, pages, schemas, tests, and utilities close together. A feature's root `index.ts` is its only public entry point; app code and other features must not import feature internals. Shared code uses focused segment entry points such as `shared/components` instead of one broad barrel. Biome enforces these boundaries.
+
+Code goes in `shared` only when more than one file consumes it. Constants and test locator helpers used by only one file stay local to that consumer.
 
 ## State and Data
 
@@ -199,6 +251,7 @@ Each feature keeps its API code, components, hooks, pages, schemas, tests, and u
 - Keeping the frontend and backend in separate repositories allows independent development and deployment, but API and environment changes must stay coordinated.
 - Using TanStack Query for server state and Zustand for shared UI state keeps their responsibilities clear, but adds dependencies and concepts to the application.
 - Organizing code by feature keeps related implementation and tests together as the project grows, but creates more folders and conventions than a smaller application needs.
+- Explicit public APIs make dependencies easier to understand and refactor, but feature root barrels can limit route-level code splitting when pages and consumed exports share the same entry point.
 - Client-side routing provides fast navigation without full page reloads, but direct visits and refreshes require a Vercel rewrite.
 - Token refresh and cookie-based authentication support persistent, secure sessions, but require careful CORS and cookie configuration across environments.
 - Unit, component, integration, end-to-end, and accessibility tests provide coverage at several levels, but increase CI time and maintenance work.

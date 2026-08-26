@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from "react";
-import { REQUIRED_FIELD_ACCESSIBLE_TEXT } from "../constants";
+
+const REQUIRED_FIELD_ACCESSIBLE_TEXT = "(required)";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	label?: string;

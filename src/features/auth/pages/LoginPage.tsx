@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { type SubmitEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import { HOME_PATH } from "../../../shared/constants";
-import usePageErrorHandler from "../../../shared/hooks/usePageErrorHandler";
+import { usePageErrorHandler } from "../../../shared/hooks";
 import { logInApi, logInAsGuestApi } from "../api/auth";
 import LoginForm from "../components/LoginForm";
 

@@ -13,8 +13,10 @@ import {
 	METHOD_POST,
 	OPEN_NAVIGATION_MENU_TEXT,
 } from "../../../../shared/constants";
-import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
-import { getButton } from "../../../../shared/tests/playwright/locator";
+import {
+	getButton,
+	waitForApiResponse,
+} from "../../../../shared/tests/playwright";
 import { logInTest } from "./support";
 
 test("logs in as a guest", async ({ page }) => {

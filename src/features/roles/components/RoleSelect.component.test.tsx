@@ -1,13 +1,12 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import {
 	DEFAULT_ROLE_SELECT_OPTION,
 	LOADING_ROLES_TEXT,
 } from "../../../shared/constants";
-import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
 import {
-	getSelect,
+	expectNoAccessibilityViolations,
 	getText,
-} from "../../../shared/tests/react-testing-library/locator";
+} from "../../../shared/tests/react-testing-library";
 import RoleSelect from "./RoleSelect";
 
 const roles = [
@@ -18,7 +17,7 @@ const roles = [
 test("renders loading state", () => {
 	render(<RoleSelect isLoading={true} list={[]} />);
 
-	const select = getSelect("") as HTMLSelectElement;
+	const select = screen.getByRole("combobox") as HTMLSelectElement;
 	expect(select.disabled).toBe(true);
 	expect(select.textContent).toContain(LOADING_ROLES_TEXT);
 });

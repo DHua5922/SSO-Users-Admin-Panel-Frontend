@@ -1,6 +1,6 @@
-import { createAxiosInstance } from "../../../shared/api/instance";
+import { createAxiosInstance } from "../../../shared/api";
 import { METHOD_GET } from "../../../shared/constants";
-import { userSchema } from "../../users/schemas";
+import { userSchema } from "../../users";
 import { ME_API_ROUTE } from "../constants";
 
 const meAxios = createAxiosInstance(ME_API_ROUTE);

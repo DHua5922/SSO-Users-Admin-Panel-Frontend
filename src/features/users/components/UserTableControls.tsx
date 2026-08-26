@@ -1,8 +1,6 @@
 import { type HTMLAttributes, type SelectHTMLAttributes, useId } from "react";
-import Button from "../../../shared/components/Button/Button";
-import Field from "../../../shared/components/Field";
-import RoleSelect from "../../roles/components/RoleSelect";
-import type { Role } from "../../roles/schemas";
+import { Button, Field } from "../../../shared/components";
+import { type Role, RoleSelect } from "../../roles";
 import { SEARCH_USERS_ARIA_LABEL } from "../constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

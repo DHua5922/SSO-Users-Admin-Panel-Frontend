@@ -1,8 +1,5 @@
 import { logInTest } from "../../../../features/auth/tests/e2e/support";
-import {
-	expect,
-	test,
-} from "../../../../shared/tests/playwright/accessibility";
+import { expect, test } from "../../../../shared/tests/playwright";
 import { goToUsersPage, openAddUserModal } from "../playwright/navigation";
 
 test("should not have any automatically detectable WCAG A or AA violations", async ({

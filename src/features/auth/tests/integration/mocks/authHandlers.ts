@@ -3,7 +3,7 @@ import {
 	BAD_REQUEST_STATUS_CODE,
 	SUCCESS_STATUS_CODE,
 } from "../../../../../shared/constants";
-import { server } from "../../../../../shared/tests/vitest.setup";
+import { server } from "../../../../../shared/tests/vitest";
 import {
 	AUTH_BASE_API_ROUTE,
 	GUEST_LOGIN_PATH,

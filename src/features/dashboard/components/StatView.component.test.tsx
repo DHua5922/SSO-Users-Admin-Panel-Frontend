@@ -1,9 +1,8 @@
-import { render } from "@testing-library/react";
-import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
+import { render, screen } from "@testing-library/react";
 import {
-	getStatus,
+	expectNoAccessibilityViolations,
 	getText,
-} from "../../../shared/tests/react-testing-library/locator";
+} from "../../../shared/tests/react-testing-library";
 import StatView from "./StatView";
 
 const totalUsersLabel = "Total Users";
@@ -26,7 +25,11 @@ test("should show loading state", () => {
 		isLoading: true,
 	});
 
-	expect(getStatus(`loading ${totalUsersLabel}`)).toBeTruthy();
+	expect(
+		screen.getByRole("status", {
+			name: new RegExp(`^loading ${totalUsersLabel}$`, "i"),
+		}),
+	).toBeTruthy();
 });
 
 test("should show stat", () => {

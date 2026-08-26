@@ -1,6 +1,6 @@
 import { HttpResponse, http } from "msw";
 import { SUCCESS_STATUS_CODE } from "../../../../../shared/constants";
-import { server } from "../../../../../shared/tests/vitest.setup";
+import { server } from "../../../../../shared/tests/vitest";
 import { ME_API_ROUTE } from "../../../constants";
 
 const meEndpoint = `*${ME_API_ROUTE}`;

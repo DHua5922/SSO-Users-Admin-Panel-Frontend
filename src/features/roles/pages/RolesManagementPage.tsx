@@ -1,6 +1,8 @@
-import ListView from "../../../shared/components/ListView.tsx";
-import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal.tsx";
-import Modal from "../../../shared/components/Modal/Modal.tsx";
+import {
+	DeleteConfirmationModal,
+	ListView,
+	Modal,
+} from "../../../shared/components";
 import RoleTable from "../components/RoleTable.tsx";
 import RoleTableControls from "../components/RoleTableControls.tsx";
 import RoleTableSkeleton from "../components/RoleTableSkeleton.tsx";

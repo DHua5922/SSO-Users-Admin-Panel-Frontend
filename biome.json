@@ -299,6 +299,172 @@
 					"onemptied"
 				]
 			}
+		},
+		{
+			"includes": [
+				"src/app/**/*.{ts,tsx}",
+				"src/features/**/*.{ts,tsx}",
+				"src/shared/**/*.{ts,tsx}",
+				"!**/*.test.{ts,tsx}",
+				"!**/tests/**"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/features/*/*",
+											"../../auth/*",
+											"../../dashboard/*",
+											"../../roles/*",
+											"../../users/*"
+										],
+										"message": "Import from the feature's root public API."
+									},
+									{
+										"group": [
+											"**/shared/api/*",
+											"**/shared/components/*",
+											"**/shared/hooks/*",
+											"**/shared/store/*",
+											"**/shared/utilities/*"
+										],
+										"message": "Import from the shared segment public API."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/tests/**/*.{ts,tsx}", "**/*.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.unit.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/*.component.test.*",
+											"**/*.integrations.test.*",
+											"**/tests/integration/**"
+										],
+										"message": "Unit tests cannot import component or integration test code."
+									},
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.component.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/*.unit.test.*",
+											"**/*.integrations.test.*",
+											"**/tests/integration/**"
+										],
+										"message": "Component tests cannot import unit or integration test code."
+									},
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.integrations.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": ["**/*.unit.test.*", "**/*.component.test.*"],
+										"message": "Integration tests cannot import unit or component test code."
+									},
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
 		}
 	],
 	"assist": {

@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
 import {
+	expectNoAccessibilityViolations,
 	findText,
 	getButton,
 	getLabel,
-} from "../../../shared/tests/react-testing-library/locator";
+} from "../../../shared/tests/react-testing-library";
 import {
 	REQUIRED_NAME_ERROR_MESSAGE,
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,

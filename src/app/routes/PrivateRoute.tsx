@@ -2,9 +2,9 @@ import { Navigate, Outlet } from "react-router";
 import {
 	LOADING_CURRENT_USER_TEXT,
 	LOGIN_PATH,
-} from "../../features/auth/constants";
-import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
-import PageLoader from "../../shared/components/PageLoader";
+	useCurrentUser,
+} from "../../features/auth";
+import { PageLoader } from "../../shared/components";
 import { MAIN_CONTENT_ID } from "../constants";
 import Navbar from "../layouts/Navbar";
 import SkipLink from "../layouts/SkipLink";

@@ -3,17 +3,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import type { HTMLAttributes } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { logOutApi } from "../../../features/auth/api/auth";
 import {
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
 	LOGIN_PATH,
 	LOGOUT_BUTTON_TEXT,
+	logOutApi,
 	ME_QUERY_KEY,
-} from "../../../features/auth/constants";
-import { ROLES_PATH } from "../../../features/roles/constants";
-import { USERS_PATH } from "../../../features/users/constants";
-import { HOME_PATH } from "../../../shared/constants";
-import usePageErrorHandler from "../../../shared/hooks/usePageErrorHandler";
+} from "../../features/auth";
+import { ROLES_PATH } from "../../features/roles";
+import { USERS_PATH } from "../../features/users";
+import { HOME_PATH } from "../../shared/constants";
+import { usePageErrorHandler } from "../../shared/hooks";
 import styles from "./NavbarNavigation.module.css";
 
 interface Props extends HTMLAttributes<HTMLUListElement> {

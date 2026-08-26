@@ -1,11 +1,11 @@
+import type { Locator, Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
-import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
+import { regexMatch } from "../../../../shared/tests";
 import {
-	getHeading,
 	getLink,
-	getSection,
 	getText,
-} from "../../../../shared/tests/playwright/locator";
+	waitForApiResponse,
+} from "../../../../shared/tests/playwright";
 import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	DASHBOARD_HEADER,
@@ -48,3 +48,16 @@ test("should show dashboard stats", async ({ page }) => {
 		getLink(roleStatsSection, DASHBOARD_VIEW_ROLES_LINK_TEXT),
 	).toBeVisible();
 });
+
+function getHeading(page: Page | Locator, headerText: string, options = {}) {
+	return page.getByRole("heading", {
+		name: regexMatch(headerText, undefined, true),
+		...options,
+	});
+}
+
+function getSection(page: Page | Locator, sectionTitle: string) {
+	return page.getByRole("region", {
+		name: regexMatch(sectionTitle, undefined, true),
+	});
+}

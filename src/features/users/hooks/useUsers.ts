@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
-import { parseError } from "../../../shared/utilities/parseError";
+import { parseError } from "../../../shared/utilities";
 import { getUsersApi } from "../api";
 import { USERS_QUERY_KEY } from "../constants";
 import type { User } from "../schemas";

@@ -1,12 +1,9 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps } from "react";
 import { LOADING_TEXT } from "../../constants";
+import { getButton } from "../../tests/react-testing-library";
 import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
-import {
-	getButton,
-	queryButton,
-} from "../../tests/react-testing-library/locator";
 import Button from "./Button";
 
 const buttonText = "Click me";
@@ -23,7 +20,7 @@ test("renders button with loading state", async () => {
 	const button = getButton(LOADING_TEXT);
 
 	expect(button).toBeTruthy();
-	expect(queryButton(buttonText)).not.toBeTruthy();
+	expect(screen.queryByRole("button", { name: buttonText })).not.toBeTruthy();
 
 	await event.click(button);
 	expect(onClick).not.toHaveBeenCalled();

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
+import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library";
 import RoleTableControls from "./RoleTableControls";
 
 test("role table controls have no automatically detectable accessibility violations", async () => {

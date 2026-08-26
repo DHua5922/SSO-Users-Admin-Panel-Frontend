@@ -1,8 +1,8 @@
-import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
 	findDialog,
 	findText,
-} from "../../../../shared/tests/react-testing-library/locator";
+	renderApp,
+} from "../../../../shared/tests/react-testing-library";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { EMPTY_ROLES_MESSAGE, ROLES_PATH } from "../../constants";
 import {

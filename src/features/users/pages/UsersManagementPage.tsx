@@ -1,7 +1,9 @@
-import ListView from "../../../shared/components/ListView.tsx";
-import DeleteConfirmationModal from "../../../shared/components/Modal/DeleteConfirmationModal.tsx";
-import Modal from "../../../shared/components/Modal/Modal.tsx";
-import useRoles from "../../roles/hooks/useRoles.ts";
+import {
+	DeleteConfirmationModal,
+	ListView,
+	Modal,
+} from "../../../shared/components";
+import { useRoles } from "../../roles";
 import UpsertUserForm from "../components/UpsertUserForm.tsx";
 import UserTable from "../components/UserTable.tsx";
 import UserTableControls from "../components/UserTableControls.tsx";

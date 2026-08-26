@@ -2,19 +2,19 @@ import { Menu, Moon, Sun } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
 import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
-import Button from "../../shared/components/Button/Button";
-import Collapsible from "../../shared/components/Collapsible/Collapsible";
+import { Button, Collapsible } from "../../shared/components";
 import {
 	APP_LOGO_ALT_TEXT,
-	CLOSE_NAVIGATION_MENU_TEXT,
 	HOME_PATH,
-	MOBILE_NAVIGATION_ARIA_LABEL,
 	MOBILE_NAVIGATION_ID,
 	OPEN_NAVIGATION_MENU_TEXT,
 } from "../../shared/constants";
 import { DARK_MODE_TEXT, DARK_THEME } from "../constants";
 import { useTheme } from "../providers/ThemeProvider";
-import NavbarNavigation from "./NavbarNavigation/NavbarNavigation";
+import NavbarNavigation from "./NavbarNavigation";
+
+const CLOSE_NAVIGATION_MENU_TEXT = "Close navigation menu";
+const MOBILE_NAVIGATION_ARIA_LABEL = "Mobile navigation menu";
 
 interface Props extends HTMLAttributes<HTMLElement> {
 	username: string;

@@ -1,6 +1,8 @@
 import { render } from "@testing-library/react";
-import { expectNoAccessibilityViolations } from "../../../shared/tests/react-testing-library/accessibility";
-import { getButton } from "../../../shared/tests/react-testing-library/locator";
+import {
+	expectNoAccessibilityViolations,
+	getButton,
+} from "../../../shared/tests/react-testing-library";
 import { SYSTEM_MANAGED_ROLE_DELETE_ARIA_LABEL_PREFIX } from "../constants";
 import RoleTable from "./RoleTable";
 

@@ -1,7 +1,7 @@
 import {
 	findButton,
 	getButton,
-} from "../../../../shared/tests/react-testing-library/locator";
+} from "../../../../shared/tests/react-testing-library";
 import {
 	ADD_USER_BUTTON_TEXT,
 	CONFIRM_DELETE_USER_BUTTON_TEXT,

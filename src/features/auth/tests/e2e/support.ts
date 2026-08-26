@@ -1,10 +1,10 @@
 import { expect, type Page } from "@playwright/test";
 import { METHOD_POST } from "../../../../shared/constants";
-import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getButton,
 	getLabel,
-} from "../../../../shared/tests/playwright/locator";
+	waitForApiResponse,
+} from "../../../../shared/tests/playwright";
 import {
 	AUTH_BASE_API_ROUTE,
 	LOGIN_EMAIL_INPUT_LABEL,

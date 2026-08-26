@@ -1,6 +1,5 @@
 import { type HTMLAttributes, useId } from "react";
-import Button from "../../../shared/components/Button/Button";
-import Field from "../../../shared/components/Field";
+import { Button, Field } from "../../../shared/components";
 import { ADD_ROLE_BUTTON_TEXT, SEARCH_ROLES_ARIA_LABEL } from "../constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

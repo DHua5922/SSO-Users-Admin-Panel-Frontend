@@ -1,14 +1,12 @@
 import { expect, type Page } from "@playwright/test";
-import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
-import {
-	openMobileMenu,
-	waitForDialogToFinishOpening,
-} from "../../../../shared/tests/playwright/behavior";
 import {
 	getButton,
 	getDialog,
 	getLink,
-} from "../../../../shared/tests/playwright/locator";
+	openMobileMenu,
+	waitForApiResponse,
+	waitForDialogToFinishOpening,
+} from "../../../../shared/tests/playwright";
 import {
 	ADD_ROLE_BUTTON_TEXT,
 	ADD_ROLE_MODAL_TITLE,

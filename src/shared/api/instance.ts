@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_PATH } from "../../features/auth/constants";
+import { LOGIN_PATH } from "../constants";
 import { refreshTokensApi } from "./token";
 
 let refreshTokensPromise: ReturnType<typeof refreshTokensApi> | null = null;

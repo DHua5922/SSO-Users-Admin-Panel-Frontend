@@ -1,13 +1,9 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { CLOSE_ALERT_BUTTON_TEXT } from "../constants";
-import { expectNoAccessibilityViolations } from "../tests/react-testing-library/accessibility";
-import {
-	getButton,
-	getText,
-	queryAlert,
-} from "../tests/react-testing-library/locator";
-import type { Alert } from "../types";
+import { CLOSE_ALERT_BUTTON_TEXT } from "../../constants";
+import { getButton, getText } from "../../tests/react-testing-library";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
+import type { Alert } from "../../types";
 import AlertList from "./AlertList";
 
 const alerts: Alert[] = [
@@ -30,7 +26,7 @@ test("has no automatically detectable accessibility violations", async () => {
 
 test("does not show alerts when list is empty", () => {
 	renderAlerts([]);
-	expect(queryAlert("")).toBeFalsy();
+	expect(screen.queryByRole("alert")).toBeFalsy();
 });
 
 test("calls onRemoveAlert when clicking on the close button", async () => {

@@ -9,10 +9,7 @@ import {
 } from "../../features/auth/constants";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import { HOME_PATH } from "../../shared/constants";
-import {
-	getButton,
-	getText,
-} from "../../shared/tests/react-testing-library/locator";
+import { getButton, getText } from "../../shared/tests/react-testing-library";
 import {
 	DARK_MODE_TEXT,
 	DARK_THEME,

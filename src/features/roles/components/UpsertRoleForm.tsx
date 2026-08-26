@@ -1,8 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type HTMLAttributes, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Button from "../../../shared/components/Button/Button";
-import Field from "../../../shared/components/Field";
+import { Button, Field } from "../../../shared/components";
 import {
 	UPSERT_ROLE_FORM_DESCRIPTION_LABEL,
 	UPSERT_ROLE_FORM_NAME_LABEL,
