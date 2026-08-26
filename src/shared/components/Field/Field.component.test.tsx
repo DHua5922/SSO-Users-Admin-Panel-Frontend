@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
-import { expectNoAccessibilityViolations } from "../tests/react-testing-library/accessibility";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
 import {
 	getLabel,
 	getText,
 	queryText,
-} from "../tests/react-testing-library/locator";
+} from "../../tests/react-testing-library/locator";
 import Field from "./Field";
 
 const label = "text field";

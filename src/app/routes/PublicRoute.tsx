@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router";
-import { LOADING_CURRENT_USER_TEXT } from "../../features/auth/constants";
-import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
-import PageLoader from "../../shared/components/PageLoader";
+import { LOADING_CURRENT_USER_TEXT, useCurrentUser } from "../../features/auth";
+import { PageLoader } from "../../shared/components";
 import { HOME_PATH } from "../../shared/constants";
 
 export default function PublicRoute() {

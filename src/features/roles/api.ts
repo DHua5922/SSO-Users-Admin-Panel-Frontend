@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createAxiosInstance } from "../../shared/api/instance";
+import { createAxiosInstance } from "../../shared/api";
 import { METHOD_DELETE, METHOD_GET, METHOD_PUT } from "../../shared/constants";
 import { ROLES_API_ROUTE } from "./constants";
 import type { UpsertRoleFormData } from "./schemas";

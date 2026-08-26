@@ -2,7 +2,7 @@ import { Modal as DefaultModal } from "@dhua5922/react-kit";
 import { type ComponentProps, useId } from "react";
 import { useShallow } from "zustand/react/shallow";
 import useAlertStore from "../../store/useAlertStore";
-import AlertList from "../AlertList";
+import AlertList from "../Alert/AlertList";
 
 interface Props extends ComponentProps<typeof DefaultModal> {
 	title: string;

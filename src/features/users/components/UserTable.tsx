@@ -1,6 +1,5 @@
 import type { HTMLAttributes } from "react";
-import Button from "../../../shared/components/Button/Button";
-import Icon from "../../../shared/components/Icon";
+import { Button, Icon } from "../../../shared/components";
 import {
 	DELETE_USER_BUTTON_ARIA_LABEL_PREFIX,
 	EDIT_USER_BUTTON_ARIA_LABEL_PREFIX,

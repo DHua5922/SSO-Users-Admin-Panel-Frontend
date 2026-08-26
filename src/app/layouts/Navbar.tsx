@@ -2,8 +2,7 @@ import { Menu, Moon, Sun } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
 import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
-import Button from "../../shared/components/Button/Button";
-import Collapsible from "../../shared/components/Collapsible/Collapsible";
+import { Button, Collapsible } from "../../shared/components";
 import {
 	APP_LOGO_ALT_TEXT,
 	CLOSE_NAVIGATION_MENU_TEXT,

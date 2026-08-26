@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
-import { LOADING_TEXT } from "../constants";
-import { expectNoAccessibilityViolations } from "../tests/react-testing-library/accessibility";
-import { getText } from "../tests/react-testing-library/locator";
+import { LOADING_TEXT } from "../../constants";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
+import { getText } from "../../tests/react-testing-library/locator";
 import ListView from "./ListView";
 
 test("shows error message", () => {

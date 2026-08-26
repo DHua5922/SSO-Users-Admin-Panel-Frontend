@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { CLOSE_ALERT_BUTTON_TEXT } from "../constants";
-import { expectNoAccessibilityViolations } from "../tests/react-testing-library/accessibility";
+import { CLOSE_ALERT_BUTTON_TEXT } from "../../constants";
+import { expectNoAccessibilityViolations } from "../../tests/react-testing-library/accessibility";
 import {
 	getButton,
 	getText,
 	queryAlert,
-} from "../tests/react-testing-library/locator";
-import type { Alert } from "../types";
+} from "../../tests/react-testing-library/locator";
+import type { Alert } from "../../types";
 import AlertList from "./AlertList";
 
 const alerts: Alert[] = [

@@ -1,4 +1,4 @@
-import Icon from "../../../shared/components/Icon";
+import { Icon } from "../../../shared/components";
 import RoleTableHeaders from "./RoleTableHeaders";
 
 export default function RoleTableSkeleton() {

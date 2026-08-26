@@ -1,4 +1,4 @@
-import { createAxiosInstance } from "../../shared/api/instance";
+import { createAxiosInstance } from "../../shared/api";
 import { METHOD_GET } from "../../shared/constants";
 import { dashboardStatsSchema } from "./schemas";
 

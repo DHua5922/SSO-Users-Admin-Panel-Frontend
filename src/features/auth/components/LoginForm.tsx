@@ -1,6 +1,5 @@
 import type { HTMLAttributes } from "react";
-import Button from "../../../shared/components/Button/Button";
-import Field from "../../../shared/components/Field";
+import { Button, Field } from "../../../shared/components";
 import {
 	GUEST_LOGIN_LOADING_TEXT,
 	GUEST_LOGIN_TEXT,

@@ -1,10 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type HTMLAttributes, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Button from "../../../shared/components/Button/Button";
-import Field from "../../../shared/components/Field";
-import RoleSelect from "../../roles/components/RoleSelect";
-import type { Role } from "../../roles/schemas";
+import { Button, Field } from "../../../shared/components";
+import { type Role, RoleSelect } from "../../roles";
 import {
 	UPSERT_USER_FORM_CONFIRM_PASSWORD_LABEL,
 	UPSERT_USER_FORM_EMAIL_LABEL,

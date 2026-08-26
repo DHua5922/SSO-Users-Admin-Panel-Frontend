@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useShallow } from "zustand/react/shallow";
-import useModalErrorHandler from "../../../shared/hooks/useModalErrorHandler";
+import { useModalErrorHandler } from "../../../shared/hooks";
 import { upsertRoleApi } from "../api";
 import {
 	ADD_ROLE_BUTTON_TEXT,

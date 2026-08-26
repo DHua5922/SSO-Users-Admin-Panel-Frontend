@@ -1,5 +1,5 @@
-import { ROLES_PATH } from "../../roles/constants";
-import { USERS_PATH } from "../../users/constants";
+import { ROLES_PATH } from "../../roles";
+import { USERS_PATH } from "../../users";
 import StatView from "../components/StatView";
 import {
 	DASHBOARD_HEADER,

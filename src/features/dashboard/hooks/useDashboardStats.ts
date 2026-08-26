@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { parseError } from "../../../shared/utilities/parseError";
+import { parseError } from "../../../shared/utilities";
 import { getDashboardStatsApi } from "../api";
 
 export function useDashboardStats() {

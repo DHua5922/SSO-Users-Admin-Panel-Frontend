@@ -1,3 +1,5 @@
+[![Continuous Integration](https://github.com/DHua5922/SSO-Users-Admin-Panel-Frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/DHua5922/SSO-Users-Admin-Panel-Frontend/actions/workflows/ci.yml)
+
 # SSO Users Admin Panel Frontend
 
 A React admin panel for managing users and roles. It connects to a separate backend API and supports normal login and guest login.

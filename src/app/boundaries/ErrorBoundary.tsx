@@ -1,5 +1,5 @@
 import { Component, type PropsWithChildren } from "react";
-import Button from "../../shared/components/Button/Button";
+import { Button } from "../../shared/components";
 
 interface State {
 	error: Error | null;

@@ -1,25 +1,19 @@
 import { lazy, Suspense } from "react";
 import { Routes as DefaultRoutes, Route } from "react-router";
-import { LOGIN_PATH } from "../../features/auth/constants";
-import { ROLES_PATH } from "../../features/roles/constants";
-import { USERS_PATH } from "../../features/users/constants";
-import AlertList from "../../shared/components/AlertList";
-import PageLoader from "../../shared/components/PageLoader";
+import { LOGIN_PATH, LoginPage } from "../../features/auth";
+import { ROLES_PATH, RolesManagementPage } from "../../features/roles";
+import { USERS_PATH, UsersManagementPage } from "../../features/users";
+import { AlertList, PageLoader } from "../../shared/components";
 import { HOME_PATH } from "../../shared/constants";
-import useAlertStore from "../../shared/store/useAlertStore";
+import { useAlertStore } from "../../shared/store";
 import NotFoundPage from "./NotFoundPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
-const LoginPage = lazy(() => import("../../features/auth/pages/LoginPage"));
-const DashboardPage = lazy(
-	() => import("../../features/dashboard/pages/DashboardPage"),
-);
-const UsersManagementPage = lazy(
-	() => import("../../features/users/pages/UsersManagementPage"),
-);
-const RolesManagementPage = lazy(
-	() => import("../../features/roles/pages/RolesManagementPage"),
+const DashboardPage = lazy(() =>
+	import("../../features/dashboard").then(({ DashboardPage }) => ({
+		default: DashboardPage,
+	})),
 );
 
 export default function Routes() {

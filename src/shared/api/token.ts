@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_BASE_API_ROUTE } from "../../features/auth/constants";
+import { AUTH_BASE_API_ROUTE } from "../../features/auth";
 import { METHOD_POST, NEW_TOKENS_API_ROUTE } from "../constants";
 
 export async function refreshTokensApi() {

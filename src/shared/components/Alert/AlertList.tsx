@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import type { Alert as AlertType } from "../types";
+import type { Alert as AlertType } from "../../types";
 import Alert from "./Alert";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

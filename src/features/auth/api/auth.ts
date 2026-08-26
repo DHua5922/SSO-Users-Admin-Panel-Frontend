@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createAxiosInstance } from "../../../shared/api/instance";
+import { createAxiosInstance } from "../../../shared/api";
 import { METHOD_POST } from "../../../shared/constants";
-import { userSchema } from "../../users/schemas";
+import { userSchema } from "../../users";
 import {
 	AUTH_BASE_API_ROUTE,
 	GUEST_LOGIN_PATH,
