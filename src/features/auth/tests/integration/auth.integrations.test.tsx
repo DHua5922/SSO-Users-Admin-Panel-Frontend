@@ -1,12 +1,12 @@
 import type { UserEvent } from "@testing-library/user-event";
 import { HOME_PATH } from "../../../../shared/constants";
-import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
 	findAlert,
 	findButton,
 	findLabel,
 	findText,
-} from "../../../../shared/tests/react-testing-library/locator";
+	renderApp,
+} from "../../../../shared/tests/react-testing-library";
 import {
 	CURRENT_USER_TOGGLE_ARIA_LABEL,
 	GUEST_LOGIN_TEXT,

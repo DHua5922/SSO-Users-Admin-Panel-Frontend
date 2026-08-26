@@ -1,11 +1,11 @@
-import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
 	findDialog,
 	findTableRow,
 	findText,
 	getButton,
 	getLabel,
-} from "../../../../shared/tests/react-testing-library/locator";
+	renderApp,
+} from "../../../../shared/tests/react-testing-library";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { mockGetRolesSuccessApi } from "../../../roles/tests/integration/roleHandlers";
 import {

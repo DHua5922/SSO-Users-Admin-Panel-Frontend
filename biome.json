@@ -343,6 +343,32 @@
 			}
 		},
 		{
+			"includes": ["**/tests/**/*.{ts,tsx}", "**/*.test.{ts,tsx}"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"patterns": [
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		{
 			"includes": ["**/*.unit.test.{ts,tsx}"],
 			"linter": {
 				"rules": {
@@ -358,6 +384,16 @@
 											"**/tests/integration/**"
 										],
 										"message": "Unit tests cannot import component or integration test code."
+									},
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
 									}
 								]
 							}
@@ -382,6 +418,16 @@
 											"**/tests/integration/**"
 										],
 										"message": "Component tests cannot import unit or integration test code."
+									},
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
 									}
 								]
 							}
@@ -402,6 +448,16 @@
 									{
 										"group": ["**/*.unit.test.*", "**/*.component.test.*"],
 										"message": "Integration tests cannot import unit or component test code."
+									},
+									{
+										"group": [
+											"**/shared/tests/*",
+											"**/shared/tests/*/*",
+											"!**/shared/tests/playwright",
+											"!**/shared/tests/vitest",
+											"!**/shared/tests/react-testing-library"
+										],
+										"message": "Import from a shared test public API."
 									}
 								]
 							}

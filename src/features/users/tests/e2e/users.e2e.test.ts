@@ -1,13 +1,13 @@
 import { expect, type Page, test } from "@playwright/test";
 import { METHOD_DELETE, METHOD_PUT } from "../../../../shared/constants";
-import { waitForApiResponse } from "../../../../shared/tests/playwright/api";
 import {
 	getButton,
 	getDialog,
 	getLabel,
 	getTableRow,
 	getText,
-} from "../../../../shared/tests/playwright/locator";
+	waitForApiResponse,
+} from "../../../../shared/tests/playwright";
 import { logInTest } from "../../../auth/tests/e2e/support";
 import {
 	ADD_USER_BUTTON_TEXT,

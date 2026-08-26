@@ -4,7 +4,7 @@ import {
 	INTERNAL_SERVER_ERROR_STATUS_CODE,
 	SUCCESS_STATUS_CODE,
 } from "../../../../shared/constants";
-import { server } from "../../../../shared/tests/vitest.setup";
+import { server } from "../../../../shared/tests/vitest";
 import {
 	CANNOT_LOAD_ROLES_ERROR_MESSAGE,
 	CANNOT_UPSERT_ROLE_ERROR_MESSAGE,

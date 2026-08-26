@@ -1,8 +1,4 @@
-import {
-	expect,
-	test,
-} from "../../../../shared/tests/playwright/accessibility";
-import { getButton } from "../../../../shared/tests/playwright/locator";
+import { expect, getButton, test } from "../../../../shared/tests/playwright";
 import { LOGIN_TEXT } from "../../constants";
 import { loadPage } from "../playwright/environment";
 

@@ -1,9 +1,10 @@
+import { screen } from "@testing-library/react";
 import { HOME_PATH } from "../../../../shared/constants";
-import { renderApp } from "../../../../shared/tests/react-testing-library/app";
+import { regexMatch } from "../../../../shared/tests";
 import {
-	findAllText,
 	findText,
-} from "../../../../shared/tests/react-testing-library/locator";
+	renderApp,
+} from "../../../../shared/tests/react-testing-library";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import { DASHBOARD_STATS_ERROR_MESSAGE } from "../../constants";
 import {
@@ -25,5 +26,9 @@ test("should show error when failing to get dashboard stats", async () => {
 	mockGetDashboardStatsFailureApi();
 	renderApp(HOME_PATH);
 
-	expect(await findAllText(DASHBOARD_STATS_ERROR_MESSAGE)).toHaveLength(2);
+	expect(
+		await screen.findAllByText(
+			regexMatch(DASHBOARD_STATS_ERROR_MESSAGE, undefined, true),
+		),
+	).toHaveLength(2);
 });

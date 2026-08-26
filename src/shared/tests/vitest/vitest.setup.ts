@@ -1,7 +1,7 @@
 import { setupServer } from "msw/node";
-import useRoleManagementStore from "../../features/roles/store/useRoleManagementStore";
-import useUserManagementStore from "../../features/users/store/useUserManagementStore";
-import useAlertStore from "../store/useAlertStore";
+import useRoleManagementStore from "../../../features/roles/store/useRoleManagementStore";
+import useUserManagementStore from "../../../features/users/store/useUserManagementStore";
+import useAlertStore from "../../store/useAlertStore";
 
 export const server = setupServer();
 

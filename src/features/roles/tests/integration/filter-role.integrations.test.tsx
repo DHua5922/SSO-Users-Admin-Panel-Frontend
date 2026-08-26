@@ -1,10 +1,10 @@
-import { renderApp } from "../../../../shared/tests/react-testing-library/app";
 import {
 	findSearchBox,
 	findTableRow,
 	findText,
 	queryTableRow,
-} from "../../../../shared/tests/react-testing-library/locator";
+	renderApp,
+} from "../../../../shared/tests/react-testing-library";
 import { mockGetMeSuccessApi } from "../../../auth/tests/integration/mocks/currentUserHandlers";
 import {
 	CANNOT_LOAD_ROLES_ERROR_MESSAGE,

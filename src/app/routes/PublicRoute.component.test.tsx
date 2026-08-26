@@ -7,7 +7,7 @@ import {
 } from "../../features/auth/constants";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import { HOME_PATH } from "../../shared/constants";
-import { getText } from "../../shared/tests/react-testing-library/locator";
+import { getText } from "../../shared/tests/react-testing-library";
 import PublicRoute from "./PublicRoute";
 
 vi.mock("../../features/auth/hooks/useCurrentUser", () => ({

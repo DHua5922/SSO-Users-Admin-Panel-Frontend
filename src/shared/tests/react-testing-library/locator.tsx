@@ -17,10 +17,6 @@ export function findText(text: string, boundary?: HTMLElement) {
 	const regex = regexMatch(text, undefined, true);
 	return element(boundary).findByText(regex);
 }
-export function findAllText(text: string, boundary?: HTMLElement) {
-	const regex = regexMatch(text, undefined, true);
-	return element(boundary).findAllByText(regex);
-}
 export function queryText(text: string, boundary?: HTMLElement) {
 	const regex = regexMatch(text, undefined, true);
 	return element(boundary).queryByText(regex);
@@ -55,22 +51,10 @@ export function getButton(text: string, boundary?: HTMLElement) {
 		name: regex,
 	});
 }
-export function queryButton(text: string, boundary?: HTMLElement) {
-	const regex = regexMatch(text);
-	return element(boundary).queryByRole(buttonRole, {
-		name: regex,
-	});
-}
 
 export function findAlert(text: string, boundary?: HTMLElement) {
 	const regex = regexMatch(text);
 	return element(boundary).findByRole(alertRole, {
-		name: regex,
-	});
-}
-export function queryAlert(text: string, boundary?: HTMLElement) {
-	const regex = regexMatch(text);
-	return element(boundary).queryByRole(alertRole, {
 		name: regex,
 	});
 }
@@ -105,20 +89,6 @@ export function queryTableRow(text: string, boundary?: HTMLElement) {
 export function findSearchBox(label: string, boundary?: HTMLElement) {
 	const regex = regexMatch(label);
 	return element(boundary).findByRole("searchbox", {
-		name: regex,
-	});
-}
-
-export function getStatus(text: string, boundary?: HTMLElement) {
-	const regex = regexMatch(text);
-	return element(boundary).getByRole("status", {
-		name: regex,
-	});
-}
-
-export function getSelect(text: string, boundary?: HTMLElement) {
-	const regex = regexMatch(text);
-	return element(boundary).getByRole("combobox", {
 		name: regex,
 	});
 }
