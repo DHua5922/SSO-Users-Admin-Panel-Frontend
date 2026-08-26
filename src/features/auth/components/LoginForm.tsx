@@ -74,6 +74,8 @@ export default function LoginForm({
 				{LOGIN_TEXT}
 			</Button>
 
+			<p className="text-center">or</p>
+
 			<Button
 				isLoading={isGuestLoginLoading}
 				loadingText={GUEST_LOGIN_LOADING_TEXT}
