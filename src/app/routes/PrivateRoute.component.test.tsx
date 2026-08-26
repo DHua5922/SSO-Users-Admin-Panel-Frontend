@@ -9,16 +9,8 @@ import {
 } from "../../features/auth/constants";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import { HOME_PATH } from "../../shared/constants";
-import { getButton, getText } from "../../shared/tests/react-testing-library";
-import {
-	DARK_MODE_TEXT,
-	DARK_THEME,
-	LIGHT_THEME,
-	SKIP_TO_MAIN_CONTENT_TEXT,
-	THEME_ATTRIBUTE_NAME,
-	THEME_STORAGE_KEY,
-} from "../constants";
-import { ThemeProvider } from "../providers/ThemeProvider";
+import { getText } from "../../shared/tests/react-testing-library";
+import { SKIP_TO_MAIN_CONTENT_TEXT } from "../constants";
 import PrivateRoute from "./PrivateRoute";
 
 vi.mock("../../features/auth/hooks/useCurrentUser", () => ({
@@ -47,25 +39,6 @@ test("skips navigation and focuses the main content", async () => {
 	expect(document.activeElement).toBe(screen.getByRole("main"));
 });
 
-test("toggles and stores the color theme", async () => {
-	localStorage.setItem(THEME_STORAGE_KEY, LIGHT_THEME);
-	const event = userEvent.setup();
-	renderRoute(true, false);
-
-	const themeButton = getButton(DARK_MODE_TEXT);
-	expect(themeButton.getAttribute("aria-pressed")).toBe("false");
-	await event.click(themeButton);
-
-	expect(document.documentElement.getAttribute(THEME_ATTRIBUTE_NAME)).toBe(
-		DARK_THEME,
-	);
-	expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe(DARK_THEME);
-	expect(themeButton.getAttribute("aria-pressed")).toBe("true");
-
-	localStorage.removeItem(THEME_STORAGE_KEY);
-	document.documentElement.removeAttribute(THEME_ATTRIBUTE_NAME);
-});
-
 test("redirect to login page", () => {
 	renderRoute(false, false);
 	expect(getText(loginText)).toBeTruthy();
@@ -85,20 +58,15 @@ function renderRoute(isLoggedIn: boolean, isLoading: boolean) {
 	const queryClient = new QueryClient();
 
 	render(
-		<ThemeProvider>
-			<QueryClientProvider client={queryClient}>
-				<MemoryRouter initialEntries={[HOME_PATH]}>
-					<Routes>
-						<Route element={<PrivateRoute />}>
-							<Route
-								path={HOME_PATH}
-								element={<div>{privateContentText}</div>}
-							/>
-						</Route>
-						<Route path={LOGIN_PATH} element={<div>{loginText}</div>} />
-					</Routes>
-				</MemoryRouter>
-			</QueryClientProvider>
-		</ThemeProvider>,
+		<QueryClientProvider client={queryClient}>
+			<MemoryRouter initialEntries={[HOME_PATH]}>
+				<Routes>
+					<Route element={<PrivateRoute />}>
+						<Route path={HOME_PATH} element={<div>{privateContentText}</div>} />
+					</Route>
+					<Route path={LOGIN_PATH} element={<div>{loginText}</div>} />
+				</Routes>
+			</MemoryRouter>
+		</QueryClientProvider>,
 	);
 }

@@ -6,16 +6,21 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import App from "./App.tsx";
 import "../styles/main.css";
 import ErrorBoundary from "./boundaries/ErrorBoundary";
+import ThemeToggle from "./layouts/ThemeToggle";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<ErrorBoundary>
-			<QueryClientProvider client={queryClient}>
-				<ReactQueryDevtools initialIsOpen={false} />
-				<App />
-			</QueryClientProvider>
-		</ErrorBoundary>
+		<ThemeProvider>
+			<ThemeToggle />
+			<ErrorBoundary>
+				<QueryClientProvider client={queryClient}>
+					<ReactQueryDevtools initialIsOpen={false} />
+					<App />
+				</QueryClientProvider>
+			</ErrorBoundary>
+		</ThemeProvider>
 	</StrictMode>,
 );

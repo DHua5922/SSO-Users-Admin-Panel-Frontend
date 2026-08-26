@@ -1,4 +1,4 @@
-import { Menu, Moon, Sun } from "lucide-react";
+import { Menu } from "lucide-react";
 import { type HTMLAttributes, useState } from "react";
 import { Link } from "react-router";
 import logo from "../../assets/logo.svg";
@@ -9,8 +9,6 @@ import {
 	MOBILE_NAVIGATION_ID,
 	OPEN_NAVIGATION_MENU_TEXT,
 } from "../../shared/constants";
-import { DARK_MODE_TEXT, DARK_THEME } from "../constants";
-import { useTheme } from "../providers/ThemeProvider";
 import NavbarNavigation from "./NavbarNavigation";
 
 const CLOSE_NAVIGATION_MENU_TEXT = "Close navigation menu";
@@ -22,9 +20,7 @@ interface Props extends HTMLAttributes<HTMLElement> {
 
 export default function Navbar({ username, className = "", ...props }: Props) {
 	const [expanded, setExpanded] = useState(false);
-	const { theme, toggleTheme } = useTheme();
 	const formattedClassName = `p-6 border-b border-gray-200 ${className}`.trim();
-	const isDarkTheme = theme === DARK_THEME;
 
 	return (
 		<nav className={formattedClassName} {...props}>
@@ -42,20 +38,6 @@ export default function Navbar({ username, className = "", ...props }: Props) {
 				</Link>
 
 				<div className="flex items-center gap-4">
-					<Button
-						type="button"
-						className="cursor-pointer bg-transparent!"
-						aria-label={DARK_MODE_TEXT}
-						aria-pressed={isDarkTheme}
-						onClick={toggleTheme}
-					>
-						{isDarkTheme ? (
-							<Sun aria-hidden="true" className="text-dark" />
-						) : (
-							<Moon aria-hidden="true" className="text-dark" />
-						)}
-					</Button>
-
 					<Button
 						type="button"
 						className="md:hidden cursor-pointer bg-transparent!"
