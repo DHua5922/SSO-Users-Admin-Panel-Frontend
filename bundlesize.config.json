@@ -9,6 +9,10 @@
 			"maxSize": "3 kB"
 		},
 		{
+			"path": "./dist/assets/DashboardStatsChart-*.js",
+			"maxSize": "110 kB"
+		},
+		{
 			"path": "./dist/assets/*.css",
 			"maxSize": "25 kB"
 		}
